@@ -1,6 +1,5 @@
 import path from 'path'
 import fs from 'fs/promises'
-import sharp from 'sharp'
 import { prisma } from './db'
 import { getGuidePaths, ensureStorageDirectory, storagePathToPublic, STORAGE_PATHS } from './storage'
 
@@ -158,6 +157,7 @@ export async function generateThumbnail(
   thumbnailPath: string,
   maxWidth = 400
 ): Promise<{ width: number; height: number }> {
+  const sharp = (await import('sharp')).default
   const metadata = await sharp(imagePath).metadata()
   const ratio = (metadata.height || 1) / (metadata.width || 1)
   const thumbHeight = Math.round(maxWidth * ratio)

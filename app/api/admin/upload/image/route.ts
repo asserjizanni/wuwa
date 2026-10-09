@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { writeFile, mkdir } from 'fs/promises'
 import path from 'path'
-import sharp from 'sharp'
 import { getAdminSession } from '@/lib/session'
 import { prisma } from '@/lib/db'
 import { getCharacterPaths, storagePathToPublic, sanitizeFilename } from '@/lib/storage'
@@ -53,6 +52,7 @@ export async function POST(request: NextRequest) {
     const outputPath = path.join(charPaths.portraits, filename)
 
     // Process with sharp: resize and convert to WebP
+    const sharp = (await import('sharp')).default
     const maxDimension = type === 'portrait' ? 800 : 1920
     await sharp(buffer)
       .resize(maxDimension, maxDimension, { fit: 'inside', withoutEnlargement: true })
