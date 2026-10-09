@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Zap, ExternalLink, Calculator } from 'lucide-react'
+import { Zap, Calculator } from 'lucide-react'
 
 const FEATURES = [
   'محرر WuwaFlex المدمج بالكامل',
@@ -61,19 +61,10 @@ export default function BuilderFeature() {
             </ul>
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <Link href="/builder" className="btn btn-primary">
+              <Link href="/builder" className="btn btn-primary px-8 py-3.5 text-sm font-bold">
                 <Calculator size={17} />
-                فتح المحرر
+                تشغيل محاكي WuwaFlex
               </Link>
-              <a
-                href="https://wuwaflex.com/builder"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-ghost"
-              >
-                <ExternalLink size={15} />
-                فتح في تبويب جديد
-              </a>
             </div>
           </motion.div>
 

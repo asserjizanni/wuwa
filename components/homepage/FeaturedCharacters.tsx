@@ -40,13 +40,13 @@ export default function FeaturedCharacters({ characters }: FeaturedCharactersPro
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-0.5 bg-[#00c8ff]" />
               <span className="text-[#00c8ff] text-xs font-bold tracking-[0.2em] uppercase">
-                شخصيات اللعبة
+                الشخصيات
               </span>
             </div>
             <h2 className="text-3xl md:text-4xl font-black text-white">
-              الشخصيات المميزة
+              الشخصيات
             </h2>
-            <p className="text-[#4d6580] text-sm mt-2">استعرض أدلة البناء المنشورة</p>
+            <p className="text-[#8fa8c4] text-sm mt-2">دليل وبنيات رنّاني Wuthering Waves</p>
           </div>
 
           <Link

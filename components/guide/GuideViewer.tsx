@@ -204,15 +204,16 @@ export default function GuideViewer({
                   style={{ transform: `scale(${zoom})`, transformOrigin: 'top center' }}
                 >
                   {!imageLoaded && !imageError && (
-                    <div className="absolute inset-0 flex items-center justify-center min-h-64 min-w-48">
-                      <Loader2 size={32} className="text-accent-cyan-DEFAULT animate-spin" />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 min-h-64 min-w-48 text-[#8fa8c4]">
+                      <Loader2 size={32} className="text-[#00c8ff] animate-spin" />
+                      <p className="text-xs">جارٍ تحميل المحتوى...</p>
                     </div>
                   )}
 
                   {imageError && (
-                    <div className="flex flex-col items-center gap-3 py-16 px-8 text-text-muted">
-                      <AlertCircle size={40} className="text-status-error/60" />
-                      <p>Failed to load page {currentPage + 1}</p>
+                    <div className="flex flex-col items-center gap-3 py-16 px-8 text-red-400">
+                      <AlertCircle size={40} className="text-red-400/80" />
+                      <p className="text-sm">تعذّر تحميل المحتوى. حاول مرة أخرى.</p>
                     </div>
                   )}
 
@@ -236,14 +237,14 @@ export default function GuideViewer({
               </div>
 
               {/* Navigation controls */}
-              <div className="flex items-center justify-center gap-4 py-4 border-t border-border/40 bg-background-DEFAULT/90 backdrop-blur-sm flex-shrink-0 no-print">
+              <div className="flex items-center justify-center gap-4 py-4 border-t border-border/40 bg-background-DEFAULT/90 backdrop-blur-sm flex-shrink-0 no-print" dir="rtl">
                 <button
                   onClick={goToPrev}
                   disabled={currentPage === 0}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl border border-border text-text-muted hover:text-text-primary hover:border-border-accent disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/10 text-[#8fa8c4] hover:text-white hover:border-cyan-500/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all text-xs font-bold"
                 >
-                  <ChevronLeft size={16} />
-                  <span className="hidden sm:inline text-sm">Previous</span>
+                  <ChevronRight size={16} />
+                  <span>الصفحة السابقة</span>
                 </button>
 
                 {/* Page dots (max 10 visible) */}
@@ -271,10 +272,10 @@ export default function GuideViewer({
                 <button
                   onClick={goToNext}
                   disabled={currentPage === pages.length - 1}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl border border-border text-text-muted hover:text-text-primary hover:border-border-accent disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/10 text-[#8fa8c4] hover:text-white hover:border-cyan-500/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all text-xs font-bold"
                 >
-                  <span className="hidden sm:inline text-sm">Next</span>
-                  <ChevronRight size={16} />
+                  <span>الصفحة التالية</span>
+                  <ChevronLeft size={16} />
                 </button>
               </div>
             </div>

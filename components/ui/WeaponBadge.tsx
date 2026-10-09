@@ -1,11 +1,11 @@
 import { Sword, Shield, Crosshair, Anchor, Radio } from 'lucide-react'
 
 const WEAPON_CONFIG: Record<string, { label: string; icon: React.ComponentType<any> }> = {
-  BROADBLADE: { label: 'Broadblade', icon: Shield },
-  SWORD:      { label: 'Sword',      icon: Sword },
-  PISTOLS:    { label: 'Pistols',    icon: Crosshair },
-  GAUNTLETS:  { label: 'Gauntlets',  icon: Anchor },
-  RECTIFIER:  { label: 'Rectifier',  icon: Radio },
+  BROADBLADE: { label: 'سيف عريض', icon: Shield },
+  SWORD:      { label: 'سيف',      icon: Sword },
+  PISTOLS:    { label: 'مسدسان',   icon: Crosshair },
+  GAUNTLETS:  { label: 'قفازات',   icon: Anchor },
+  RECTIFIER:  { label: 'مُصحِّح',  icon: Radio },
 }
 
 export interface WeaponBadgeProps {

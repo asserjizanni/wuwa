@@ -196,7 +196,7 @@ export default function CharactersClient({ initialCharacters }: CharactersClient
               }}
             >
               <BookOpen size={12} />
-              له دليل
+              البِلدات المتوفرة
             </button>
 
             {/* Sort */}

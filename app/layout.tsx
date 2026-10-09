@@ -27,17 +27,23 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: 'بناء Wuthering Waves — دليل الشخصيات',
-    template: '%s | بناء WW',
+    default: 'Wuthering Waves Builds — أدلة الشخصيات والبِلدات',
+    template: '%s | Wuthering Waves Builds',
   },
-  description: 'المرجع الأشمل لبنيات شخصيات Wuthering Waves — أدلة البناء الاحترافية ومحرر WuwaFlex في مكان واحد.',
-  keywords: ['Wuthering Waves', 'WW builds', 'WuwaFlex', 'بنيات الشخصيات', 'أدلة البناء'],
-  authors: [{ name: 'WW Builds Hub' }],
+  description: 'منصة مجتمعية لعرض أدلة الشخصيات والبِلدات. تطوير الموقع: Taleen — المجتمع العربي: وذرينق ويفز العربية.',
+  keywords: ['Wuthering Waves', 'WW builds', 'WuwaFlex', 'الشخصيات', 'البِلدات', 'وذرينق ويفز العربية'],
+  authors: [{ name: 'Taleen' }],
+  icons: {
+    icon: '/icon.png',
+    apple: '/icon.png',
+  },
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
     locale: 'ar_SA',
-    siteName: 'بناء Wuthering Waves',
+    siteName: 'Wuthering Waves Builds',
+    title: 'Wuthering Waves Builds — أدلة الشخصيات والبِلدات',
+    description: 'منصة مجتمعية لعرض أدلة الشخصيات والبِلدات.',
   },
 }
 

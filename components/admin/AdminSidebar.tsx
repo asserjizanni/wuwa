@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  Waves, LayoutDashboard, Users, BookOpen, Activity,
+  LayoutDashboard, Users, BookOpen, Activity,
   Settings, LogOut, ChevronRight, Shield, Menu, X, ExternalLink,
   Sparkles, Radio
 } from 'lucide-react'
@@ -60,8 +61,10 @@ export default function AdminSidebar({ adminEmail, adminName, adminRole }: Admin
           </button>
 
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#00c8ff] to-[#0055aa] flex items-center justify-center shadow-[0_0_15px_rgba(0,200,255,0.4)]">
-              <Waves size={16} className="text-[#020609]" />
+            <div className="w-8 h-8 rounded-full p-0.5 bg-gradient-to-br from-[#00c8ff] to-[#7c3aed] shadow-[0_0_12px_rgba(0,200,255,0.4)]">
+              <div className="w-full h-full rounded-full overflow-hidden relative">
+                <Image src="/logo.png" alt="Logo" fill className="object-cover" sizes="32px" />
+              </div>
             </div>
             <div>
               <p className="text-white text-xs font-black tracking-wide leading-none">Control Center</p>
@@ -112,7 +115,7 @@ export default function AdminSidebar({ adminEmail, adminName, adminRole }: Admin
               <div className="p-4 border-b border-white/[0.08] flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#00c8ff] to-[#0055aa] flex items-center justify-center">
-                    <Waves size={16} className="text-[#020609]" />
+                    <Shield size={16} className="text-[#020609]" />
                   </div>
                   <div>
                     <p className="text-white text-xs font-black">Control Center</p>
@@ -196,15 +199,17 @@ export default function AdminSidebar({ adminEmail, adminName, adminRole }: Admin
         {/* Brand */}
         <div className="p-5 border-b border-white/[0.07]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#00c8ff] to-[#0055aa] flex items-center justify-center shadow-[0_0_20px_rgba(0,200,255,0.35)] shrink-0">
-              <Waves size={20} className="text-[#020609]" />
+            <div className="w-10 h-10 rounded-full p-0.5 bg-gradient-to-br from-[#00c8ff] via-[#38bdf8] to-[#7c3aed] shadow-[0_0_18px_rgba(0,200,255,0.4)] shrink-0">
+              <div className="w-full h-full rounded-full overflow-hidden relative">
+                <Image src="/logo.png" alt="Logo" fill className="object-cover" sizes="40px" />
+              </div>
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-1.5">
                 <p className="text-white text-sm font-black tracking-wide">Control Center</p>
                 <span className="px-1.5 py-0.2 rounded bg-[#00c8ff]/20 text-[#00c8ff] text-[9px] font-mono font-bold">PRO</span>
               </div>
-              <p className="text-[#4d6580] text-xs mt-0.5 truncate">Wuthering Waves Hub</p>
+              <p className="text-[#8fa8c4] text-xs mt-0.5 truncate">Wuthering Waves Hub</p>
             </div>
           </div>
         </div>

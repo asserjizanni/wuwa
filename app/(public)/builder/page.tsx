@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import BuilderClient from './BuilderClient'
 
 export const metadata: Metadata = {
-  title: 'محاكي البناء WuwaFlex — محاكي إحصائيات Wuthering Waves',
-  description: 'استخدم محاكي وباني الشخصيات WuwaFlex المدمج مباشرة. حاكِ بنيات شخصيات Wuthering Waves، وحسّن الإحصائيات، وخطط لفريقك المتكامل.',
+  title: 'WuwaFlex — محاكي البناء المدمج | Wuthering Waves Builds',
+  description: 'استخدم محاكي وباني الشخصيات WuwaFlex المدمج مباشرة داخل الموقع لمحاكاة بنيات رنّاني Wuthering Waves وتحسين الإحصائيات.',
 }
 
 export default function BuilderPage() {

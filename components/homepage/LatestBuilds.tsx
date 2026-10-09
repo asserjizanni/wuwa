@@ -40,17 +40,17 @@ export default function LatestBuilds({ guides }: { guides: Guide[] }) {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-0.5 bg-[#e8a32e]" />
-              <span className="text-[#e8a32e] text-xs font-bold tracking-[0.2em] uppercase">الأدلة</span>
+              <span className="text-[#e8a32e] text-xs font-bold tracking-[0.2em] uppercase">البِلدات</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black text-white">أحدث البنيات</h2>
-            <p className="text-[#4d6580] text-sm mt-2">أدلة الشخصيات المنشورة حديثاً</p>
+            <h2 className="text-3xl md:text-4xl font-black text-white">أحدث البِلدات</h2>
+            <p className="text-[#8fa8c4] text-sm mt-2">أدلة الشخصيات المنشورة حديثاً</p>
           </div>
 
           <Link
             href="/characters?hasGuide=true"
             className="hidden sm:flex items-center gap-2 text-sm text-[#00c8ff] hover:text-white transition-colors font-bold group"
           >
-            <span>جميع الأدلة</span>
+            <span>جميع البِلدات</span>
             <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
           </Link>
         </motion.div>

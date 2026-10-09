@@ -2,8 +2,9 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Waves, Eye, EyeOff, Loader2, Lock, ShieldCheck, ArrowRight } from 'lucide-react'
+import { Eye, EyeOff, Loader2, Lock, ShieldCheck, ArrowRight } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 export default function LoginClient() {
@@ -78,13 +79,15 @@ export default function LoginClient() {
         {/* Top glowing line */}
         <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-[#00c8ff] to-transparent" />
 
-        {/* Brand header */}
+        {/* Brand header with Character Logo */}
         <div className="flex flex-col items-center text-center mb-6">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00c8ff] to-[#0055aa] flex items-center justify-center shadow-[0_0_30px_rgba(0,200,255,0.4)] mb-4">
-            <Waves size={28} className="text-[#020609]" />
+          <div className="w-16 h-16 rounded-full p-1 bg-gradient-to-br from-[#00c8ff] via-[#38bdf8] to-[#7c3aed] shadow-[0_0_28px_rgba(0,200,255,0.45)] mb-3">
+            <div className="w-full h-full rounded-full overflow-hidden relative bg-[#040812]">
+              <Image src="/logo.png" alt="Logo" fill className="object-cover" sizes="64px" priority />
+            </div>
           </div>
           <span className="text-[10px] font-bold text-[#00c8ff] tracking-[0.25em] uppercase font-mono mb-1">
-            Wuthering Waves Hub
+            Wuthering Waves Builds
           </span>
           <h1 className="text-2xl font-black text-white tracking-tight">
             لوحة الإدارة المركزية

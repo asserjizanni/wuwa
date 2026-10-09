@@ -8,11 +8,11 @@ import { prisma, safeDb } from '@/lib/db'
 import { FALLBACK_CHARACTERS } from '@/lib/data/fallback'
 
 export const metadata: Metadata = {
-  title: 'بناء Wuthering Waves — أدلة الشخصيات والمجتمع العربي',
-  description: 'المرجع العربي الأشمل لبنيات شخصيات Wuthering Waves — تصفح أدلة البناء الاحترافية، وتوزيع الإيكوز، واستخدم محاكي WuwaFlex المدمج.',
+  title: 'Wuthering Waves Builds — أدلة الشخصيات والبِلدات | وذرينق ويفز العربية',
+  description: 'منصة مجتمعية لعرض أدلة الشخصيات والبِلدات. استعرض أحدث بنيات رنّاني Wuthering Waves، وتوزيع الصدى، ومحاكي WuwaFlex المدمج.',
   openGraph: {
-    title: 'بناء Wuthering Waves — الدليل العربي الشامل',
-    description: 'تصفح بنيات الرنّانين، وشاهد أدلة البناء المفصلة واستخدم حاسبة WuwaFlex.',
+    title: 'Wuthering Waves Builds — وذرينق ويفز العربية',
+    description: 'منصة مجتمعية لعرض أدلة الشخصيات والبِلدات.',
   },
 }
 

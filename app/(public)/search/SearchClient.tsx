@@ -63,7 +63,7 @@ export default function SearchClient() {
           </div>
 
           <h1 className="text-3xl md:text-5xl font-black text-white mb-8 text-center">
-            البحث عن الشخصيات
+            ابحث عن شخصية
           </h1>
 
           {/* Search bar */}
@@ -73,7 +73,7 @@ export default function SearchClient() {
               type="text"
               id="search-input"
               autoFocus
-              placeholder="اكتب اسم الشخصية بالعربية أو الإنجليزية (مثال: جينهسي، Jiyan)..."
+              placeholder="ابحث عن شخصية..."
               value={query}
               onChange={e => setQuery(e.target.value)}
               className="w-full input-field pr-12 pl-12 py-4 text-base rounded-2xl border-white/[0.1] bg-[#0c1322]/80 focus:border-[#00c8ff]/50 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"

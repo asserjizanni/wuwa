@@ -5,8 +5,8 @@ import { prisma, safeDb } from '@/lib/db'
 import { FALLBACK_CHARACTERS } from '@/lib/data/fallback'
 
 export const metadata: Metadata = {
-  title: 'الشخصيات — دليل بناء Wuthering Waves',
-  description: 'تصفح جميع شخصيات Wuthering Waves. صفّح حسب العنصر والسلاح والندرة وابحث عن دليل بناء لكل رنّان.',
+  title: 'الشخصيات — Wuthering Waves Builds',
+  description: 'تصفح جميع شخصيات Wuthering Waves. صفّح حسب العنصر والسلاح والندرة وابحث عن دليل وبناء لكل رنّان.',
 }
 
 export const revalidate = 30
@@ -50,14 +50,14 @@ export default async function CharactersPage() {
           {/* Eyebrow */}
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-0.5 bg-[#00c8ff]" />
-            <span className="text-[#00c8ff] text-xs font-bold tracking-[0.2em] uppercase">الفهرس</span>
+            <span className="text-[#00c8ff] text-xs font-bold tracking-[0.2em] uppercase">دليل الرنّانين</span>
           </div>
 
           <h1 className="text-3xl md:text-5xl font-black text-white mb-3 leading-tight">
-            بنيات الشخصيات
+            جميع الشخصيات
           </h1>
-          <p className="text-[#4d6580] text-base">
-            <span className="text-[#8fa8c4] font-semibold">{characters.length}</span> شخصية متاحة
+          <p className="text-[#8fa8c4] text-base">
+            <span className="text-white font-bold">{characters.length}</span> شخصية متاحة
           </p>
         </div>
       </div>

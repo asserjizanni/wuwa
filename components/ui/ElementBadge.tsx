@@ -1,12 +1,12 @@
 import { Wind, Sun, Flame, Zap, Snowflake, Moon } from 'lucide-react'
 
 const ELEMENT_CONFIG: Record<string, { label: string; icon: React.ComponentType<any>; className: string }> = {
-  AERO:    { label: 'Aero',    icon: Wind,      className: 'element-aero' },
-  SPECTRO: { label: 'Spectro', icon: Sun,       className: 'element-spectro' },
-  FUSION:  { label: 'Fusion',  icon: Flame,     className: 'element-fusion' },
-  ELECTRO: { label: 'Electro', icon: Zap,       className: 'element-electro' },
-  GLACIO:  { label: 'Glacio',  icon: Snowflake, className: 'element-glacio' },
-  HAVOC:   { label: 'Havoc',   icon: Moon,      className: 'element-havoc' },
+  AERO:    { label: 'هواء',    icon: Wind,      className: 'element-aero' },
+  SPECTRO: { label: 'طيف',    icon: Sun,       className: 'element-spectro' },
+  FUSION:  { label: 'اندماج',  icon: Flame,     className: 'element-fusion' },
+  ELECTRO: { label: 'كهرباء', icon: Zap,       className: 'element-electro' },
+  GLACIO:  { label: 'جليد',   icon: Snowflake, className: 'element-glacio' },
+  HAVOC:   { label: 'فوضى',   icon: Moon,      className: 'element-havoc' },
 }
 
 export interface ElementBadgeProps {

@@ -210,14 +210,14 @@ export default function CharacterDetailClient({ character, relatedCharacters }: 
                     className={`btn text-base px-8 py-4 ${isS5 ? 'btn-gold' : 'btn-primary'}`}
                   >
                     <Play size={18} fill="currentColor" />
-                    عرض دليل البناء
-                    <span className="opacity-70 text-sm mr-1">({activeGuide.pageCount} صفحة)</span>
+                    دليل الشخصية
+                    <span className="opacity-75 text-sm mr-1">({activeGuide.pageCount} صفحة)</span>
                   </motion.button>
                 </div>
               ) : (
-                <div className="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl border border-white/10 text-[#4d6580] text-sm bg-white/[0.02]">
-                  <BookOpen size={16} />
-                  الدليل قريبًا
+                <div className="inline-flex items-center gap-2.5 px-5 py-3.5 rounded-2xl border border-white/10 text-[#8fa8c4] text-sm bg-white/[0.03]">
+                  <BookOpen size={16} className="text-[#4d6580]" />
+                  لم يُضف دليل لهذه الشخصية بعد
                 </div>
               )}
 
@@ -241,6 +241,10 @@ export default function CharacterDetailClient({ character, relatedCharacters }: 
           {/* Section header */}
           <div className="flex items-center justify-between mb-8">
             <div>
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="w-6 h-0.5 bg-[#00c8ff]" />
+                <span className="text-[#00c8ff] text-xs font-bold uppercase tracking-wider">الصور</span>
+              </div>
               <h2 className="text-2xl font-black text-white">{activeGuide.title}</h2>
               <p className="text-[#8fa8c4] text-sm mt-1">
                 {activeGuide.pageCount} صفحة
@@ -251,9 +255,9 @@ export default function CharacterDetailClient({ character, relatedCharacters }: 
               onClick={() => setViewerOpen(true)}
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
-              className="btn btn-outline text-sm py-3 px-6"
+              className="btn btn-outline text-sm py-2.5 px-5"
             >
-              عرض الدليل كاملاً
+              عرض التفاصيل
               <ExternalLink size={14} />
             </motion.button>
           </div>
