@@ -1,0 +1,230 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ─────────────────────────────────────────────────────
+// ENUMERATIONS
+// ─────────────────────────────────────────────────────
+
+enum Element {
+  AERO
+  SPECTRO
+  FUSION
+  ELECTRO
+  GLACIO
+  HAVOC
+}
+
+enum WeaponType {
+  BROADBLADE
+  SWORD
+  PISTOLS
+  GAUNTLETS
+  RECTIFIER
+}
+
+enum Rarity {
+  FOUR_STAR
+  FIVE_STAR
+}
+
+enum GuideStatus {
+  DRAFT
+  PROCESSING
+  READY
+  PUBLISHED
+  FAILED
+  ARCHIVED
+}
+
+enum JobStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  ADMIN
+  EDITOR
+}
+
+// ─────────────────────────────────────────────────────
+// ADMIN USERS
+// ─────────────────────────────────────────────────────
+
+model AdminUser {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  passwordHash String
+  name         String?
+  role         AdminRole  @default(ADMIN)
+  isActive     Boolean    @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  auditLogs    AuditLog[]
+
+  @@index([email])
+  @@map("admin_users")
+}
+
+// ─────────────────────────────────────────────────────
+// CHARACTERS
+// ─────────────────────────────────────────────────────
+
+model Character {
+  id               String     @id @default(cuid())
+  name             String
+  slug             String     @unique
+  element          Element
+  weaponType       WeaponType
+  rarity           Rarity     @default(FIVE_STAR)
+  portraitPath     String?
+  backgroundPath   String?
+  description      String?    @db.Text
+  sourceUrl        String?
+  sourceVerifiedAt DateTime?
+  isPublished      Boolean    @default(false)
+  isFeatured       Boolean    @default(false)
+  sortOrder        Int        @default(0)
+  tags             String[]   @default([])
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  guides           BuildGuide[]
+  processingJobs   ProcessingJob[]
+
+  @@index([slug])
+  @@index([element])
+  @@index([weaponType])
+  @@index([isPublished])
+  @@map("characters")
+}
+
+// ─────────────────────────────────────────────────────
+// BUILD GUIDES
+// ─────────────────────────────────────────────────────
+
+model BuildGuide {
+  id              String      @id @default(cuid())
+  characterId     String
+  title           String
+  version         Int         @default(1)
+  originalPdfPath String?
+  status          GuideStatus @default(DRAFT)
+  pageCount       Int         @default(0)
+  isActive        Boolean     @default(false)
+  notes           String?     @db.Text
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  publishedAt     DateTime?
+
+  character        Character      @relation(fields: [characterId], references: [id], onDelete: Cascade)
+  pages            GuidePage[]
+  processingJobs   ProcessingJob[]
+
+  @@index([characterId])
+  @@index([status])
+  @@index([isActive])
+  @@map("build_guides")
+}
+
+// ─────────────────────────────────────────────────────
+// GUIDE PAGES
+// ─────────────────────────────────────────────────────
+
+model GuidePage {
+  id            String   @id @default(cuid())
+  guideId       String
+  pageNumber    Int
+  imagePath     String
+  thumbnailPath String?
+  width         Int?
+  height        Int?
+  fileSize      Int?
+  createdAt     DateTime @default(now())
+
+  guide         BuildGuide @relation(fields: [guideId], references: [id], onDelete: Cascade)
+
+  @@unique([guideId, pageNumber])
+  @@index([guideId])
+  @@map("guide_pages")
+}
+
+// ─────────────────────────────────────────────────────
+// PROCESSING JOBS
+// ─────────────────────────────────────────────────────
+
+model ProcessingJob {
+  id           String    @id @default(cuid())
+  characterId  String?
+  guideId      String?
+  status       JobStatus @default(PENDING)
+  progress     Int       @default(0)
+  totalPages   Int?
+  processedPages Int?    @default(0)
+  errorMessage String?   @db.Text
+  metadata     Json?
+  startedAt    DateTime?
+  completedAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  character    Character?  @relation(fields: [characterId], references: [id], onDelete: SetNull)
+  guide        BuildGuide? @relation(fields: [guideId], references: [id], onDelete: SetNull)
+
+  @@index([status])
+  @@index([characterId])
+  @@index([guideId])
+  @@map("processing_jobs")
+}
+
+// ─────────────────────────────────────────────────────
+// SITE SETTINGS
+// ─────────────────────────────────────────────────────
+
+model SiteSetting {
+  id           String   @id @default(cuid())
+  settingKey   String   @unique
+  settingValue String   @db.Text
+  description  String?
+  updatedAt    DateTime @updatedAt
+
+  @@index([settingKey])
+  @@map("site_settings")
+}
+
+// ─────────────────────────────────────────────────────
+// AUDIT LOG
+// ─────────────────────────────────────────────────────
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  adminUserId String?
+  action      String
+  targetType  String?
+  targetId    String?
+  details     Json?
+  ipAddress   String?
+  createdAt   DateTime @default(now())
+
+  adminUser   AdminUser? @relation(fields: [adminUserId], references: [id], onDelete: SetNull)
+
+  @@index([adminUserId])
+  @@index([targetType, targetId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
