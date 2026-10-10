@@ -346,6 +346,7 @@ export default function CharacterDetailClient({ character, relatedCharacters }: 
         <GuideViewer
           isOpen={viewerOpen}
           onClose={() => setViewerOpen(false)}
+          guideId={activeGuide.id}
           pages={activeGuide.pages}
           title={activeGuide.title}
           characterName={character.name}

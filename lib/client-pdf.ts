@@ -38,17 +38,23 @@ export async function convertPdfToWebpPages(
   for (let i = 1; i <= totalPages; i++) {
     if (onProgress) onProgress(i, totalPages)
     const page = await pdf.getPage(i)
-    // Scale 1.5 gives crisp ~1200-1500px resolution while keeping size around 200-300KB
-    const viewport = page.getViewport({ scale: 1.5 })
+    // Scale 1.2 gives ~1000-1200px width — good quality while keeping each page ~100-200KB
+    const viewport = page.getViewport({ scale: 1.2 })
+
+    // Cap max width at 900px to limit payload size on Netlify
+    const maxWidth = 900
+    const scale = viewport.width > maxWidth ? maxWidth / viewport.width : 1
+    const finalViewport = page.getViewport({ scale: 1.2 * scale })
+
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
     if (!ctx) continue
-    canvas.width = viewport.width
-    canvas.height = viewport.height
+    canvas.width = finalViewport.width
+    canvas.height = finalViewport.height
 
-    await page.render({ canvasContext: ctx, viewport }).promise
-    // Convert to webp with 0.82 quality
-    const dataUrl = canvas.toDataURL('image/webp', 0.82)
+    await page.render({ canvasContext: ctx, viewport: finalViewport }).promise
+    // 0.72 quality gives good readability at ~100-200KB per page
+    const dataUrl = canvas.toDataURL('image/webp', 0.72)
     pages.push(dataUrl)
   }
 

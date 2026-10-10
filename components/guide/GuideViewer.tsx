@@ -20,24 +20,55 @@ interface GuidePage {
 interface GuideViewerProps {
   isOpen: boolean
   onClose: () => void
+  guideId: string
   pages: GuidePage[]
   title: string
   characterName: string
 }
 
 export default function GuideViewer({
-  isOpen, onClose, pages, title, characterName
+  isOpen, onClose, guideId, pages: initialPages, title, characterName
 }: GuideViewerProps) {
   const [currentPage, setCurrentPage] = useState(0)
   const [mode, setMode] = useState<'single' | 'grid'>('single')
   const [zoom, setZoom] = useState(1)
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
+  const [pages, setPages] = useState<GuidePage[]>(initialPages)
+  const [pagesLoading, setPagesLoading] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const touchStartX = useRef<number>(0)
   const touchStartY = useRef<number>(0)
 
   const currentPageData = pages[currentPage]
+
+  // Fetch pages from API when opening (handles Netlify Blobs / DB / store)
+  useEffect(() => {
+    if (!isOpen || !guideId) return
+    // If we already have pages with real images, use them
+    if (initialPages.length > 0 && initialPages[0]?.imagePath) {
+      setPages(initialPages)
+      return
+    }
+    // Otherwise fetch from API
+    setPagesLoading(true)
+    fetch(`/api/guides/${guideId}/pages`)
+      .then(r => r.json())
+      .then(data => {
+        if (data.pages && data.pages.length > 0) {
+          setPages(data.pages.map((p: any, i: number) => ({
+            id: `fetched-${i}`,
+            pageNumber: p.pageNumber,
+            imagePath: p.imagePath,
+            thumbnailPath: p.thumbnailPath || p.imagePath,
+            width: p.width || null,
+            height: p.height || null,
+          })))
+        }
+      })
+      .catch(() => {})
+      .finally(() => setPagesLoading(false))
+  }, [isOpen, guideId])
 
   // Reset state when opening
   useEffect(() => {
@@ -203,10 +234,10 @@ export default function GuideViewer({
                   className="relative inline-block max-w-full"
                   style={{ transform: `scale(${zoom})`, transformOrigin: 'top center' }}
                 >
-                  {!imageLoaded && !imageError && (
+                  {(!imageLoaded && !imageError) && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 min-h-64 min-w-48 text-[#8fa8c4]">
                       <Loader2 size={32} className="text-[#00c8ff] animate-spin" />
-                      <p className="text-xs">جارٍ تحميل المحتوى...</p>
+                      <p className="text-xs">{pagesLoading ? 'جارٍ تحميل الصفحات...' : 'جارٍ تحميل المحتوى...'}</p>
                     </div>
                   )}
 

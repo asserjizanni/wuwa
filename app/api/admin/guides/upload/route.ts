@@ -10,6 +10,7 @@ import {
   sanitizeFilename,
 } from '@/lib/storage'
 import { getStoredCharacter, addStoredGuide } from '@/lib/data/characterStore'
+import { saveGuidePages } from '@/lib/blob-store'
 
 // Netlify serverless functions have a hard 6 MB body limit.
 // Solution: client converts PDF pages to WebP images in the browser,
@@ -221,6 +222,7 @@ async function handlePageImagesUpload({
   const charPaths = getCharacterPaths(character.slug)
   const guideImagesDir = path.join(charPaths.guides, guideDirName)
   const savedPagePaths: string[] = []
+  let diskWriteOk = false
 
   try {
     await mkdir(guideImagesDir, { recursive: true })
@@ -233,12 +235,12 @@ async function handlePageImagesUpload({
         storagePathToPublic(path.join(guideImagesDir, filename))
       )
     }
+    diskWriteOk = true
   } catch {
-    // Netlify: read-only FS outside /tmp — store placeholder paths
+    // Netlify: read-only FS — store the actual data-URLs directly.
+    // The browser can render data-URLs without any file serving.
     for (let i = 0; i < pages.length; i++) {
-      savedPagePaths.push(
-        `/storage/characters/${character.slug}/guides/${guideDirName}/page-${String(i + 1).padStart(3, '0')}.webp`
-      )
+      savedPagePaths.push(pages[i])
     }
   }
 
@@ -287,6 +289,18 @@ async function handlePageImagesUpload({
   }, null)
 
   if (dbResult) {
+    // Also persist pages to Netlify Blobs for the GuideViewer
+    await saveGuidePages({
+      guideId: dbResult.id,
+      pages: savedPagePaths.map((imgPath, i) => ({
+        pageNumber: i + 1,
+        imagePath: imgPath,
+        thumbnailPath: imgPath,
+        width: 1200,
+        height: 1697,
+      })),
+    }).catch(() => {})
+
     return NextResponse.json(
       {
         success: true,
@@ -304,25 +318,34 @@ async function handlePageImagesUpload({
   }
 
   // Offline/DB-down fallback
+  const guideId = `guide-${character.slug}-${Date.now()}`
+  const fallbackPages = savedPagePaths.map((imgPath, i) => ({
+    id: `page-${Date.now()}-${i + 1}`,
+    pageNumber: i + 1,
+    imagePath: imgPath,
+    thumbnailPath: imgPath,
+    width: 1200,
+    height: 1697,
+  }))
+
   const fallbackGuide = {
-    id: `guide-${character.slug}-${Date.now()}`,
+    id: guideId,
     title,
     version,
     originalPdfPath: '',
     status: 'PUBLISHED' as const,
     isActive: true,
-    pageCount: savedPagePaths.length,
-    pages: savedPagePaths.map((imgPath, i) => ({
-      id: `page-${Date.now()}-${i + 1}`,
-      pageNumber: i + 1,
-      imagePath: imgPath,
-      thumbnailPath: imgPath,
-      width: 1200,
-      height: 1697,
-    })),
+    pageCount: fallbackPages.length,
+    pages: fallbackPages,
     createdAt: new Date().toISOString(),
     publishedAt: new Date().toISOString(),
   }
+
+  // Save pages to Netlify Blobs so they persist across requests
+  await saveGuidePages({
+    guideId,
+    pages: fallbackPages,
+  }).catch(() => {})
 
   addStoredGuide(character.id, fallbackGuide)
 

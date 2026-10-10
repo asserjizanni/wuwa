@@ -10,48 +10,14 @@ declare global {
   var __deletedCharacterIds: Set<string> | undefined
 }
 
-function getStoreDirs() {
-  const localDir = path.join(process.cwd(), 'storage', 'data')
-  const tmpDir = path.join(os.tmpdir(), 'wuwa-storage', 'data')
-  return { localDir, tmpDir }
-}
+// The canonical "seed" file is bundled with the deployment at storage/data/characters.json.
+// On Netlify, the project root is read-only but the file is readable.
+// Mutations are stored in-memory only (Netlify is serverless — no persistent writable FS).
+// On local dev, mutations also write to storage/data/characters.json.
 
-function getWritableFile(filename: string): string {
-  const { localDir, tmpDir } = getStoreDirs()
-  try {
-    if (!fs.existsSync(localDir)) {
-      fs.mkdirSync(localDir, { recursive: true })
-    }
-    const testFile = path.join(localDir, '.write-test')
-    fs.writeFileSync(testFile, 'ok')
-    fs.unlinkSync(testFile)
-    return path.join(localDir, filename)
-  } catch {
-    // Read-only filesystem (e.g. Netlify/Lambda)
-    try {
-      if (!fs.existsSync(tmpDir)) {
-        fs.mkdirSync(tmpDir, { recursive: true })
-      }
-      return path.join(tmpDir, filename)
-    } catch {
-      return path.join(os.tmpdir(), filename)
-    }
-  }
-}
-
-function getReadableFile(filename: string): string | null {
-  const { localDir, tmpDir } = getStoreDirs()
-  const localFile = path.join(localDir, filename)
-  if (fs.existsSync(localFile)) return localFile
-
-  const tmpFile = path.join(tmpDir, filename)
-  if (fs.existsSync(tmpFile)) return tmpFile
-
-  const fallbackTmp = path.join(os.tmpdir(), filename)
-  if (fs.existsSync(fallbackTmp)) return fallbackTmp
-
-  return null
-}
+const BUNDLE_DATA_FILE = path.join(process.cwd(), 'storage', 'data', 'characters.json')
+const TMP_DATA_FILE = path.join(os.tmpdir(), 'wuwa-characters.json')
+const DELETED_IDS_FILE = path.join(os.tmpdir(), 'wuwa-deleted-characters.json')
 
 function getDeletedIds(): Set<string> {
   if (global.__deletedCharacterIds) {
@@ -60,17 +26,14 @@ function getDeletedIds(): Set<string> {
 
   const set = new Set<string>()
   try {
-    const readable = getReadableFile('deleted-characters.json')
-    if (readable) {
-      const raw = fs.readFileSync(readable, 'utf-8')
+    if (fs.existsSync(DELETED_IDS_FILE)) {
+      const raw = fs.readFileSync(DELETED_IDS_FILE, 'utf-8')
       const parsed = JSON.parse(raw)
       if (Array.isArray(parsed)) {
         parsed.forEach(id => set.add(String(id).toLowerCase()))
       }
     }
-  } catch (err) {
-    console.error('[characterStore] Error loading deleted ids:', err)
-  }
+  } catch {}
 
   global.__deletedCharacterIds = set
   return set
@@ -79,53 +42,55 @@ function getDeletedIds(): Set<string> {
 function saveDeletedIds(set: Set<string>) {
   global.__deletedCharacterIds = set
   try {
-    const target = getWritableFile('deleted-characters.json')
-    fs.writeFileSync(target, JSON.stringify(Array.from(set), null, 2), 'utf-8')
-  } catch (err) {
-    console.error('[characterStore] Error saving deleted ids:', err)
-  }
+    fs.writeFileSync(DELETED_IDS_FILE, JSON.stringify(Array.from(set), null, 2), 'utf-8')
+  } catch {}
+}
+
+function tryWriteLocal(data: CharacterFallback[]) {
+  // Try writing to the project storage file (works on local dev, read-only on Netlify)
+  try {
+    fs.writeFileSync(BUNDLE_DATA_FILE, JSON.stringify(data, null, 2), 'utf-8')
+    return
+  } catch {}
+  // Fallback to /tmp (ephemeral on Netlify, good for local testing)
+  try {
+    fs.writeFileSync(TMP_DATA_FILE, JSON.stringify(data, null, 2), 'utf-8')
+  } catch {}
 }
 
 function loadFromDisk(): CharacterFallback[] {
   const deleted = getDeletedIds()
+
+  // 1. Try /tmp (mutations written in this session)
   try {
-    const readable = getReadableFile('characters.json')
-    if (readable) {
-      const raw = fs.readFileSync(readable, 'utf-8')
+    if (fs.existsSync(TMP_DATA_FILE)) {
+      const raw = fs.readFileSync(TMP_DATA_FILE, 'utf-8')
       const parsed = JSON.parse(raw)
-      if (Array.isArray(parsed) && parsed.length > 0) {
+      if (Array.isArray(parsed)) {
         return parsed.filter(
           c => !deleted.has(String(c.id).toLowerCase()) && !deleted.has(String(c.slug).toLowerCase())
         )
       }
     }
-  } catch (err) {
-    console.error('[characterStore] Error reading characters file:', err)
-  }
+  } catch {}
 
-  // Initialize with FALLBACK_CHARACTERS minus deleted ones
-  const initial = JSON.parse(JSON.stringify(FALLBACK_CHARACTERS)).filter(
-    (c: CharacterFallback) =>
-      !deleted.has(String(c.id).toLowerCase()) && !deleted.has(String(c.slug).toLowerCase())
+  // 2. Read from bundled storage/data/characters.json (part of the Git repo / deployment)
+  try {
+    if (fs.existsSync(BUNDLE_DATA_FILE)) {
+      const raw = fs.readFileSync(BUNDLE_DATA_FILE, 'utf-8')
+      const parsed = JSON.parse(raw)
+      if (Array.isArray(parsed)) {
+        return parsed.filter(
+          c => !deleted.has(String(c.id).toLowerCase()) && !deleted.has(String(c.slug).toLowerCase())
+        )
+      }
+    }
+  } catch {}
+
+  // 3. Ultimate fallback (empty after our change)
+  return FALLBACK_CHARACTERS.filter(
+    c => !deleted.has(c.id.toLowerCase()) && !deleted.has(c.slug.toLowerCase())
   )
-
-  try {
-    const target = getWritableFile('characters.json')
-    fs.writeFileSync(target, JSON.stringify(initial, null, 2), 'utf-8')
-  } catch (writeErr) {
-    console.error('[characterStore] Failed to write initial characters:', writeErr)
-  }
-
-  return initial
-}
-
-function saveToDisk(characters: CharacterFallback[]) {
-  try {
-    const target = getWritableFile('characters.json')
-    fs.writeFileSync(target, JSON.stringify(characters, null, 2), 'utf-8')
-  } catch (err) {
-    console.error('[characterStore] Error saving characters file:', err)
-  }
 }
 
 export function getStoredCharacters(): CharacterFallback[] {
@@ -198,7 +163,7 @@ export function createStoredCharacter(input: {
 
   characters.unshift(newChar)
   global.__cachedCharacters = characters
-  saveToDisk(characters)
+  tryWriteLocal(characters)
   return newChar
 }
 
@@ -222,7 +187,7 @@ export function updateStoredCharacter(
 
   characters[index] = updated
   global.__cachedCharacters = characters
-  saveToDisk(characters)
+  tryWriteLocal(characters)
   return updated
 }
 
@@ -246,7 +211,7 @@ export function deleteStoredCharacter(idOrSlug: string): boolean {
   )
 
   global.__cachedCharacters = filtered
-  saveToDisk(filtered)
+  tryWriteLocal(filtered)
   return true
 }
 
@@ -266,7 +231,7 @@ export function deleteStoredGuide(guideId: string): boolean {
 
   if (modified) {
     global.__cachedCharacters = characters
-    saveToDisk(characters)
+    tryWriteLocal(characters)
   }
 
   return modified
@@ -288,7 +253,7 @@ export function addStoredGuide(characterIdOrSlug: string, guideData: any): any {
   char.guides.unshift(guideData)
 
   global.__cachedCharacters = characters
-  saveToDisk(characters)
+  tryWriteLocal(characters)
   return guideData
 }
 
@@ -317,7 +282,7 @@ export function publishStoredGuide(guideId: string): boolean {
 
   if (modified) {
     global.__cachedCharacters = characters
-    saveToDisk(characters)
+    tryWriteLocal(characters)
   }
 
   return modified
