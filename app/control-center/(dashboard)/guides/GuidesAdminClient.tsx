@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import ElementBadge from '@/components/ui/ElementBadge'
+import { convertPdfToWebpPages } from '@/lib/client-pdf'
 
 interface GuideItem {
   id: string
@@ -105,25 +106,47 @@ export default function GuidesAdminClient() {
 
     setUploading(true)
     try {
-      const formData = new FormData()
-      formData.append('characterId', selectedCharId)
-      formData.append('title', guideTitle)
-      formData.append('pdf', selectedFile)
+      let pages: string[]
+
+      if (selectedFile.type === 'application/pdf' || selectedFile.name.toLowerCase().endsWith('.pdf')) {
+        toast.loading('Converting PDF\u2026 (this may take a moment)', { id: 'pdf-convert' })
+        pages = await convertPdfToWebpPages(selectedFile, (current, total) => {
+          toast.loading(`Converting page ${current} of ${total}\u2026`, { id: 'pdf-convert' })
+        })
+        toast.dismiss('pdf-convert')
+      } else {
+        const reader = new FileReader()
+        pages = await new Promise<string[]>((resolve, reject) => {
+          reader.onload = () => resolve([reader.result as string])
+          reader.onerror = reject
+          reader.readAsDataURL(selectedFile)
+        })
+      }
+
+      if (pages.length === 0) {
+        throw new Error('No pages could be extracted from the file.')
+      }
 
       const res = await fetch('/api/admin/guides/upload', {
         method: 'POST',
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          characterId: selectedCharId,
+          title: guideTitle,
+          pages,
+        }),
       })
 
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Failed to upload guide')
 
-      toast.success('Guide uploaded! Conversion job is running.')
+      toast.success(`Guide uploaded! (${pages.length} page${pages.length !== 1 ? 's' : ''} converted)`)
       setShowUploadModal(false)
       setGuideTitle('')
       setSelectedFile(null)
       fetchGuides()
     } catch (err: any) {
+      toast.dismiss('pdf-convert')
       toast.error(err.message || 'Upload failed')
     } finally {
       setUploading(false)

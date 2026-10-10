@@ -12,6 +12,7 @@ import {
 import toast from 'react-hot-toast'
 import ElementBadge from '@/components/ui/ElementBadge'
 import WeaponBadge from '@/components/ui/WeaponBadge'
+import { convertPdfToWebpPages } from '@/lib/client-pdf'
 
 const ELEMENTS = [
   { value: 'AERO', label: 'Aero' },
@@ -194,14 +195,37 @@ export default function EditCharacterClient({ characterId }: { characterId: stri
 
     setUploadingPdf(true)
     try {
-      const formData = new FormData()
-      formData.append('characterId', character.id)
-      formData.append('title', pdfTitle)
-      formData.append('pdf', selectedPdfFile)
+      let pages: string[]
+
+      if (selectedPdfFile.type === 'application/pdf' || selectedPdfFile.name.toLowerCase().endsWith('.pdf')) {
+        // Convert PDF pages to WebP images in the browser (avoids Netlify 413)
+        toast.loading(`Converting PDF\u2026 (this may take a moment)`, { id: 'pdf-convert' })
+        pages = await convertPdfToWebpPages(selectedPdfFile, (current, total) => {
+          toast.loading(`Converting page ${current} of ${total}\u2026`, { id: 'pdf-convert' })
+        })
+        toast.dismiss('pdf-convert')
+      } else {
+        // File is already an image; wrap in array
+        const reader = new FileReader()
+        pages = await new Promise<string[]>((resolve, reject) => {
+          reader.onload = () => resolve([reader.result as string])
+          reader.onerror = reject
+          reader.readAsDataURL(selectedPdfFile)
+        })
+      }
+
+      if (pages.length === 0) {
+        throw new Error('No pages could be extracted from the file.')
+      }
 
       const res = await fetch('/api/admin/guides/upload', {
         method: 'POST',
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          characterId: character.id,
+          title: pdfTitle,
+          pages,
+        }),
       })
 
       const text = await res.text()
@@ -211,14 +235,15 @@ export default function EditCharacterClient({ characterId }: { characterId: stri
       } catch {
         throw new Error(`Upload server error (${res.status}): ${text.slice(0, 80) || 'Invalid server response'}`)
       }
-      if (!res.ok) throw new Error(data.error || 'Failed to upload PDF')
+      if (!res.ok) throw new Error(data.error || 'Failed to upload guide')
 
-      toast.success('PDF guide uploaded successfully!')
+      toast.success(`Guide uploaded successfully! (${pages.length} page${pages.length !== 1 ? 's' : ''})`)
       setPdfTitle('')
       setSelectedPdfFile(null)
       if (pdfInputRef.current) pdfInputRef.current.value = ''
       fetchCharacter()
     } catch (err: any) {
+      toast.dismiss('pdf-convert')
       toast.error(err.message || 'PDF upload failed')
     } finally {
       setUploadingPdf(false)

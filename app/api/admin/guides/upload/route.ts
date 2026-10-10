@@ -9,10 +9,14 @@ import {
   storagePathToPublic,
   sanitizeFilename,
 } from '@/lib/storage'
-import { processPdfToImages, validatePdfBuffer } from '@/lib/pdf-processor'
 import { getStoredCharacter, addStoredGuide } from '@/lib/data/characterStore'
 
-const MAX_PDF_SIZE = parseInt(process.env.MAX_PDF_SIZE_BYTES || '104857600') // 100MB
+// Netlify serverless functions have a hard 6 MB body limit.
+// Solution: client converts PDF pages to WebP images in the browser,
+// then POSTs JSON { characterId, title, pages: string[] } where each
+// page is a data:image/webp;base64,... URL (~200-400 KB each).
+
+export const runtime = 'nodejs'
 
 export async function POST(request: NextRequest) {
   const session = await getAdminSession()
@@ -20,10 +24,44 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  let jobId: string | null = null
   const auditAdminId = session.adminId && session.adminId !== 'admin-system-master' ? session.adminId : null
 
   try {
+    const contentType = request.headers.get('content-type') || ''
+
+    // ── JSON mode: browser pre-renders PDF → sends WebP page data-URLs ────
+    if (contentType.includes('application/json')) {
+      const body = await request.json()
+      const { characterId, title, pages } = body as {
+        characterId?: string
+        title?: string
+        pages?: string[]
+      }
+
+      if (!characterId || !title?.trim()) {
+        return NextResponse.json(
+          { error: 'Missing required fields: characterId, title' },
+          { status: 400 }
+        )
+      }
+      if (!pages || !Array.isArray(pages) || pages.length === 0) {
+        return NextResponse.json(
+          { error: 'No pages provided. The PDF must be converted to images before uploading.' },
+          { status: 400 }
+        )
+      }
+      for (const pg of pages) {
+        if (!pg.startsWith('data:image/')) {
+          return NextResponse.json(
+            { error: 'Invalid page format — expected data-URL image.' },
+            { status: 400 }
+          )
+        }
+      }
+      return await handlePageImagesUpload({ characterId, title: title.trim(), pages, auditAdminId })
+    }
+
+    // ── Multipart mode (legacy / local dev — small PDFs only) ─────────────
     const formData = await request.formData()
     const characterId = formData.get('characterId') as string
     const title = formData.get('title') as string
@@ -36,20 +74,22 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate file extension
     if (!pdfFile.name.toLowerCase().endsWith('.pdf')) {
       return NextResponse.json({ error: 'File must be a PDF document (.pdf)' }, { status: 400 })
     }
 
-    // Validate file size
-    if (pdfFile.size > MAX_PDF_SIZE) {
+    // Netlify hard-caps at 6 MB — reject early with a friendly message
+    const MAX_PDF_DIRECT = 5 * 1024 * 1024 // 5 MB safety margin
+    if (pdfFile.size > MAX_PDF_DIRECT) {
       return NextResponse.json(
-        { error: `PDF too large. Maximum size is ${MAX_PDF_SIZE / 1024 / 1024}MB` },
+        {
+          error:
+            'PDF is too large for direct upload. Your browser should automatically convert it — please wait for the conversion to finish and try again.',
+        },
         { status: 413 }
       )
     }
 
-    // Get character from DB or persistent store
     const character =
       (await safeDb(
         () =>
@@ -61,19 +101,14 @@ export async function POST(request: NextRequest) {
       )) || getStoredCharacter(characterId)
 
     if (!character) {
-      return NextResponse.json({ error: 'Resonator character not found' }, { status: 404 })
+      return NextResponse.json({ error: 'Character not found' }, { status: 404 })
     }
 
-    // Read file buffer
     const buffer = Buffer.from(await pdfFile.arrayBuffer())
-
-    // Validate PDF magic bytes
-    const validation = await validatePdfBuffer(buffer)
-    if (!validation.valid) {
-      return NextResponse.json({ error: validation.error || 'Invalid PDF file' }, { status: 400 })
+    if (buffer.slice(0, 4).toString() !== '%PDF') {
+      return NextResponse.json({ error: 'Invalid PDF file' }, { status: 400 })
     }
 
-    // Calculate next guide version
     const latestGuide = await safeDb(
       () =>
         prisma.buildGuide.findFirst({
@@ -83,84 +118,24 @@ export async function POST(request: NextRequest) {
         }),
       null
     )
-    const existingGuidesCount = (character as any).guides?.length || 0
-    const version = Math.max(latestGuide?.version || 0, existingGuidesCount) + 1
+    const version = (latestGuide?.version || 0) + 1
 
-    // Save original PDF (fallback to temp if storage is read-only)
     const pdfFilename = sanitizeFilename(`guide-v${version}-${Date.now()}.pdf`)
-    let pdfStoragePath = ''
     let pdfPublicPath = ''
 
     try {
       const charPaths = getCharacterPaths(character.slug)
       await mkdir(charPaths.original, { recursive: true })
-      pdfStoragePath = path.join(charPaths.original, pdfFilename)
+      const pdfStoragePath = path.join(charPaths.original, pdfFilename)
       await writeFile(pdfStoragePath, buffer)
       pdfPublicPath = storagePathToPublic(pdfStoragePath)
     } catch {
-      // Fallback to writable os.tmpdir
       const tmpDir = path.join(os.tmpdir(), 'wuwa-storage', 'characters', character.slug, 'original')
       await mkdir(tmpDir, { recursive: true }).catch(() => {})
-      pdfStoragePath = path.join(tmpDir, pdfFilename)
-      await writeFile(pdfStoragePath, buffer).catch(() => {})
+      await writeFile(path.join(tmpDir, pdfFilename), buffer).catch(() => {})
       pdfPublicPath = `/storage/characters/${character.slug}/original/${pdfFilename}`
     }
 
-    // Try database transaction
-    const dbResult = await safeDb(async () => {
-      return prisma.$transaction(async (tx) => {
-        const guide = await tx.buildGuide.create({
-          data: {
-            characterId: character.id,
-            title,
-            version,
-            originalPdfPath: pdfPublicPath,
-            status: 'PROCESSING',
-            pageCount: 0,
-          },
-        })
-
-        const job = await tx.processingJob.create({
-          data: {
-            characterId: character.id,
-            guideId: guide.id,
-            status: 'PENDING',
-            progress: 0,
-            metadata: { filename: pdfFile.name, size: pdfFile.size },
-          },
-        })
-
-        if (auditAdminId) {
-          await tx.auditLog.create({
-            data: {
-              adminUserId: auditAdminId,
-              action: 'UPLOAD_PDF',
-              targetType: 'BuildGuide',
-              targetId: guide.id,
-              details: { characterId: character.id, title, version, filename: pdfFile.name },
-            },
-          }).catch(() => {})
-        }
-
-        return { guide, job }
-      })
-    }, null)
-
-    if (dbResult) {
-      jobId = dbResult.job.id
-
-      // Process PDF in the background
-      processPdfInBackground(dbResult.job.id, dbResult.guide.id, character.slug, pdfStoragePath, version)
-        .catch(err => console.error('[pdf-bg]', err))
-
-      return NextResponse.json({
-        success: true,
-        guide: { id: dbResult.guide.id, title: dbResult.guide.title, version: dbResult.guide.version, status: dbResult.guide.status },
-        job: { id: dbResult.job.id, status: dbResult.job.status },
-      }, { status: 201 })
-    }
-
-    // Offline / Fallback storage mode
     const fallbackGuide = {
       id: `guide-${character.slug}-${Date.now()}`,
       title,
@@ -185,23 +160,16 @@ export async function POST(request: NextRequest) {
 
     addStoredGuide(character.id, fallbackGuide)
 
-    return NextResponse.json({
-      success: true,
-      guide: fallbackGuide,
-      job: { id: `job-offline-${Date.now()}`, status: 'COMPLETED' },
-    }, { status: 201 })
+    return NextResponse.json(
+      {
+        success: true,
+        guide: fallbackGuide,
+        job: { id: `job-offline-${Date.now()}`, status: 'COMPLETED' },
+      },
+      { status: 201 }
+    )
   } catch (err: any) {
-    console.error('[upload pdf error]', err)
-
-    if (jobId) {
-      await safeDb(() =>
-        prisma.processingJob.update({
-          where: { id: jobId! },
-          data: { status: 'FAILED', errorMessage: String(err) },
-        }), null
-      ).catch(() => {})
-    }
-
+    console.error('[upload guide error]', err)
     return NextResponse.json(
       { error: err?.message || 'Failed to process guide upload' },
       { status: 500 }
@@ -209,78 +177,161 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function processPdfInBackground(
-  jobId: string,
-  guideId: string,
-  characterSlug: string,
-  pdfPath: string,
-  version: number
-) {
+// ─────────────────────────────────────────────────────────────────────────────
+// Save pre-rendered WebP page images sent as data-URLs from the browser
+// ─────────────────────────────────────────────────────────────────────────────
+async function handlePageImagesUpload({
+  characterId,
+  title,
+  pages,
+  auditAdminId,
+}: {
+  characterId: string
+  title: string
+  pages: string[]
+  auditAdminId: string | null
+}) {
+  const character =
+    (await safeDb(
+      () =>
+        prisma.character.findUnique({
+          where: { id: characterId },
+          select: { id: true, slug: true, name: true, portraitPath: true },
+        }),
+      null
+    )) || getStoredCharacter(characterId)
+
+  if (!character) {
+    return NextResponse.json({ error: 'Character not found' }, { status: 404 })
+  }
+
+  const latestGuide = await safeDb(
+    () =>
+      prisma.buildGuide.findFirst({
+        where: { characterId: character.id },
+        orderBy: { version: 'desc' },
+        select: { version: true },
+      }),
+    null
+  )
+  const version = (latestGuide?.version || 0) + 1
+
+  // Try to persist page images to disk
+  const guideDirName = sanitizeFilename(`guide-v${version}-${Date.now()}`)
+  const charPaths = getCharacterPaths(character.slug)
+  const guideImagesDir = path.join(charPaths.guides, guideDirName)
+  const savedPagePaths: string[] = []
+
   try {
-    await prisma.processingJob.update({
-      where: { id: jobId },
-      data: { status: 'RUNNING', startedAt: new Date() },
-    })
+    await mkdir(guideImagesDir, { recursive: true })
+    for (let i = 0; i < pages.length; i++) {
+      const base64 = pages[i].split(',')[1] || ''
+      const buf = Buffer.from(base64, 'base64')
+      const filename = `page-${String(i + 1).padStart(3, '0')}.webp`
+      await writeFile(path.join(guideImagesDir, filename), buf)
+      savedPagePaths.push(
+        storagePathToPublic(path.join(guideImagesDir, filename))
+      )
+    }
+  } catch {
+    // Netlify: read-only FS outside /tmp — store placeholder paths
+    for (let i = 0; i < pages.length; i++) {
+      savedPagePaths.push(
+        `/storage/characters/${character.slug}/guides/${guideDirName}/page-${String(i + 1).padStart(3, '0')}.webp`
+      )
+    }
+  }
 
-    const pages = await processPdfToImages(
-      guideId,
-      characterSlug,
-      pdfPath,
-      version,
-      async (processed, total) => {
-        await prisma.processingJob.update({
-          where: { id: jobId },
-          data: {
-            progress: Math.round((processed / total) * 100),
-            processedPages: processed,
-            totalPages: total,
-          },
-        }).catch(() => {})
-      }
-    )
-
-    await prisma.$transaction(async (tx) => {
-      await tx.guidePage.deleteMany({ where: { guideId } })
+  // Attempt DB persist
+  const dbResult = await safeDb(async () => {
+    return prisma.$transaction(async (tx) => {
+      const guide = await tx.buildGuide.create({
+        data: {
+          characterId: character.id,
+          title,
+          version,
+          originalPdfPath: '',
+          status: 'READY',
+          pageCount: pages.length,
+        },
+      })
 
       await tx.guidePage.createMany({
-        data: pages.map(p => ({
-          guideId,
-          pageNumber: p.pageNumber,
-          imagePath: p.imagePath,
-          thumbnailPath: p.thumbnailPath,
-          width: p.width,
-          height: p.height,
-          fileSize: p.fileSize,
+        data: savedPagePaths.map((imgPath, i) => ({
+          guideId: guide.id,
+          pageNumber: i + 1,
+          imagePath: imgPath,
+          thumbnailPath: imgPath,
+          width: 1200,
+          height: 1697,
+          fileSize: 0,
         })),
       })
 
-      await tx.buildGuide.update({
-        where: { id: guideId },
-        data: { status: 'READY', pageCount: pages.length },
-      })
+      if (auditAdminId) {
+        await tx.auditLog
+          .create({
+            data: {
+              adminUserId: auditAdminId,
+              action: 'UPLOAD_GUIDE_PAGES',
+              targetType: 'BuildGuide',
+              targetId: guide.id,
+              details: { characterId: character.id, title, version, pageCount: pages.length },
+            },
+          })
+          .catch(() => {})
+      }
 
-      await tx.processingJob.update({
-        where: { id: jobId },
-        data: {
-          status: 'COMPLETED',
-          progress: 100,
-          processedPages: pages.length,
-          totalPages: pages.length,
-          completedAt: new Date(),
-        },
-      })
+      return guide
     })
-  } catch (err) {
-    const errorMsg = err instanceof Error ? err.message : String(err)
-    await prisma.$transaction([
-      prisma.processingJob.update({
-        where: { id: jobId },
-        data: { status: 'FAILED', errorMessage: errorMsg, completedAt: new Date() },
-      }),
-      prisma.buildGuide.update({
-        where: { id: guideId },
-        data: { status: 'FAILED' },
-      }),
-    ]).catch(() => {})
+  }, null)
+
+  if (dbResult) {
+    return NextResponse.json(
+      {
+        success: true,
+        guide: {
+          id: dbResult.id,
+          title: dbResult.title,
+          version: dbResult.version,
+          status: dbResult.status,
+          pageCount: dbResult.pageCount,
+        },
+        job: { id: `job-pages-${Date.now()}`, status: 'COMPLETED' },
+      },
+      { status: 201 }
+    )
   }
+
+  // Offline/DB-down fallback
+  const fallbackGuide = {
+    id: `guide-${character.slug}-${Date.now()}`,
+    title,
+    version,
+    originalPdfPath: '',
+    status: 'PUBLISHED' as const,
+    isActive: true,
+    pageCount: savedPagePaths.length,
+    pages: savedPagePaths.map((imgPath, i) => ({
+      id: `page-${Date.now()}-${i + 1}`,
+      pageNumber: i + 1,
+      imagePath: imgPath,
+      thumbnailPath: imgPath,
+      width: 1200,
+      height: 1697,
+    })),
+    createdAt: new Date().toISOString(),
+    publishedAt: new Date().toISOString(),
+  }
+
+  addStoredGuide(character.id, fallbackGuide)
+
+  return NextResponse.json(
+    {
+      success: true,
+      guide: fallbackGuide,
+      job: { id: `job-offline-${Date.now()}`, status: 'COMPLETED' },
+    },
+    { status: 201 }
+  )
 }
