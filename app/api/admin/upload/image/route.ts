@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { writeFile, mkdir } from 'fs/promises'
 import path from 'path'
 import { getAdminSession } from '@/lib/session'
-import { prisma } from '@/lib/db'
+import { prisma, safeDb } from '@/lib/db'
+import { getStoredCharacter, updateStoredCharacter } from '@/lib/data/characterStore'
 import { getCharacterPaths, storagePathToPublic, sanitizeFilename } from '@/lib/storage'
 
 const MAX_IMAGE_SIZE = 10 * 1024 * 1024 // 10MB
@@ -35,16 +36,30 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Image too large (max 10MB)' }, { status: 413 })
     }
 
-    const character = await prisma.character.findUnique({
-      where: { id: characterId },
-      select: { slug: true },
-    })
+    let characterSlug: string | null = null
 
-    if (!character) {
+    const dbChar = await safeDb(
+      () => prisma.character.findUnique({
+        where: { id: characterId },
+        select: { slug: true },
+      }),
+      null
+    )
+
+    if (dbChar) {
+      characterSlug = dbChar.slug
+    } else {
+      const stored = getStoredCharacter(characterId)
+      if (stored) {
+        characterSlug = stored.slug
+      }
+    }
+
+    if (!characterSlug) {
       return NextResponse.json({ error: 'Character not found' }, { status: 404 })
     }
 
-    const charPaths = getCharacterPaths(character.slug)
+    const charPaths = getCharacterPaths(characterSlug)
     await mkdir(charPaths.portraits, { recursive: true })
 
     const buffer = Buffer.from(await file.arrayBuffer())
@@ -61,13 +76,21 @@ export async function POST(request: NextRequest) {
 
     const publicPath = storagePathToPublic(outputPath)
 
-    // Update character record
-    await prisma.character.update({
-      where: { id: characterId },
-      data: type === 'portrait'
-        ? { portraitPath: publicPath }
-        : { backgroundPath: publicPath },
-    })
+    // Update character record in DB and local store
+    await safeDb(
+      () => prisma.character.update({
+        where: { id: characterId },
+        data: type === 'portrait'
+          ? { portraitPath: publicPath }
+          : { backgroundPath: publicPath },
+      }),
+      null
+    )
+
+    updateStoredCharacter(
+      characterId,
+      type === 'portrait' ? { portraitPath: publicPath } : { backgroundPath: publicPath }
+    )
 
     return NextResponse.json({ success: true, path: publicPath })
   } catch (err) {

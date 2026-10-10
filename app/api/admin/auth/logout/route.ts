@@ -8,9 +8,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  const auditAdminId = session.adminId && session.adminId !== 'admin-system-master' ? session.adminId : null
   await prisma.auditLog.create({
     data: {
-      adminUserId: session.adminId,
+      adminUserId: auditAdminId,
       action: 'LOGOUT',
     },
   }).catch(() => {})

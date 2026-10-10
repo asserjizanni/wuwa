@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   BookOpen, Plus, Search, Filter, Eye, UploadCloud,
   CheckCircle2, Clock, AlertTriangle, RefreshCw, ChevronLeft,
-  ChevronRight, ExternalLink, Archive, FileText, Loader2, Sparkles
+  ChevronRight, ExternalLink, Archive, FileText, Loader2, Sparkles, Trash2
 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import ElementBadge from '@/components/ui/ElementBadge'
@@ -137,7 +137,9 @@ export default function GuidesAdminClient() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'publish' }),
       })
-      const data = await res.json()
+      const text = await res.text()
+      let data: any = {}
+      try { data = JSON.parse(text) } catch {}
       if (!res.ok) throw new Error(data.error || 'Failed to publish')
       toast.success('Guide set as active and published!')
       fetchGuides()
@@ -146,12 +148,33 @@ export default function GuidesAdminClient() {
     }
   }
 
+  const handleDeleteGuide = async (guideId: string, title: string) => {
+    if (!window.confirm(`Are you sure you want to permanently delete guide "${title}"?`)) {
+      return
+    }
+    try {
+      const res = await fetch(`/api/admin/guides/${guideId}`, {
+        method: 'DELETE',
+      })
+      const text = await res.text()
+      let data: any = {}
+      try { data = JSON.parse(text) } catch {}
+      if (!res.ok) throw new Error(data.error || 'Failed to delete')
+      toast.success('Guide deleted successfully')
+      fetchGuides()
+    } catch (err: any) {
+      toast.error(err.message || 'Error deleting guide')
+    }
+  }
+
   const handleArchive = async (guideId: string) => {
     try {
       const res = await fetch(`/api/admin/guides/${guideId}`, {
         method: 'DELETE',
       })
-      const data = await res.json()
+      const text = await res.text()
+      let data: any = {}
+      try { data = JSON.parse(text) } catch {}
       if (!res.ok) throw new Error(data.error || 'Failed to archive')
       toast.success('Guide archived')
       fetchGuides()
@@ -316,12 +339,20 @@ export default function GuidesAdminClient() {
                 {!guide.isActive && guide.status !== 'ARCHIVED' && (
                   <button
                     onClick={() => handleArchive(guide.id)}
-                    className="p-2 rounded-lg text-gray-500 hover:text-rose-400 hover:bg-rose-500/10 transition"
+                    className="p-2 rounded-lg text-gray-500 hover:text-amber-400 hover:bg-amber-500/10 transition"
                     title="Archive guide"
                   >
                     <Archive className="w-4 h-4" />
                   </button>
                 )}
+
+                <button
+                  onClick={() => handleDeleteGuide(guide.id, guide.title)}
+                  className="p-2 rounded-lg text-gray-500 hover:text-rose-400 hover:bg-rose-500/10 transition"
+                  title="Delete guide permanently"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
               </div>
             </div>
           ))

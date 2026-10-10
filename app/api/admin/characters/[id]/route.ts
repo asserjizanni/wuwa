@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma, safeDb } from '@/lib/db'
 import { getAdminSession } from '@/lib/session'
 import { FALLBACK_CHARACTERS } from '@/lib/data/fallback'
+import {
+  getStoredCharacter,
+  updateStoredCharacter,
+  deleteStoredCharacter,
+} from '@/lib/data/characterStore'
 import { z } from 'zod'
 
 const updateSchema = z.object({
@@ -51,8 +56,8 @@ export async function GET(
     return NextResponse.json({ character })
   }
 
-  // Fallback character
-  const fallback = FALLBACK_CHARACTERS.find(c => c.id === id || c.slug === id)
+  // Fallback character from persistent store
+  const fallback = getStoredCharacter(id)
   if (fallback) {
     return NextResponse.json({ character: fallback })
   }
@@ -70,6 +75,8 @@ export async function PATCH(
   }
 
   const { id } = await context.params
+  // Sanitize: fallback session ID is not a real DB cuid — use null for audit log
+  const auditAdminId = session.adminId && session.adminId !== 'admin-system-master' ? session.adminId : null
 
   try {
     const body = await request.json()
@@ -88,11 +95,11 @@ export async function PATCH(
 
         await tx.auditLog.create({
           data: {
-            adminUserId: session.adminId,
+            adminUserId: auditAdminId,
             action: 'UPDATE_CHARACTER',
             targetType: 'Character',
             targetId: char.id,
-            details: data,
+            details: data as any,
           },
         })
 
@@ -101,17 +108,23 @@ export async function PATCH(
     }, null)
 
     if (character) {
+      updateStoredCharacter(id, {
+        ...data,
+        sourceUrl: data.sourceUrl || null,
+      })
       return NextResponse.json({ character })
     }
 
     // Fallback response for offline or simulated updates
-    const fallback = FALLBACK_CHARACTERS.find(c => c.id === id || c.slug === id)
-    return NextResponse.json({
-      character: {
-        ...(fallback || { id, name: 'Character', slug: id }),
-        ...data,
-      },
+    const updated = updateStoredCharacter(id, {
+      ...data,
+      sourceUrl: data.sourceUrl || null,
     })
+    if (updated) {
+      return NextResponse.json({ character: updated })
+    }
+
+    return NextResponse.json({ error: 'Character not found' }, { status: 404 })
   } catch (err) {
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: 'Validation failed', details: err.issues }, { status: 422 })
@@ -130,6 +143,7 @@ export async function DELETE(
   }
 
   const { id } = await context.params
+  const auditAdminId = session.adminId && session.adminId !== 'admin-system-master' ? session.adminId : null
 
   const body = await request.json().catch(() => ({}))
   if (body.confirm !== true) {
@@ -147,19 +161,34 @@ export async function DELETE(
 
     if (character) {
       await prisma.$transaction(async (tx) => {
-        await tx.character.delete({ where: { id } })
-        await tx.auditLog.create({
-          data: {
-            adminUserId: session.adminId,
-            action: 'DELETE_CHARACTER',
-            targetType: 'Character',
-            targetId: id,
-            details: { name: character.name, slug: character.slug },
-          },
+        const guides = await tx.buildGuide.findMany({
+          where: { characterId: id },
+          select: { id: true },
         })
+        const guideIds = guides.map(g => g.id)
+        if (guideIds.length > 0) {
+          await tx.guidePage.deleteMany({ where: { guideId: { in: guideIds } } })
+          await tx.processingJob.deleteMany({ where: { guideId: { in: guideIds } } })
+          await tx.buildGuide.deleteMany({ where: { characterId: id } })
+        }
+        await tx.processingJob.deleteMany({ where: { characterId: id } })
+        await tx.character.delete({ where: { id } })
+        if (auditAdminId) {
+          await tx.auditLog.create({
+            data: {
+              adminUserId: auditAdminId,
+              action: 'DELETE_CHARACTER',
+              targetType: 'Character',
+              targetId: id,
+              details: { name: character.name, slug: character.slug },
+            },
+          }).catch(() => {})
+        }
       })
     }
   }, null)
 
-  return NextResponse.json({ success: true })
+  deleteStoredCharacter(id)
+
+  return NextResponse.json({ success: true, message: 'Character deleted successfully' })
 }

@@ -124,7 +124,10 @@ export default function CharactersAdminClient() {
 
   const handleDelete = async () => {
     if (!deletingChar) return
-    if (deleteConfirmText.trim().toLowerCase() !== deletingChar.name.trim().toLowerCase()) {
+    const input = deleteConfirmText.trim().toLowerCase()
+    const nameMatch = input === deletingChar.name.trim().toLowerCase()
+    const slugMatch = input === deletingChar.slug.trim().toLowerCase()
+    if (!nameMatch && !slugMatch) {
       toast.error('Character name does not match')
       return
     }
@@ -136,13 +139,17 @@ export default function CharactersAdminClient() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ confirm: true }),
       })
-      if (!res.ok) throw new Error('Failed to delete')
+      const text = await res.text()
+      let data: any = {}
+      try { data = JSON.parse(text) } catch {}
+      if (!res.ok) throw new Error(data.error || 'Failed to delete')
+
       toast.success(`Deleted ${deletingChar.name}`)
       setDeletingChar(null)
       setDeleteConfirmText('')
       fetchCharacters()
-    } catch {
-      toast.error('Failed to delete character')
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to delete character')
     } finally {
       setIsDeleting(false)
     }
@@ -431,9 +438,18 @@ export default function CharactersAdminClient() {
                 remove all associated build guides, converted images, and processing records.
               </p>
               <div>
-                <label className="text-xs text-gray-400 block mb-1.5">
-                  Type <span className="font-mono text-white font-bold">{deletingChar.name}</span> to confirm:
-                </label>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-xs text-gray-400">
+                    Type <span className="font-mono text-white font-bold">{deletingChar.name}</span> to confirm:
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setDeleteConfirmText(deletingChar.name)}
+                    className="text-xs text-primary hover:underline cursor-pointer"
+                  >
+                    Auto-fill
+                  </button>
+                </div>
                 <input
                   type="text"
                   value={deleteConfirmText}
@@ -456,8 +472,9 @@ export default function CharactersAdminClient() {
                 <button
                   type="button"
                   disabled={
-                    deleteConfirmText.trim().toLowerCase() !==
-                      deletingChar.name.trim().toLowerCase() || isDeleting
+                    (deleteConfirmText.trim().toLowerCase() !== deletingChar.name.trim().toLowerCase() &&
+                     deleteConfirmText.trim().toLowerCase() !== deletingChar.slug.trim().toLowerCase()) ||
+                    isDeleting
                   }
                   onClick={handleDelete}
                   className="px-4 py-2 rounded-lg bg-rose-600 text-white text-sm font-semibold hover:bg-rose-500 disabled:opacity-40 transition"

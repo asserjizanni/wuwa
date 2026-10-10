@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import CharactersClient from './CharactersClient'
 import { prisma, safeDb } from '@/lib/db'
-import { FALLBACK_CHARACTERS } from '@/lib/data/fallback'
+import { getStoredCharacters } from '@/lib/data/characterStore'
 
 export const metadata: Metadata = {
   title: 'الشخصيات — Wuthering Waves Builds',
@@ -30,7 +30,7 @@ async function getCharacters() {
   )
 
   if (list && list.length > 0) return list
-  return FALLBACK_CHARACTERS
+  return getStoredCharacters().filter(c => c.isPublished)
 }
 
 export default async function CharactersPage() {

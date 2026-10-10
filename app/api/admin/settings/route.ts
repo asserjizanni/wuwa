@@ -77,9 +77,10 @@ export async function PATCH(request: NextRequest) {
         )
       )
 
+      const auditAdminId = session.adminId && session.adminId !== 'admin-system-master' ? session.adminId : null
       await prisma.auditLog.create({
         data: {
-          adminUserId: session.adminId,
+          adminUserId: auditAdminId,
           action: 'UPDATE_SETTINGS',
           targetType: 'SiteSetting',
           targetId: 'multiple',

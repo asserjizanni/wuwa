@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma, safeDb } from '@/lib/db'
 import { getAdminSession } from '@/lib/session'
 import { FALLBACK_CHARACTERS } from '@/lib/data/fallback'
+import { getStoredCharacters } from '@/lib/data/characterStore'
 
 export async function GET(request: NextRequest) {
   const session = await getAdminSession()
@@ -56,8 +57,8 @@ export async function GET(request: NextRequest) {
   }
 
   // Fallback guides
-  const fallbackGuides = FALLBACK_CHARACTERS.flatMap(c =>
-    c.guides.map(g => ({
+  const fallbackGuides = getStoredCharacters().flatMap(c =>
+    (c.guides || []).map(g => ({
       id: g.id,
       title: g.title,
       version: g.version,

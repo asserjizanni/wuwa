@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma, safeDb } from '@/lib/db'
 import { getAdminSession } from '@/lib/session'
+import {
+  deleteStoredGuide,
+  publishStoredGuide,
+  getStoredCharacters,
+} from '@/lib/data/characterStore'
 
 // GET /api/admin/guides/[id] - Get guide with pages and job
 export async function GET(
@@ -30,11 +35,26 @@ export async function GET(
     null
   )
 
-  if (!guide) {
-    return NextResponse.json({ error: 'Guide not found' }, { status: 404 })
+  if (guide) {
+    return NextResponse.json({ guide })
   }
 
-  return NextResponse.json({ guide })
+  // Fallback lookup from character store
+  const allChars = getStoredCharacters()
+  for (const c of allChars) {
+    const found = c.guides?.find((g: any) => g.id === id)
+    if (found) {
+      return NextResponse.json({
+        guide: {
+          ...found,
+          character: { name: c.name, slug: c.slug, element: c.element },
+          pages: found.pages || [],
+        },
+      })
+    }
+  }
+
+  return NextResponse.json({ error: 'Guide not found' }, { status: 404 })
 }
 
 // PATCH /api/admin/guides/[id] - Update guide (publish, title, page reorder)
@@ -50,6 +70,11 @@ export async function PATCH(
   const { id } = await context.params
   const body = await request.json().catch(() => ({}))
   const { action, title, isActive } = body
+
+  // Also update in characterStore
+  if (action === 'publish') {
+    publishStoredGuide(id)
+  }
 
   const result = await safeDb(async () => {
     if (action === 'publish') {
@@ -92,7 +117,7 @@ export async function PATCH(
   return NextResponse.json(result)
 }
 
-// DELETE /api/admin/guides/[id] - Archive (not delete) a guide
+// DELETE /api/admin/guides/[id] - Permanently delete a guide
 export async function DELETE(
   request: NextRequest,
   context: { params: Promise<{ id: string }> | { id: string } }
@@ -104,19 +129,17 @@ export async function DELETE(
 
   const { id } = await context.params
 
+  // Delete from DB if connected
   await safeDb(async () => {
-    const guide = await prisma.buildGuide.findUnique({
-      where: { id },
-      select: { isActive: true },
+    await prisma.$transaction(async (tx) => {
+      await tx.guidePage.deleteMany({ where: { guideId: id } })
+      await tx.processingJob.deleteMany({ where: { guideId: id } })
+      await tx.buildGuide.delete({ where: { id } })
     })
-
-    if (guide && !guide.isActive) {
-      await prisma.buildGuide.update({
-        where: { id },
-        data: { status: 'ARCHIVED' },
-      })
-    }
   }, null)
 
-  return NextResponse.json({ success: true })
+  // Always delete from characterStore
+  deleteStoredGuide(id)
+
+  return NextResponse.json({ success: true, message: 'Guide deleted successfully' })
 }

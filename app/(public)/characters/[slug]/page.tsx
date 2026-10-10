@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { prisma, safeDb } from '@/lib/db'
 import CharacterDetailClient from './CharacterDetailClient'
-import { FALLBACK_CHARACTERS } from '@/lib/data/fallback'
+import { getStoredCharacters, getStoredCharacter } from '@/lib/data/characterStore'
 
 interface Props {
   params: { slug: string }
@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         select: { name: true, element: true, weaponType: true, description: true },
       }),
     null
-  ) || FALLBACK_CHARACTERS.find(c => c.slug === params.slug)
+  ) || getStoredCharacter(params.slug)
 
   if (!character) {
     return { title: 'الشخصية غير موجودة' }
@@ -53,7 +53,7 @@ async function getCharacterWithGuide(slug: string) {
   )
 
   if (char) return char
-  return FALLBACK_CHARACTERS.find(c => c.slug === slug) || null
+  return getStoredCharacter(slug)
 }
 
 async function getRelatedCharacters(characterId: string, element: string, weaponType: string) {
@@ -82,8 +82,8 @@ async function getRelatedCharacters(characterId: string, element: string, weapon
 
   if (list && list.length > 0) return list
 
-  return FALLBACK_CHARACTERS
-    .filter(c => c.id !== characterId && (c.element === element || c.weaponType === weaponType))
+  return getStoredCharacters()
+    .filter(c => c.isPublished && c.id !== characterId && (c.element === element || c.weaponType === weaponType))
     .slice(0, 4)
 }
 

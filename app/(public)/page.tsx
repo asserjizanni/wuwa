@@ -5,7 +5,7 @@ import ElementExplorer from '@/components/homepage/ElementExplorer'
 import LatestBuilds from '@/components/homepage/LatestBuilds'
 import BuilderFeature from '@/components/homepage/BuilderFeature'
 import { prisma, safeDb } from '@/lib/db'
-import { FALLBACK_CHARACTERS } from '@/lib/data/fallback'
+import { getStoredCharacters } from '@/lib/data/characterStore'
 
 export const metadata: Metadata = {
   title: 'Wuthering Waves Builds — أدلة الشخصيات والبِلدات | وذرينق ويفز العربية',
@@ -35,7 +35,7 @@ async function getFeaturedCharacters() {
   )
 
   if (list && list.length > 0) return list
-  return FALLBACK_CHARACTERS.slice(0, 8)
+  return getStoredCharacters().filter(c => c.isPublished).slice(0, 8)
 }
 
 async function getLatestBuilds() {
@@ -60,21 +60,24 @@ async function getLatestBuilds() {
 
   if (list && list.length > 0) return list
 
-  return FALLBACK_CHARACTERS.flatMap(c =>
-    c.guides.map(g => ({
-      id: g.id,
-      title: g.title,
-      version: g.version,
-      pageCount: g.pageCount,
-      publishedAt: g.publishedAt,
-      character: {
-        name: c.name,
-        slug: c.slug,
-        element: c.element,
-        portraitPath: c.portraitPath,
-      },
-    }))
-  ).slice(0, 6)
+  return getStoredCharacters()
+    .filter(c => c.isPublished)
+    .flatMap(c =>
+      (c.guides || []).map(g => ({
+        id: g.id,
+        title: g.title,
+        version: g.version,
+        pageCount: g.pageCount,
+        publishedAt: g.publishedAt,
+        character: {
+          name: c.name,
+          slug: c.slug,
+          element: c.element,
+          portraitPath: c.portraitPath,
+        },
+      }))
+    )
+    .slice(0, 6)
 }
 
 export const revalidate = 60

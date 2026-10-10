@@ -87,6 +87,11 @@ export default function EditCharacterClient({ characterId }: { characterId: stri
   const portraitInputRef = useRef<HTMLInputElement>(null)
   const bannerInputRef = useRef<HTMLInputElement>(null)
 
+  // Delete state
+  const [showDeleteCharModal, setShowDeleteCharModal] = useState(false)
+  const [isDeletingChar, setIsDeletingChar] = useState(false)
+  const [deletingGuideId, setDeletingGuideId] = useState<string | null>(null)
+
   const fetchCharacter = async () => {
     try {
       const res = await fetch(`/api/admin/characters/${characterId}`)
@@ -157,7 +162,9 @@ export default function EditCharacterClient({ characterId }: { characterId: stri
         body: formData,
       })
 
-      const data = await res.json()
+      const text = await res.text()
+      let data: any = {}
+      try { data = JSON.parse(text) } catch {}
       if (!res.ok) throw new Error(data.error || 'Failed to upload image')
 
       toast.success(`${type === 'portrait' ? 'Portrait' : 'Banner'} uploaded successfully!`)
@@ -197,10 +204,16 @@ export default function EditCharacterClient({ characterId }: { characterId: stri
         body: formData,
       })
 
-      const data = await res.json()
+      const text = await res.text()
+      let data: any = {}
+      try {
+        data = JSON.parse(text)
+      } catch {
+        throw new Error(`Upload server error (${res.status}): ${text.slice(0, 80) || 'Invalid server response'}`)
+      }
       if (!res.ok) throw new Error(data.error || 'Failed to upload PDF')
 
-      toast.success('PDF uploaded! Processing pages in background...')
+      toast.success('PDF guide uploaded successfully!')
       setPdfTitle('')
       setSelectedPdfFile(null)
       if (pdfInputRef.current) pdfInputRef.current.value = ''
@@ -219,14 +232,62 @@ export default function EditCharacterClient({ characterId }: { characterId: stri
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'publish' }),
       })
+      const text = await res.text()
+      let err: any = {}
+      try { err = JSON.parse(text) } catch {}
       if (!res.ok) {
-        const err = await res.json()
         throw new Error(err.error || 'Failed to publish guide')
       }
       toast.success('Guide set as active and published!')
       fetchCharacter()
     } catch (err: any) {
       toast.error(err.message)
+    }
+  }
+
+  const handleDeleteGuide = async (guideId: string, guideTitle: string) => {
+    if (!window.confirm(`Are you sure you want to delete guide "${guideTitle}"? This cannot be undone.`)) {
+      return
+    }
+
+    setDeletingGuideId(guideId)
+    try {
+      const res = await fetch(`/api/admin/guides/${guideId}`, {
+        method: 'DELETE',
+      })
+      const text = await res.text()
+      let data: any = {}
+      try { data = JSON.parse(text) } catch {}
+      if (!res.ok) throw new Error(data.error || 'Failed to delete guide')
+
+      toast.success('Guide deleted successfully')
+      fetchCharacter()
+    } catch (err: any) {
+      toast.error(err.message || 'Error deleting guide')
+    } finally {
+      setDeletingGuideId(null)
+    }
+  }
+
+  const handleDeleteCharacter = async () => {
+    if (!character) return
+    setIsDeletingChar(true)
+    try {
+      const res = await fetch(`/api/admin/characters/${character.id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ confirm: true }),
+      })
+      const text = await res.text()
+      let data: any = {}
+      try { data = JSON.parse(text) } catch {}
+      if (!res.ok) throw new Error(data.error || 'Failed to delete character')
+
+      toast.success(`Deleted ${character.name}`)
+      router.push('/control-center/characters')
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to delete character')
+      setIsDeletingChar(false)
     }
   }
 
@@ -284,6 +345,15 @@ export default function EditCharacterClient({ characterId }: { characterId: stri
             <ExternalLink className="w-3.5 h-3.5" />
             Public Page
           </Link>
+          <button
+            type="button"
+            onClick={() => setShowDeleteCharModal(true)}
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-rose-500/30 text-rose-400 hover:text-white hover:bg-rose-500/20 text-xs font-semibold transition"
+            title="Delete resonator"
+          >
+            <Trash2 className="w-3.5 h-3.5" />
+            Delete
+          </button>
         </div>
       </div>
 
@@ -723,6 +793,21 @@ export default function EditCharacterClient({ characterId }: { characterId: stri
                           View in Public Reader
                         </Link>
                       )}
+
+                      <button
+                        type="button"
+                        disabled={deletingGuideId === guide.id}
+                        onClick={() => handleDeleteGuide(guide.id, guide.title)}
+                        className="px-2.5 py-1.5 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 hover:bg-rose-500/20 hover:text-white text-xs font-semibold transition flex items-center gap-1 disabled:opacity-40"
+                        title="Delete this build guide"
+                      >
+                        {deletingGuideId === guide.id ? (
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        ) : (
+                          <Trash2 className="w-3.5 h-3.5" />
+                        )}
+                        <span>Delete</span>
+                      </button>
                     </div>
                   </div>
                 ))
@@ -731,6 +816,53 @@ export default function EditCharacterClient({ characterId }: { characterId: stri
           </div>
         </div>
       )}
+
+      {/* Delete Resonator Confirmation Modal */}
+      <AnimatePresence>
+        {showDeleteCharModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="glass-card max-w-md w-full p-6 rounded-2xl border border-rose-500/30 space-y-4 shadow-2xl"
+            >
+              <div className="flex items-center gap-3 text-rose-400">
+                <AlertTriangle className="w-6 h-6 shrink-0" />
+                <h3 className="text-lg font-bold text-white">Delete Resonator</h3>
+              </div>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                Are you sure you want to delete <strong className="text-white">{character.name}</strong>?
+                This action is permanent. All associated build guides, rendered pages, and image assets will be purged.
+              </p>
+              <div className="flex items-center justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowDeleteCharModal(false)}
+                  className="px-4 py-2 rounded-xl border border-white/10 text-gray-300 hover:text-white text-xs font-semibold"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  disabled={isDeletingChar}
+                  onClick={handleDeleteCharacter}
+                  className="px-4 py-2 rounded-xl bg-rose-500 hover:bg-rose-600 disabled:opacity-40 text-white text-xs font-semibold transition flex items-center gap-2"
+                >
+                  {isDeletingChar ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Deleting...
+                    </>
+                  ) : (
+                    'Permanently Delete'
+                  )}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

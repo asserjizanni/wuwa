@@ -3,6 +3,7 @@ import { prisma, safeDb } from '@/lib/db'
 import { getAdminSession } from '@/lib/session'
 import { generateSlug, initCharacterStorage } from '@/lib/storage'
 import { FALLBACK_CHARACTERS } from '@/lib/data/fallback'
+import { getStoredCharacters, createStoredCharacter } from '@/lib/data/characterStore'
 import { z } from 'zod'
 
 const createCharacterSchema = z.object({
@@ -66,14 +67,16 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(result)
   }
 
-  // Fallback characters
-  let list = [...FALLBACK_CHARACTERS]
+  // Fallback characters from persistent store
+  let list = [...getStoredCharacters()]
   if (search) list = list.filter(c => c.name.toLowerCase().includes(search.toLowerCase()))
   if (element) list = list.filter(c => c.element === element)
+  if (published === 'true') list = list.filter(c => c.isPublished === true)
+  if (published === 'false') list = list.filter(c => c.isPublished === false)
   const total = list.length
   const paginated = list.slice((page - 1) * limit, page * limit).map(c => ({
     ...c,
-    _count: { guides: c.guides.length },
+    _count: { guides: c.guides ? c.guides.length : 0 },
   }))
 
   return NextResponse.json({
@@ -87,6 +90,9 @@ export async function POST(request: NextRequest) {
   if (!session.adminId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
+
+  // Sanitize: fallback session ID is not a real DB cuid — use null for audit log
+  const auditAdminId = session.adminId && session.adminId !== 'admin-system-master' ? session.adminId : null
 
   try {
     const body = await request.json()
@@ -121,7 +127,7 @@ export async function POST(request: NextRequest) {
 
         await tx.auditLog.create({
           data: {
-            adminUserId: session.adminId,
+            adminUserId: auditAdminId,
             action: 'CREATE_CHARACTER',
             targetType: 'Character',
             targetId: char.id,
@@ -139,7 +145,22 @@ export async function POST(request: NextRequest) {
       console.error('[storage] Failed to create directories for', slug, storageErr)
     }
 
-    return NextResponse.json({ character }, { status: 201 })
+    if (character) {
+      // Also sync to local store
+      createStoredCharacter({
+        ...data,
+        slug,
+      })
+      return NextResponse.json({ character }, { status: 201 })
+    }
+
+    // Fallback store when DB is offline
+    const fallbackChar = createStoredCharacter({
+      ...data,
+      slug,
+    })
+
+    return NextResponse.json({ character: fallbackChar }, { status: 201 })
   } catch (err) {
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: 'Validation failed', details: err.issues }, { status: 422 })

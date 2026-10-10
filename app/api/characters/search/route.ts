@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma, safeDb } from '@/lib/db'
-import { FALLBACK_CHARACTERS } from '@/lib/data/fallback'
+import { getStoredCharacters } from '@/lib/data/characterStore'
 
 export async function GET(request: NextRequest) {
   const q = request.nextUrl.searchParams.get('q')?.trim() || ''
@@ -36,12 +36,14 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ characters })
   }
 
-  // Fallback search
+  // Fallback search from persistent store
   const lowerQ = q.toLowerCase()
-  const matched = FALLBACK_CHARACTERS.filter(c =>
-    c.name.toLowerCase().includes(lowerQ) ||
-    c.nameEn.toLowerCase().includes(lowerQ) ||
-    c.slug.includes(lowerQ)
+  const matched = getStoredCharacters().filter(c =>
+    c.isPublished && (
+      c.name.toLowerCase().includes(lowerQ) ||
+      (c.nameEn && c.nameEn.toLowerCase().includes(lowerQ)) ||
+      c.slug.includes(lowerQ)
+    )
   ).slice(0, 20)
 
   return NextResponse.json({ characters: matched })

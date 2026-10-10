@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma, safeDb } from '@/lib/db'
 import { getAdminSession } from '@/lib/session'
 import { FALLBACK_CHARACTERS } from '@/lib/data/fallback'
+import { getStoredCharacters } from '@/lib/data/characterStore'
 
 export async function GET(request: NextRequest) {
   const session = await getAdminSession()
@@ -73,8 +74,9 @@ export async function GET(request: NextRequest) {
   }
 
   // Fallback statistics when PostgreSQL is not running
-  const fallbackGuides = FALLBACK_CHARACTERS.flatMap(c =>
-    c.guides.map(g => ({
+  const characters = getStoredCharacters()
+  const fallbackGuides = characters.flatMap(c =>
+    (c.guides || []).map(g => ({
       id: g.id,
       title: g.title,
       version: g.version,
@@ -90,9 +92,9 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.json({
     stats: {
-      totalCharacters: FALLBACK_CHARACTERS.length,
-      publishedCharacters: FALLBACK_CHARACTERS.length,
-      noGuideCharacters: FALLBACK_CHARACTERS.filter(c => c.guides.length === 0).length,
+      totalCharacters: characters.length,
+      publishedCharacters: characters.filter(c => c.isPublished).length,
+      noGuideCharacters: characters.filter(c => !c.guides || c.guides.length === 0).length,
       totalGuides: fallbackGuides.length,
       publishedGuides: fallbackGuides.length,
       totalPages: fallbackGuides.reduce((acc, g) => acc + g.pageCount, 0),
