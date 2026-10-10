@@ -46,7 +46,7 @@ export default function FeaturedCharacters({ characters }: FeaturedCharactersPro
             <h2 className="text-3xl md:text-4xl font-black text-white">
               الشخصيات
             </h2>
-            <p className="text-[#8fa8c4] text-sm mt-2">دليل وبنيات رنّاني Wuthering Waves</p>
+            <p className="text-[#8fa8c4] text-sm mt-2">أدلة وبنيات Resonators في Wuthering Waves</p>
           </div>
 
           <Link

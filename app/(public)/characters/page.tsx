@@ -50,7 +50,7 @@ export default async function CharactersPage() {
           {/* Eyebrow */}
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-0.5 bg-[#00c8ff]" />
-            <span className="text-[#00c8ff] text-xs font-bold tracking-[0.2em] uppercase">دليل الرنّانين</span>
+            <span className="text-[#00c8ff] text-xs font-bold tracking-[0.2em] uppercase">Resonators Guide</span>
           </div>
 
           <h1 className="text-3xl md:text-5xl font-black text-white mb-3 leading-tight">

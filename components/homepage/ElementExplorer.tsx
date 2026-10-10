@@ -7,63 +7,57 @@ import { Wind, Sun, Flame, Zap, Snowflake, Moon } from 'lucide-react'
 const ELEMENTS = [
   {
     id: 'AERO',
-    name: 'هواء',
-    nameEn: 'Aero',
+    name: 'Aero',
     icon: Wind,
     color:  '#38bdf8',
     bg:     'rgba(56,189,248,0.08)',
     border: 'rgba(56,189,248,0.25)',
-    desc:   'مقاتلو الرياح المركّزون على السرعة والحركة',
+    desc:   'Wind and speed focused combatants',
   },
   {
     id: 'SPECTRO',
-    name: 'طيف',
-    nameEn: 'Spectro',
+    name: 'Spectro',
     icon: Sun,
     color:  '#fbbf24',
     bg:     'rgba(251,191,36,0.08)',
     border: 'rgba(251,191,36,0.25)',
-    desc:   'مقاتلو الطيف بتأثيرات الضوء والتحكم',
+    desc:   'Light and time manipulation combatants',
   },
   {
     id: 'FUSION',
-    name: 'اندماج',
-    nameEn: 'Fusion',
+    name: 'Fusion',
     icon: Flame,
     color:  '#f87171',
     bg:     'rgba(239,68,68,0.08)',
     border: 'rgba(239,68,68,0.25)',
-    desc:   'مقاتلو الاندماج بضربات نارية متفجرة',
+    desc:   'Explosive fire damage combatants',
   },
   {
     id: 'ELECTRO',
-    name: 'كهرباء',
-    nameEn: 'Electro',
+    name: 'Electro',
     icon: Zap,
     color:  '#c084fc',
     bg:     'rgba(168,85,247,0.08)',
     border: 'rgba(168,85,247,0.25)',
-    desc:   'مقاتلو الكهرباء بصعقات متسلسلة هجومية',
+    desc:   'Lightning and rapid chain strike combatants',
   },
   {
     id: 'GLACIO',
-    name: 'جليد',
-    nameEn: 'Glacio',
+    name: 'Glacio',
     icon: Snowflake,
     color:  '#bfdbfe',
     bg:     'rgba(147,197,253,0.08)',
     border: 'rgba(147,197,253,0.25)',
-    desc:   'مقاتلو الجليد بقدرات التجميد والتحكم بالخصم',
+    desc:   'Ice and freezing crowd-control combatants',
   },
   {
     id: 'HAVOC',
-    name: 'فوضى',
-    nameEn: 'Havoc',
+    name: 'Havoc',
     icon: Moon,
     color:  '#a78bfa',
     bg:     'rgba(107,33,168,0.08)',
     border: 'rgba(107,33,168,0.35)',
-    desc:   'مقاتلو الفوضى بهجمات ظلال مدمرة',
+    desc:   'Shadow and destructive dark combatants',
   },
 ]
 
@@ -85,12 +79,12 @@ export default function ElementExplorer() {
         >
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="w-10 h-0.5 bg-gradient-to-r from-transparent to-[#00c8ff]" />
-            <span className="text-[#00c8ff] text-xs font-bold tracking-[0.2em] uppercase">العناصر</span>
+            <span className="text-[#00c8ff] text-xs font-bold tracking-[0.2em] uppercase">Elements</span>
             <div className="w-10 h-0.5 bg-gradient-to-l from-transparent to-[#00c8ff]" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-black text-white mb-3">استكشف العناصر</h2>
+          <h2 className="text-3xl md:text-4xl font-black text-white mb-3">استكشف Elements</h2>
           <p className="text-[#4d6580] text-base max-w-xl mx-auto">
-            تصفح الشخصيات حسب العنصر واعثر على الدليل المثالي لبنائك
+            تصفح الشخصيات حسب الـ Elements واعثر على الدليل المثالي لبنائك
           </p>
         </motion.div>
 
@@ -126,8 +120,7 @@ export default function ElementExplorer() {
                   className="mb-3 transition-transform duration-300 group-hover:scale-110"
                   style={{ color: el.color }}
                 />
-                <div className="font-black text-white text-sm">{el.name}</div>
-                <div className="text-[10px] text-[#4d6580] mt-0.5 latin">{el.nameEn}</div>
+                <div className="font-black text-white text-base tracking-wide latin">{el.name}</div>
                 <p className="text-[#4d6580] text-[11px] mt-2 leading-relaxed hidden sm:block">
                   {el.desc}
                 </p>

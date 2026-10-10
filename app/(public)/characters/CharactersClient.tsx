@@ -9,12 +9,12 @@ const ELEMENTS = ['AERO', 'SPECTRO', 'FUSION', 'ELECTRO', 'GLACIO', 'HAVOC']
 const WEAPONS  = ['BROADBLADE', 'SWORD', 'PISTOLS', 'GAUNTLETS', 'RECTIFIER']
 
 const ELEMENT_AR: Record<string, string> = {
-  AERO:    'هواء',
-  SPECTRO: 'طيف',
-  FUSION:  'اندماج',
-  ELECTRO: 'كهرباء',
-  GLACIO:  'جليد',
-  HAVOC:   'فوضى',
+  AERO:    'Aero',
+  SPECTRO: 'Spectro',
+  FUSION:  'Fusion',
+  ELECTRO: 'Electro',
+  GLACIO:  'Glacio',
+  HAVOC:   'Havoc',
 }
 const WEAPON_AR: Record<string, string> = {
   BROADBLADE:  'سيف عريض',

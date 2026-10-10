@@ -126,7 +126,7 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.35 }}
               className="text-[#8fa8c4] text-base sm:text-lg max-w-xl leading-relaxed"
             >
-              المرجع المجتمعي الشامل لاستعراض أفضل بنيات رنّاني <span className="text-white font-bold">Wuthering Waves</span>، وتوزيع الصدى، مع محاكي <span className="text-[#00c8ff] font-bold">WuwaFlex</span> المدمج.
+              المرجع المجتمعي الشامل لاستعراض أفضل بنيات <span className="text-white font-bold">Resonators</span> و <span className="text-white font-bold">Echo Builds</span> في <span className="text-white font-bold">Wuthering Waves</span>، مع محاكي <span className="text-[#00c8ff] font-bold">WuwaFlex</span> المدمج.
             </motion.p>
 
             {/* CTAs */}
@@ -168,7 +168,7 @@ export default function HeroSection() {
               </div>
               <div>
                 <p className="text-2xl sm:text-3xl font-black text-[#00c8ff] latin tracking-tight">6</p>
-                <p className="text-xs text-[#8fa8c4] mt-0.5">العناصر القتالية</p>
+                <p className="text-xs text-[#8fa8c4] mt-0.5">Elements</p>
               </div>
               <div>
                 <p className="text-2xl sm:text-3xl font-black text-[#e8a32e] latin tracking-tight">5</p>
