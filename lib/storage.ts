@@ -62,12 +62,13 @@ export function sanitizeFilename(name: string): string {
 }
 
 export function generateSlug(name: string): string {
-  return name
+  const clean = name
     .toLowerCase()
     .trim()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')
     .substring(0, 100)
+  return clean || `resonator-${Date.now().toString(36)}`
 }
 
 export function preventPathTraversal(base: string, filePath: string): string {

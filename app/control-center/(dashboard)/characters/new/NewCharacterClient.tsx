@@ -74,18 +74,38 @@ export default function NewCharacterClient() {
 
     setLoading(true)
     try {
+      const payload = {
+        name: formData.name.trim(),
+        slug: formData.slug.trim() || undefined,
+        element: formData.element,
+        weaponType: formData.weaponType,
+        rarity: formData.rarity,
+        description: formData.description.trim() || undefined,
+        sourceUrl: formData.sourceUrl.trim() || undefined,
+        isPublished: formData.isPublished,
+        isFeatured: formData.isFeatured,
+        tags: formData.tags,
+      }
+
       const res = await fetch('/api/admin/characters', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       })
 
-      const data = await res.json()
+      const text = await res.text()
+      let data: any = {}
+      try { data = JSON.parse(text) } catch {}
+
       if (!res.ok) {
-        throw new Error(data.error || 'Failed to create character')
+        let errorMsg = data.error || 'Failed to create character'
+        if (data.details && Array.isArray(data.details)) {
+          errorMsg = data.details.map((d: any) => `${d.path?.join('.') || 'field'}: ${d.message}`).join(', ')
+        }
+        throw new Error(errorMsg)
       }
 
-      toast.success(`${data.character.name} created successfully!`)
+      toast.success(`${data.character?.name || formData.name} created successfully!`)
       router.push(`/control-center/characters/${data.character.id}/edit`)
     } catch (err: any) {
       toast.error(err.message || 'An error occurred')

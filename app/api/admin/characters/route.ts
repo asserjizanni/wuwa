@@ -7,16 +7,16 @@ import { getStoredCharacters, createStoredCharacter } from '@/lib/data/character
 import { z } from 'zod'
 
 const createCharacterSchema = z.object({
-  name: z.string().min(1).max(100),
-  slug: z.string().min(1).max(100).regex(/^[a-z0-9-]+$/).optional(),
-  element: z.enum(['AERO', 'SPECTRO', 'FUSION', 'ELECTRO', 'GLACIO', 'HAVOC']),
-  weaponType: z.enum(['BROADBLADE', 'SWORD', 'PISTOLS', 'GAUNTLETS', 'RECTIFIER']),
-  rarity: z.enum(['FOUR_STAR', 'FIVE_STAR']).default('FIVE_STAR'),
-  description: z.string().max(2000).optional(),
-  sourceUrl: z.string().url().optional().or(z.literal('')),
-  isPublished: z.boolean().default(false),
-  isFeatured: z.boolean().default(false),
-  tags: z.array(z.string()).default([]),
+  name: z.string().min(1, 'Name is required').max(100),
+  slug: z.string().max(100).optional().nullable().or(z.literal('')),
+  element: z.string().transform(v => v.toUpperCase()).pipe(z.enum(['AERO', 'SPECTRO', 'FUSION', 'ELECTRO', 'GLACIO', 'HAVOC'])),
+  weaponType: z.string().transform(v => v.toUpperCase()).pipe(z.enum(['BROADBLADE', 'SWORD', 'PISTOLS', 'GAUNTLETS', 'RECTIFIER'])),
+  rarity: z.enum(['FOUR_STAR', 'FIVE_STAR']).optional().default('FIVE_STAR'),
+  description: z.string().max(2000).optional().nullable().or(z.literal('')),
+  sourceUrl: z.string().max(500).optional().nullable().or(z.literal('')),
+  isPublished: z.boolean().optional().default(true),
+  isFeatured: z.boolean().optional().default(false),
+  tags: z.array(z.string()).optional().default([]),
 })
 
 export async function GET(request: NextRequest) {
@@ -98,14 +98,14 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const data = createCharacterSchema.parse(body)
 
-    const slug = data.slug || generateSlug(data.name)
+    let slug = (data.slug && data.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '')) || generateSlug(data.name)
+    if (!slug) {
+      slug = `resonator-${Date.now().toString(36)}`
+    }
 
     const existing = await safeDb(() => prisma.character.findUnique({ where: { slug } }), null)
     if (existing) {
-      return NextResponse.json(
-        { error: `Slug "${slug}" is already in use`, field: 'slug' },
-        { status: 409 }
-      )
+      slug = `${slug}-${Date.now().toString(36).slice(-4)}`
     }
 
     const character = await safeDb(async () => {

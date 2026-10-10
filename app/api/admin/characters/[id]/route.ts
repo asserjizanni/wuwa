@@ -15,7 +15,7 @@ const updateSchema = z.object({
   weaponType: z.enum(['BROADBLADE', 'SWORD', 'PISTOLS', 'GAUNTLETS', 'RECTIFIER']).optional(),
   rarity: z.enum(['FOUR_STAR', 'FIVE_STAR']).optional(),
   description: z.string().max(2000).optional().nullable(),
-  sourceUrl: z.string().url().optional().nullable().or(z.literal('')),
+  sourceUrl: z.string().max(500).optional().nullable().or(z.literal('')),
   isPublished: z.boolean().optional(),
   isFeatured: z.boolean().optional(),
   tags: z.array(z.string()).optional(),
