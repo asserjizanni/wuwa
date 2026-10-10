@@ -31,10 +31,10 @@ async function getFeaturedCharacters() {
         orderBy: [{ isFeatured: 'desc' }, { sortOrder: 'asc' }, { name: 'asc' }],
         take: 8,
       }),
-    []
+    null
   )
 
-  if (list && list.length > 0) return list
+  if (list !== null) return list
   return getStoredCharacters().filter(c => c.isPublished).slice(0, 8)
 }
 
@@ -55,10 +55,10 @@ async function getLatestBuilds() {
         orderBy: { publishedAt: 'desc' },
         take: 6,
       }),
-    []
+    null
   )
 
-  if (list && list.length > 0) return list
+  if (list !== null) return list
 
   return getStoredCharacters()
     .filter(c => c.isPublished)

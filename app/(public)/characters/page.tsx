@@ -26,10 +26,10 @@ async function getCharacters() {
         },
         orderBy: [{ sortOrder: 'asc' }, { name: 'asc' }],
       }),
-    []
+    null
   )
 
-  if (list && list.length > 0) return list
+  if (list !== null) return list
   return getStoredCharacters().filter(c => c.isPublished)
 }
 

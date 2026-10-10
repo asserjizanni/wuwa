@@ -22,7 +22,7 @@ if (process.env.NODE_ENV !== 'production') {
  * If the DB is unreachable, fails fast (under 600ms) and caches failure for 15s
  * so subsequent page renders are instantaneous (< 5ms).
  */
-export async function safeDb<T>(fn: () => Promise<T>, fallback: T, timeoutMs = 600): Promise<T> {
+export async function safeDb<T>(fn: () => Promise<T>, fallback: T, timeoutMs = 5000): Promise<T> {
   const now = Date.now()
   if (global.dbOfflineUntil && now < global.dbOfflineUntil) {
     return fallback
