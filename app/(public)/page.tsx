@@ -9,7 +9,7 @@ import { getStoredCharacters } from '@/lib/data/characterStore'
 
 export const metadata: Metadata = {
   title: 'Wuthering Waves Builds — أدلة الشخصيات والبِلدات | وذرينق ويفز العربية',
-  description: 'منصة مجتمعية لعرض أدلة الشخصيات والبِلدات. استعرض أحدث بنيات رنّاني Wuthering Waves، وتوزيع الصدى، ومحاكي WuwaFlex المدمج.',
+  description: 'منصة مجتمعية لعرض أدلة الشخصيات والبِلدات. استعرض أحدث بنيات Resonators في Wuthering Waves، وتوزيع Echoes، ومحاكي WuwaFlex المدمج.',
   openGraph: {
     title: 'Wuthering Waves Builds — وذرينق ويفز العربية',
     description: 'منصة مجتمعية لعرض أدلة الشخصيات والبِلدات.',

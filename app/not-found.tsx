@@ -23,7 +23,7 @@ export default function NotFound() {
       </h1>
 
       <p className="text-[#8fa8c4] max-w-md mb-8 text-sm md:text-base leading-relaxed">
-        الرنّان أو دليل البناء الذي تبحث عنه قد تلاشى في حقل تاست (Tacet Field) أو تم نقله إلى موقع آخر.
+        الـ Resonator أو دليل البناء الذي تبحث عنه قد تلاشى في حقل تاست (Tacet Field) أو تم نقله إلى موقع آخر.
       </p>
 
       <div className="flex flex-wrap gap-3 justify-center">

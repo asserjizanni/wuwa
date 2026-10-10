@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `دليل بناء ${character.name}`,
-    description: character.description || `دليل بناء شامل، وأطقم الصدى، والأسلحة، والفرق لشخصية ${character.name} في Wuthering Waves.`,
+    description: character.description || `دليل بناء شامل، وأطقم Echoes، والأسلحة، والفرق لشخصية ${character.name} في Wuthering Waves.`,
     openGraph: {
       title: `${character.name} — دليل بناء Wuthering Waves`,
       description: character.description || `استعرض دليل البناء الشامل لشخصية ${character.name}.`,

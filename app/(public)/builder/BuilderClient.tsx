@@ -72,7 +72,7 @@ export default function BuilderClient() {
               >
                 wuwaflex.com
               </a>
-              {' '}— محاكي إحصائيات وأطقم صدى متكامل
+              {' '}— محاكي إحصائيات وأطقم Echoes متكامل
             </p>
           </div>
         </div>

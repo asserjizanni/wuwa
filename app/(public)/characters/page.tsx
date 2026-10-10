@@ -6,7 +6,7 @@ import { getStoredCharacters } from '@/lib/data/characterStore'
 
 export const metadata: Metadata = {
   title: 'الشخصيات — Wuthering Waves Builds',
-  description: 'تصفح جميع شخصيات Wuthering Waves. صفّح حسب العنصر والسلاح والندرة وابحث عن دليل وبناء لكل رنّان.',
+  description: 'تصفح جميع شخصيات Wuthering Waves. صفّح حسب Elements والسلاح والندرة وابحث عن دليل وبناء لكل Resonator.',
 }
 
 export const revalidate = 30

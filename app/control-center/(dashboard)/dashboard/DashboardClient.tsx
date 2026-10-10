@@ -422,7 +422,7 @@ export default function DashboardClient() {
           >
             <Plus size={18} className="mx-auto mb-2 text-[#00c8ff] group-hover:scale-110 transition-transform" />
             <span className="text-xs font-bold text-white block">إضافة شخصية</span>
-            <span className="text-[10px] text-[#4d6580]">رنّان جديد</span>
+            <span className="text-[10px] text-[#4d6580]">Resonator جديد</span>
           </Link>
 
           <Link
