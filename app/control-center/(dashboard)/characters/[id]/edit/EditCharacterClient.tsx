@@ -12,7 +12,7 @@ import {
 import toast from 'react-hot-toast'
 import ElementBadge from '@/components/ui/ElementBadge'
 import WeaponBadge from '@/components/ui/WeaponBadge'
-import { convertPdfToWebpPages } from '@/lib/client-pdf'
+import { convertPdfToWebpPages, optimizeImageForUpload } from '@/lib/client-pdf'
 
 const ELEMENTS = [
   { value: 'AERO', label: 'Aero' },
@@ -153,10 +153,13 @@ export default function EditCharacterClient({ characterId }: { characterId: stri
     else setUploadingBanner(true)
 
     try {
+      // Optimize image in browser before uploading to avoid upload limits and speed up transfers
+      const fileToUpload = await optimizeImageForUpload(file, isPortrait ? 800 : 1920, 0.88)
+
       const formData = new FormData()
       formData.append('characterId', character.id)
       formData.append('type', type)
-      formData.append('file', file)
+      formData.append('file', fileToUpload)
 
       const res = await fetch('/api/admin/upload/image', {
         method: 'POST',
@@ -601,6 +604,7 @@ export default function EditCharacterClient({ characterId }: { characterId: stri
               onChange={e => {
                 const f = e.target.files?.[0]
                 if (f) handleImageUpload('portrait', f)
+                e.target.value = ''
               }}
             />
 
@@ -656,6 +660,7 @@ export default function EditCharacterClient({ characterId }: { characterId: stri
               onChange={e => {
                 const f = e.target.files?.[0]
                 if (f) handleImageUpload('background', f)
+                e.target.value = ''
               }}
             />
 
