@@ -32,3 +32,8 @@ tsconfig.tsbuildinfo
 # Prisma
 prisma/dev.db
 prisma/dev.db-journal
+
+# Database Backups
+backups/
+*.dump
+

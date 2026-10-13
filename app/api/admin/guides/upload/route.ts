@@ -11,6 +11,11 @@ import {
 } from '@/lib/storage'
 import { getStoredCharacter, addStoredGuide } from '@/lib/data/characterStore'
 import { saveGuidePages } from '@/lib/blob-store'
+import {
+  isSupabaseStorageConfigured,
+  uploadBufferToStorage,
+  parseDataUrl,
+} from '@/lib/supabase-storage'
 
 // Netlify serverless functions have a hard 6 MB body limit.
 // Solution: client converts PDF pages to WebP images in the browser,
@@ -217,87 +222,144 @@ async function handlePageImagesUpload({
   )
   const version = (latestGuide?.version || 0) + 1
 
-  // Try to persist page images to disk
-  const guideDirName = sanitizeFilename(`guide-v${version}-${Date.now()}`)
-  const charPaths = getCharacterPaths(character.slug)
-  const guideImagesDir = path.join(charPaths.guides, guideDirName)
-  const savedPagePaths: string[] = []
-  let diskWriteOk = false
+  // 1. Create guide record in DB if available
+  const dbGuide = await safeDb(async () => {
+    return prisma.buildGuide.create({
+      data: {
+        characterId: character.id,
+        title,
+        version,
+        originalPdfPath: '',
+        status: 'READY',
+        pageCount: pages.length,
+      },
+    })
+  }, null)
 
-  try {
-    await mkdir(guideImagesDir, { recursive: true })
-    for (let i = 0; i < pages.length; i++) {
-      const base64 = pages[i].split(',')[1] || ''
-      const buf = Buffer.from(base64, 'base64')
-      const filename = `page-${String(i + 1).padStart(3, '0')}.webp`
-      await writeFile(path.join(guideImagesDir, filename), buf)
-      savedPagePaths.push(
-        storagePathToPublic(path.join(guideImagesDir, filename))
-      )
-    }
-    diskWriteOk = true
-  } catch {
-    // Netlify: read-only FS — store the actual data-URLs directly.
-    // The browser can render data-URLs without any file serving.
-    for (let i = 0; i < pages.length; i++) {
-      savedPagePaths.push(pages[i])
+  const guideId = dbGuide?.id || `guide-${character.slug}-${Date.now()}`
+
+  interface PageImageEntry {
+    pageNumber: number
+    imagePath: string
+    thumbnailPath: string
+    width: number
+    height: number
+    fileSize: number
+  }
+
+  const savedPages: PageImageEntry[] = []
+
+  // 2. Upload to Supabase Storage if configured (standard in production and local with .env.local)
+  if (isSupabaseStorageConfigured()) {
+    try {
+      for (let i = 0; i < pages.length; i++) {
+        const { buffer, contentType } = parseDataUrl(pages[i])
+        const ext = contentType.includes('png') ? 'png' : 'webp'
+        const imgObj = `guide-pages/${guideId}/${i + 1}/image.${ext}`
+        const thumbObj = `guide-pages/${guideId}/${i + 1}/thumbnail.${ext}`
+
+        const imgUrl = await uploadBufferToStorage({
+          path: imgObj,
+          buffer,
+          contentType,
+        })
+        const thumbUrl = await uploadBufferToStorage({
+          path: thumbObj,
+          buffer,
+          contentType,
+        })
+
+        savedPages.push({
+          pageNumber: i + 1,
+          imagePath: imgUrl,
+          thumbnailPath: thumbUrl,
+          width: 1200,
+          height: 1697,
+          fileSize: buffer.length,
+        })
+      }
+    } catch (storageErr) {
+      console.error('[upload guide] Supabase Storage upload error:', storageErr)
     }
   }
 
-  // Attempt DB persist
-  const dbResult = await safeDb(async () => {
-    return prisma.$transaction(async (tx) => {
-      const guide = await tx.buildGuide.create({
-        data: {
-          characterId: character.id,
-          title,
-          version,
-          originalPdfPath: '',
-          status: 'READY',
-          pageCount: pages.length,
-        },
-      })
+  // 3. Fallback: local disk if Supabase Storage was not configured or failed
+  if (savedPages.length !== pages.length) {
+    savedPages.length = 0
+    const guideDirName = sanitizeFilename(`guide-v${version}-${Date.now()}`)
+    const charPaths = getCharacterPaths(character.slug)
+    const guideImagesDir = path.join(charPaths.guides, guideDirName)
 
-      await tx.guidePage.createMany({
-        data: savedPagePaths.map((imgPath, i) => ({
-          guideId: guide.id,
+    try {
+      await mkdir(guideImagesDir, { recursive: true })
+      for (let i = 0; i < pages.length; i++) {
+        const { buffer } = parseDataUrl(pages[i])
+        const filename = `page-${String(i + 1).padStart(3, '0')}.webp`
+        await writeFile(path.join(guideImagesDir, filename), buffer)
+        const pPath = storagePathToPublic(path.join(guideImagesDir, filename))
+        savedPages.push({
           pageNumber: i + 1,
-          imagePath: imgPath,
-          thumbnailPath: imgPath,
+          imagePath: pPath,
+          thumbnailPath: pPath,
+          width: 1200,
+          height: 1697,
+          fileSize: buffer.length,
+        })
+      }
+    } catch {
+      // Last resort fallback (e.g. offline dev without Supabase on read-only FS)
+      for (let i = 0; i < pages.length; i++) {
+        savedPages.push({
+          pageNumber: i + 1,
+          imagePath: pages[i],
+          thumbnailPath: pages[i],
           width: 1200,
           height: 1697,
           fileSize: 0,
+        })
+      }
+    }
+  }
+
+  // 4. Persist guide pages in DB if DB guide was created
+  if (dbGuide) {
+    await safeDb(async () => {
+      await prisma.guidePage.createMany({
+        data: savedPages.map((p) => ({
+          guideId: dbGuide.id,
+          pageNumber: p.pageNumber,
+          imagePath: p.imagePath,
+          thumbnailPath: p.thumbnailPath,
+          width: p.width,
+          height: p.height,
+          fileSize: p.fileSize,
         })),
       })
 
       if (auditAdminId) {
-        await tx.auditLog
+        await prisma.auditLog
           .create({
             data: {
               adminUserId: auditAdminId,
               action: 'UPLOAD_GUIDE_PAGES',
               targetType: 'BuildGuide',
-              targetId: guide.id,
+              targetId: dbGuide.id,
               details: { characterId: character.id, title, version, pageCount: pages.length },
             },
           })
           .catch(() => {})
       }
+    }, null)
 
-      return guide
-    })
-  }, null)
-
-  if (dbResult) {
-    // Also persist pages to Netlify Blobs for the GuideViewer
+    // Also persist pages to /tmp for cache
     await saveGuidePages({
-      guideId: dbResult.id,
-      pages: savedPagePaths.map((imgPath, i) => ({
-        pageNumber: i + 1,
-        imagePath: imgPath,
-        thumbnailPath: imgPath,
-        width: 1200,
-        height: 1697,
+      guideId: dbGuide.id,
+      pages: savedPages.map((p) => ({
+        pageNumber: p.pageNumber,
+        imagePath: p.imagePath,
+        thumbnailPath: p.thumbnailPath,
+        width: p.width,
+        height: p.height,
       })),
     }).catch(() => {})
 
@@ -305,11 +367,11 @@ async function handlePageImagesUpload({
       {
         success: true,
         guide: {
-          id: dbResult.id,
-          title: dbResult.title,
-          version: dbResult.version,
-          status: dbResult.status,
-          pageCount: dbResult.pageCount,
+          id: dbGuide.id,
+          title: dbGuide.title,
+          version: dbGuide.version,
+          status: dbGuide.status,
+          pageCount: dbGuide.pageCount,
         },
         job: { id: `job-pages-${Date.now()}`, status: 'COMPLETED' },
       },
@@ -318,14 +380,13 @@ async function handlePageImagesUpload({
   }
 
   // Offline/DB-down fallback
-  const guideId = `guide-${character.slug}-${Date.now()}`
-  const fallbackPages = savedPagePaths.map((imgPath, i) => ({
+  const fallbackPages = savedPages.map((p, i) => ({
     id: `page-${Date.now()}-${i + 1}`,
-    pageNumber: i + 1,
-    imagePath: imgPath,
-    thumbnailPath: imgPath,
-    width: 1200,
-    height: 1697,
+    pageNumber: p.pageNumber,
+    imagePath: p.imagePath,
+    thumbnailPath: p.thumbnailPath,
+    width: p.width,
+    height: p.height,
   }))
 
   const fallbackGuide = {
@@ -341,7 +402,6 @@ async function handlePageImagesUpload({
     publishedAt: new Date().toISOString(),
   }
 
-  // Save pages to Netlify Blobs so they persist across requests
   await saveGuidePages({
     guideId,
     pages: fallbackPages,

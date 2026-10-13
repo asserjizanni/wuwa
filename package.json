@@ -13,7 +13,12 @@
     "db:seed": "tsx scripts/seed.ts",
     "db:studio": "prisma studio",
     "admin:create": "tsx scripts/create-admin.ts",
-    "setup": "tsx scripts/setup.ts"
+    "setup": "tsx scripts/setup.ts",
+    "db:backup": "tsx scripts/backup-guide-pages.ts",
+    "db:backup:full": "tsx scripts/backup-database.ts",
+    "db:verify:backup": "tsx scripts/verify-backup.ts",
+    "migrate:dry-run": "tsx scripts/migrate-images-to-storage.ts --dry-run",
+    "migrate:storage": "tsx scripts/migrate-images-to-storage.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
@@ -30,7 +35,8 @@
     "sharp": "^0.33.5",
     "tailwind-merge": "^2.5.4",
     "uuid": "^10.0.0",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "@supabase/supabase-js": "^2.117.3"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
@@ -49,4 +55,3 @@
     "@img/sharp-linux-x64": "0.33.5"
   }
 }
-

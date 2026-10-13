@@ -5,6 +5,7 @@ import { getAdminSession } from '@/lib/session'
 import { prisma, safeDb } from '@/lib/db'
 import { getStoredCharacter, updateStoredCharacter } from '@/lib/data/characterStore'
 import { getCharacterPaths, storagePathToPublic, sanitizeFilename } from '@/lib/storage'
+import { isSupabaseStorageConfigured, uploadBufferToStorage } from '@/lib/supabase-storage'
 
 const MAX_IMAGE_SIZE = 15 * 1024 * 1024 // 15MB
 const ALLOWED_MIME_TYPES = [
@@ -107,21 +108,37 @@ export async function POST(request: NextRequest) {
     }
 
     const ext = isWebp ? 'webp' : (fileExt.replace(/^\./, '') || 'webp')
+    const mime = isWebp ? 'image/webp' : (file.type || 'image/jpeg')
     const filename = sanitizeFilename(`${type}-${Date.now()}.${ext}`)
     let publicPath = ''
 
-    // Attempt writing to persistent local storage
-    try {
-      const charPaths = getCharacterPaths(characterSlug)
-      await mkdir(charPaths.portraits, { recursive: true })
-      const outputPath = path.join(charPaths.portraits, filename)
-      await writeFile(outputPath, processedBuffer)
-      publicPath = storagePathToPublic(outputPath)
-    } catch (diskErr) {
-      // Netlify or read-only filesystem: fallback to Data URL
-      console.warn('[upload image] Disk write failed (read-only filesystem / Netlify). Storing as Data URL:', diskErr)
-      const mime = isWebp ? 'image/webp' : (file.type || 'image/jpeg')
-      publicPath = `data:${mime};base64,${processedBuffer.toString('base64')}`
+    // 1. Upload to Supabase Storage if configured (production / standard)
+    if (isSupabaseStorageConfigured()) {
+      try {
+        const storagePath = `characters/${characterSlug}/${filename}`
+        publicPath = await uploadBufferToStorage({
+          path: storagePath,
+          buffer: processedBuffer,
+          contentType: mime,
+        })
+      } catch (storageErr) {
+        console.error('[upload image] Supabase Storage upload failed, attempting local fallback:', storageErr)
+      }
+    }
+
+    // 2. Fallback to local storage if Supabase Storage is unavailable
+    if (!publicPath) {
+      try {
+        const charPaths = getCharacterPaths(characterSlug)
+        await mkdir(charPaths.portraits, { recursive: true })
+        const outputPath = path.join(charPaths.portraits, filename)
+        await writeFile(outputPath, processedBuffer)
+        publicPath = storagePathToPublic(outputPath)
+      } catch (diskErr) {
+        // Last resort fallback (e.g. read-only filesystem without Supabase configured)
+        console.warn('[upload image] Disk write failed. Storing as Data URL:', diskErr)
+        publicPath = `data:${mime};base64,${processedBuffer.toString('base64')}`
+      }
     }
 
     // Update character record in DB
