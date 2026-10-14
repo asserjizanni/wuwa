@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     'عجلة الحظ التفاعلية لشخصيات Wuthering Waves. جرّب حظك الآن واحصل على Resonator عشوائي مع استعراض بنيات وعتاد الشخصية.',
 }
 
-export const revalidate = 30
+export const revalidate = 3600
 
 async function getSpinCharacters(): Promise<SpinCharacter[]> {
   const list = await safeDb(

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { prisma, safeDb } from '@/lib/db'
 import { getAdminSession } from '@/lib/session'
 import {
@@ -111,8 +112,19 @@ export async function PATCH(
         updatedAt: new Date(),
       },
     })
+
+    try {
+      revalidatePath('/')
+      revalidatePath('/characters')
+    } catch {}
+
     return { guide: updated }
   }, { success: true })
+
+  try {
+    revalidatePath('/')
+    revalidatePath('/characters')
+  } catch {}
 
   return NextResponse.json(result)
 }
@@ -140,6 +152,11 @@ export async function DELETE(
 
   // Always delete from characterStore
   deleteStoredGuide(id)
+
+  try {
+    revalidatePath('/')
+    revalidatePath('/characters')
+  } catch {}
 
   return NextResponse.json({ success: true, message: 'Guide deleted successfully' })
 }

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { prisma, safeDb } from '@/lib/db'
 import { getAdminSession } from '@/lib/session'
 import { generateSlug, initCharacterStorage } from '@/lib/storage'
@@ -151,6 +152,14 @@ export async function POST(request: NextRequest) {
         ...data,
         slug,
       })
+
+      try {
+        revalidatePath('/')
+        revalidatePath('/characters')
+        revalidatePath('/spin')
+        revalidatePath(`/characters/${slug}`)
+      } catch {}
+
       return NextResponse.json({ character }, { status: 201 })
     }
 
@@ -159,6 +168,13 @@ export async function POST(request: NextRequest) {
       ...data,
       slug,
     })
+
+    try {
+      revalidatePath('/')
+      revalidatePath('/characters')
+      revalidatePath('/spin')
+      revalidatePath(`/characters/${slug}`)
+    } catch {}
 
     return NextResponse.json({ character: fallbackChar }, { status: 201 })
   } catch (err) {

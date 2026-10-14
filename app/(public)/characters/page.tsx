@@ -9,14 +9,23 @@ export const metadata: Metadata = {
   description: 'تصفح جميع شخصيات Wuthering Waves. صفّح حسب Elements والسلاح والندرة وابحث عن دليل وبناء لكل Resonator.',
 }
 
-export const revalidate = 30
+export const revalidate = 3600
 
 async function getCharacters() {
   const list = await safeDb(
     () =>
       prisma.character.findMany({
         where: { isPublished: true },
-        include: {
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          element: true,
+          weaponType: true,
+          rarity: true,
+          portraitPath: true,
+          isPublished: true,
+          sortOrder: true,
           guides: {
             where: { status: 'PUBLISHED', isActive: true },
             select: { id: true, title: true, pageCount: true, publishedAt: true },

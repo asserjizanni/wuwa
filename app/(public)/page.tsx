@@ -21,7 +21,15 @@ async function getFeaturedCharacters() {
     () =>
       prisma.character.findMany({
         where: { isPublished: true },
-        include: {
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          element: true,
+          weaponType: true,
+          rarity: true,
+          portraitPath: true,
+          isFeatured: true,
           guides: {
             where: { status: 'PUBLISHED', isActive: true },
             select: { id: true, title: true, pageCount: true },
@@ -47,7 +55,12 @@ async function getLatestBuilds() {
           isActive: true,
           character: { isPublished: true },
         },
-        include: {
+        select: {
+          id: true,
+          title: true,
+          version: true,
+          pageCount: true,
+          publishedAt: true,
           character: {
             select: { name: true, slug: true, element: true, portraitPath: true },
           },
@@ -80,7 +93,7 @@ async function getLatestBuilds() {
     .slice(0, 6)
 }
 
-export const revalidate = 60
+export const revalidate = 3600
 
 export default async function HomePage() {
   const [featured, latestBuilds] = await Promise.all([

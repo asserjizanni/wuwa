@@ -57,12 +57,12 @@ export default function JobsAdminClient() {
     fetchJobs()
   }, [page, statusFilter])
 
-  // Polling auto-refresh every 4 seconds
+  // Polling auto-refresh every 15 seconds
   useEffect(() => {
     if (!autoRefresh) return
     const interval = setInterval(() => {
       fetchJobs()
-    }, 4000)
+    }, 15000)
     return () => clearInterval(interval)
   }, [autoRefresh, page, statusFilter])
 

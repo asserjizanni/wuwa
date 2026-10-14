@@ -19,7 +19,14 @@ export async function GET(request: NextRequest) {
             { slug: { contains: q.toLowerCase(), mode: 'insensitive' } },
           ],
         },
-        include: {
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          element: true,
+          weaponType: true,
+          rarity: true,
+          portraitPath: true,
           guides: {
             where: { status: 'PUBLISHED', isActive: true },
             select: { id: true, title: true, pageCount: true },
@@ -27,7 +34,7 @@ export async function GET(request: NextRequest) {
           },
         },
         orderBy: { name: 'asc' },
-        take: 20,
+        take: 12,
       }),
     []
   )

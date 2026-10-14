@@ -7,15 +7,18 @@ declare global {
   var dbOfflineUntil: number | undefined
 }
 
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined
+  dbOfflineUntil: number | undefined
+}
+
 export const prisma =
-  global.prisma ||
+  globalForPrisma.prisma ??
   new PrismaClient({
-    log: process.env.NODE_ENV === 'development' ? ['error'] : ['error'],
+    log: ['error'],
   })
 
-if (process.env.NODE_ENV !== 'production') {
-  global.prisma = prisma
-}
+globalForPrisma.prisma = prisma
 
 /**
  * Execute a DB query with rapid circuit breaker and timeout.

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { prisma, safeDb } from '@/lib/db'
 import { getAdminSession } from '@/lib/session'
 import { FALLBACK_CHARACTERS } from '@/lib/data/fallback'
@@ -112,6 +113,12 @@ export async function PATCH(
         ...data,
         sourceUrl: data.sourceUrl || null,
       })
+      try {
+        revalidatePath('/')
+        revalidatePath('/characters')
+        revalidatePath('/spin')
+        if (character.slug) revalidatePath(`/characters/${character.slug}`)
+      } catch {}
       return NextResponse.json({ character })
     }
 
@@ -121,6 +128,12 @@ export async function PATCH(
       sourceUrl: data.sourceUrl || null,
     })
     if (updated) {
+      try {
+        revalidatePath('/')
+        revalidatePath('/characters')
+        revalidatePath('/spin')
+        if (updated.slug) revalidatePath(`/characters/${updated.slug}`)
+      } catch {}
       return NextResponse.json({ character: updated })
     }
 
@@ -189,6 +202,12 @@ export async function DELETE(
   }, null)
 
   deleteStoredCharacter(id)
+
+  try {
+    revalidatePath('/')
+    revalidatePath('/characters')
+    revalidatePath('/spin')
+  } catch {}
 
   return NextResponse.json({ success: true, message: 'Character deleted successfully' })
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { cache } from 'react'
 import { prisma, safeDb } from '@/lib/db'
 import CharacterDetailClient from './CharacterDetailClient'
 import { getStoredCharacters, getStoredCharacter } from '@/lib/data/characterStore'
@@ -8,40 +9,38 @@ interface Props {
   params: { slug: string }
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const character = await safeDb(
-    () =>
-      prisma.character.findUnique({
-        where: { slug: params.slug, isPublished: true },
-        select: { name: true, element: true, weaponType: true, description: true },
-      }),
-    null
-  ) || getStoredCharacter(params.slug)
-
-  if (!character) {
-    return { title: 'الشخصية غير موجودة' }
-  }
-
-  return {
-    title: `دليل بناء ${character.name}`,
-    description: character.description || `دليل بناء شامل، وأطقم Echoes، والأسلحة، والفرق لشخصية ${character.name} في Wuthering Waves.`,
-    openGraph: {
-      title: `${character.name} — دليل بناء Wuthering Waves`,
-      description: character.description || `استعرض دليل البناء الشامل لشخصية ${character.name}.`,
-    },
-  }
-}
-
-async function getCharacterWithGuide(slug: string) {
+const getCharacterWithGuide = cache(async (slug: string) => {
   const char = await safeDb(
     () =>
       prisma.character.findUnique({
         where: { slug, isPublished: true },
-        include: {
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          element: true,
+          weaponType: true,
+          rarity: true,
+          portraitPath: true,
+          backgroundPath: true,
+          description: true,
           guides: {
             where: { isActive: true, status: 'PUBLISHED' },
-            include: {
+            select: {
+              id: true,
+              title: true,
+              version: true,
+              pageCount: true,
+              publishedAt: true,
               pages: {
+                select: {
+                  id: true,
+                  pageNumber: true,
+                  imagePath: true,
+                  thumbnailPath: true,
+                  width: true,
+                  height: true,
+                },
                 orderBy: { pageNumber: 'asc' },
               },
             },
@@ -54,9 +53,9 @@ async function getCharacterWithGuide(slug: string) {
 
   if (char) return char
   return getStoredCharacter(slug)
-}
+})
 
-async function getRelatedCharacters(characterId: string, element: string, weaponType: string) {
+const getRelatedCharacters = cache(async (characterId: string, element: string, weaponType: string) => {
   const list = await safeDb(
     () =>
       prisma.character.findMany({
@@ -85,9 +84,26 @@ async function getRelatedCharacters(characterId: string, element: string, weapon
   return getStoredCharacters()
     .filter(c => c.isPublished && c.id !== characterId && (c.element === element || c.weaponType === weaponType))
     .slice(0, 4)
+})
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const character = await getCharacterWithGuide(params.slug)
+
+  if (!character) {
+    return { title: 'الشخصية غير موجودة' }
+  }
+
+  return {
+    title: `دليل بناء ${character.name}`,
+    description: character.description || `دليل بناء شامل، وأطقم Echoes، والأسلحة، والفرق لشخصية ${character.name} في Wuthering Waves.`,
+    openGraph: {
+      title: `${character.name} — دليل بناء Wuthering Waves`,
+      description: character.description || `استعرض دليل البناء الشامل لشخصية ${character.name}.`,
+    },
+  }
 }
 
-export const revalidate = 60
+export const revalidate = 3600
 
 export default async function CharacterPage({ params }: Props) {
   const character = await getCharacterWithGuide(params.slug)
