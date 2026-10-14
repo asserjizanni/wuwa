@@ -7,6 +7,7 @@ node_modules/
 .next/
 out/
 build/
+.netlify/
 
 # env files (keep .env.example only)
 .env
@@ -15,8 +16,11 @@ build/
 .env.test.local
 .env.production.local
 
-# storage (uploaded files — not committed)
-storage/
+# storage (uploaded files — not committed, keep bundled seed data)
+storage/*
+!storage/data/
+storage/data/*
+!storage/data/characters.json
 
 # misc
 .DS_Store
