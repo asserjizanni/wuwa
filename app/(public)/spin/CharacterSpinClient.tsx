@@ -143,13 +143,24 @@ export default function CharacterSpinClient({ characters }: CharacterSpinClientP
       const count = filteredCharacters.length
       if (count === 0) return
 
-      const width = canvas.width
-      const height = canvas.height
+      const VIRTUAL_SIZE = 560
+      const dpr = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1
+      const targetPixelSize = Math.round(VIRTUAL_SIZE * dpr)
+
+      if (canvas.width !== targetPixelSize || canvas.height !== targetPixelSize) {
+        canvas.width = targetPixelSize
+        canvas.height = targetPixelSize
+      }
+
+      ctx.save()
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      ctx.clearRect(0, 0, VIRTUAL_SIZE, VIRTUAL_SIZE)
+
+      const width = VIRTUAL_SIZE
+      const height = VIRTUAL_SIZE
       const centerX = width / 2
       const centerY = height / 2
       const radius = width / 2 - 24
-
-      ctx.clearRect(0, 0, width, height)
 
       // ── 1. Outer Metallic Rim & Neon Glow ──
       ctx.save()
@@ -366,7 +377,8 @@ export default function CharacterSpinClient({ characters }: CharacterSpinClientP
       ctx.arc(0, 0, 5, 0, Math.PI * 2)
       ctx.fillStyle = '#00c8ff'
       ctx.fill()
-      ctx.restore()
+      ctx.restore() // restore diamond symbol transform
+      ctx.restore() // restore outer DPR transform
     },
     [filteredCharacters]
   )
@@ -376,20 +388,13 @@ export default function CharacterSpinClient({ characters }: CharacterSpinClientP
     drawWheel(currentRotationRef.current)
   }, [drawWheel])
 
-  // Handle Canvas Resize for High DPI displays
+  // Redraw cleanly on window resize or orientation change
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const dpr = window.devicePixelRatio || 1
-    const size = Math.min(window.innerWidth > 640 ? 560 : 340, 560)
-    canvas.width = size * dpr
-    canvas.height = size * dpr
-    canvas.style.width = `${size}px`
-    canvas.style.height = `${size}px`
-
-    const ctx = canvas.getContext('2d')
-    if (ctx) ctx.scale(dpr, dpr)
-    drawWheel(currentRotationRef.current)
+    const handleResize = () => {
+      drawWheel(currentRotationRef.current)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [drawWheel])
 
   // ── Spin Trigger & Physics Easing ──
@@ -485,7 +490,7 @@ export default function CharacterSpinClient({ characters }: CharacterSpinClientP
   }, [])
 
   return (
-    <div className="relative min-h-screen pt-24 pb-20 px-4 sm:px-6 overflow-hidden flex flex-col items-center">
+    <div className="relative min-h-screen pt-24 pb-32 sm:pb-24 px-4 sm:px-6 overflow-hidden flex flex-col items-center">
       {/* Background Cosmic Glow & Particle Gradients */}
       <div className="absolute inset-0 bg-[#030508] -z-20" />
       <div
@@ -586,36 +591,34 @@ export default function CharacterSpinClient({ characters }: CharacterSpinClientP
       </div>
 
       {/* ── Main Wheel Arena ── */}
-      <div className="relative flex flex-col items-center justify-center my-4">
+      <div className="relative flex flex-col items-center justify-center my-4 w-full">
         {/* Top Fixed Metallic Needle Pointer */}
-        <div className="absolute -top-7 z-30 flex flex-col items-center pointer-events-none drop-shadow-[0_4px_16px_rgba(0,200,255,0.7)]">
-          <div className="w-7 h-7 rounded-full bg-gradient-to-b from-[#38bdf8] via-[#00c8ff] to-[#0284c7] border-2 border-white shadow-[0_0_20px_#00c8ff] flex items-center justify-center">
-            <div className="w-2.5 h-2.5 rounded-full bg-white animate-pulse" />
+        <div className="absolute -top-5 sm:-top-6 z-30 flex flex-col items-center pointer-events-none drop-shadow-[0_4px_16px_rgba(0,200,255,0.7)]">
+          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gradient-to-b from-[#38bdf8] via-[#00c8ff] to-[#0284c7] border-2 border-white shadow-[0_0_20px_#00c8ff] flex items-center justify-center">
+            <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white animate-pulse" />
           </div>
           {/* Triangle Tip pointing down */}
-          <div className="w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-t-[22px] border-t-[#00c8ff] -mt-1.5 filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
+          <div className="w-0 h-0 border-l-[10px] sm:border-l-[12px] border-l-transparent border-r-[10px] sm:border-r-[12px] border-r-transparent border-t-[18px] sm:border-t-[22px] border-t-[#00c8ff] -mt-1 sm:-mt-1.5 filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
         </div>
 
         {/* Outer Glow Halo */}
         <div className="absolute -inset-4 sm:-inset-8 rounded-full bg-gradient-to-tr from-cyan-500/20 via-violet-600/15 to-transparent blur-3xl -z-10 pointer-events-none" />
 
         {/* Canvas Wheel */}
-        <div className="relative p-2.5 rounded-full bg-[#030611]/90 border border-cyan-500/20 shadow-[0_20px_70px_rgba(0,0,0,0.9),0_0_50px_rgba(0,200,255,0.12)]">
+        <div className="relative p-2 sm:p-2.5 rounded-full bg-[#030611]/90 border border-cyan-500/20 shadow-[0_20px_70px_rgba(0,0,0,0.9),0_0_50px_rgba(0,200,255,0.12)] w-[min(90vw,520px)] h-[min(90vw,520px)] flex items-center justify-center">
           <canvas
             ref={canvasRef}
-            width={560}
-            height={560}
-            className="block max-w-[90vw] max-h-[90vw] sm:max-w-[560px] sm:max-h-[560px] rounded-full transition-transform"
+            className="w-full h-full block rounded-full select-none"
           />
         </div>
       </div>
 
       {/* ── Action Controls (Spin Button) ── */}
-      <div className="mt-8 flex flex-col items-center gap-3">
+      <div className="mt-6 sm:mt-8 flex flex-col items-center gap-3 w-full px-4">
         <button
           onClick={handleSpin}
           disabled={isSpinning || filteredCharacters.length === 0}
-          className={`relative group px-12 py-4 rounded-2xl font-black text-lg sm:text-xl tracking-wider transition-all duration-300 flex items-center gap-3 ${
+          className={`relative group w-full max-w-xs sm:w-auto px-8 sm:px-12 py-3.5 sm:py-4 rounded-2xl font-black text-base sm:text-xl tracking-wider transition-all duration-300 flex items-center justify-center gap-3 ${
             isSpinning
               ? 'bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed'
               : 'bg-gradient-to-r from-[#00c8ff] via-[#38bdf8] to-[#7c3aed] text-black hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(0,200,255,0.5)] hover:shadow-[0_0_60px_rgba(0,200,255,0.8)] border border-cyan-300'
@@ -623,7 +626,7 @@ export default function CharacterSpinClient({ characters }: CharacterSpinClientP
           aria-label="Spin Character Wheel"
         >
           <RotateCw
-            size={22}
+            size={20}
             className={`transition-all duration-700 ${
               isSpinning ? 'animate-spin text-slate-500' : 'text-black group-hover:rotate-180'
             }`}
@@ -642,14 +645,14 @@ export default function CharacterSpinClient({ characters }: CharacterSpinClientP
       {/* ── Cinematic Winner Reveal Modal ── */}
       <AnimatePresence>
         {showWinnerModal && winner && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-2xl">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-2xl">
             {/* Modal Outer Glow */}
             <motion.div
               initial={{ scale: 0.8, opacity: 0, y: 30 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.8, opacity: 0, y: 30 }}
               transition={{ type: 'spring', damping: 22, stiffness: 260 }}
-              className="relative max-w-lg w-full rounded-3xl bg-[#040814]/95 border-2 border-cyan-400/50 shadow-[0_0_80px_rgba(0,200,255,0.35)] overflow-hidden p-6 sm:p-8 text-center"
+              className="relative max-w-lg w-full max-h-[92vh] overflow-y-auto rounded-3xl bg-[#040814]/95 border-2 border-cyan-400/50 shadow-[0_0_80px_rgba(0,200,255,0.35)] p-5 sm:p-8 text-center"
               dir="rtl"
             >
               {/* Radial Element Spotlight */}
@@ -662,12 +665,12 @@ export default function CharacterSpinClient({ characters }: CharacterSpinClientP
               />
 
               {/* Title & Celebration */}
-              <div className="space-y-1 mb-5">
+              <div className="space-y-1 mb-4 sm:mb-5">
                 <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-[#00c8ff] text-xs font-bold font-mono tracking-widest uppercase">
                   THE WAVES HAVE CHOSEN!
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-black text-white">
-                  اختارتك أمواج السولاريس!
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white leading-tight">
+                  اختارتك {winner.name} لتكون مالكها!
                 </h2>
               </div>
 
