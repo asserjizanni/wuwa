@@ -670,7 +670,7 @@ export default function CharacterSpinClient({ characters }: CharacterSpinClientP
                   THE WAVES HAVE CHOSEN!
                 </div>
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white leading-tight">
-                  اختارتك {winner.name} لتكون مالكها!
+                  مبارك لك ربحت شخصية {winner.name}!
                 </h2>
               </div>
 
@@ -745,7 +745,7 @@ export default function CharacterSpinClient({ characters }: CharacterSpinClientP
                     setShowWinnerModal(false)
                     handleSpin()
                   }}
-                  className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-black font-black text-sm hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(0,200,255,0.4)] flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-black font-black text-sm hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(0,200,255,0.4)] flex items-center justify-center gap-2 whitespace-nowrap"
                 >
                   <RotateCw size={16} />
                   <span>تدوير مجدداً (Spin Again)</span>
@@ -753,7 +753,7 @@ export default function CharacterSpinClient({ characters }: CharacterSpinClientP
 
                 <Link
                   href={`/characters/${winner.slug}`}
-                  className="w-full sm:w-auto px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/15 font-bold text-sm transition-all flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/15 font-bold text-sm transition-all flex items-center justify-center gap-2 whitespace-nowrap"
                 >
                   <span>استعراض البِلد والدليل</span>
                   <ExternalLink size={15} />
