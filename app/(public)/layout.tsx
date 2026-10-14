@@ -1,5 +1,6 @@
 import PublicNav from '@/components/public/PublicNav'
 import PublicFooter from '@/components/public/PublicFooter'
+import MusicPlayer from '@/components/audio/MusicPlayer'
 
 export default function PublicLayout({
   children,
@@ -12,6 +13,7 @@ export default function PublicLayout({
       <main className="flex-1">
         {children}
       </main>
+      <MusicPlayer />
       <PublicFooter />
     </div>
   )

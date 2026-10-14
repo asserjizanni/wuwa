@@ -146,12 +146,12 @@ export default function HeroSection() {
               </Link>
 
               <Link
-                href="/builder"
-                id="hero-builder-btn"
-                className="btn btn-outline text-base px-8 py-3.5 hover:border-cyan-400/50"
+                href="/spin"
+                id="hero-spin-btn"
+                className="btn btn-outline text-base px-6 py-3.5 border-violet-500/40 hover:border-violet-400 bg-violet-950/20 text-violet-200 hover:text-white shadow-[0_0_20px_rgba(167,139,250,0.15)] hover:shadow-[0_0_25px_rgba(167,139,250,0.3)] transition-all flex items-center gap-2"
               >
-                <Zap size={18} className="text-[#00c8ff]" />
-                <span>محاكي WuwaFlex</span>
+                <Sparkles size={18} className="text-[#a78bfa] animate-pulse" />
+                <span>عجلة الحظ</span>
               </Link>
             </motion.div>
 
@@ -188,14 +188,14 @@ export default function HeroSection() {
             <div className="absolute -inset-4 sm:-inset-8 rounded-3xl bg-gradient-to-tr from-cyan-500/20 via-violet-600/15 to-transparent blur-3xl -z-10 pointer-events-none" />
 
             {/* Character Artwork Frame */}
-            <div className="relative w-full max-w-md aspect-[3/4] rounded-3xl overflow-hidden border border-cyan-500/30 shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_50px_rgba(0,200,255,0.15)] group">
+            <div className="relative w-full max-w-md aspect-[3/4.2] rounded-3xl overflow-hidden border border-cyan-500/30 shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_50px_rgba(0,200,255,0.15)] group">
               <Image
-                src="/hero-character.png"
-                alt="Wuthering Waves Character"
+                src="/carthi.png"
+                alt="Carthi - Wuthering Waves"
                 fill
                 className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
                 priority
-                sizes="(max-width: 1024px) 100vw, 420px"
+                sizes="(max-width: 1024px) 100vw, 440px"
               />
 
               {/* Bottom cinematic gradient fade */}
@@ -212,8 +212,8 @@ export default function HeroSection() {
                     <p className="text-[10px] text-[#00c8ff] font-semibold">بناء وتطوير الشخصيات</p>
                   </div>
                 </div>
-                <div className="text-[11px] font-bold text-slate-400">
-                  Taleen
+                <div className="text-[11px] font-bold text-cyan-300/90 font-mono tracking-wide">
+                  Carthi
                 </div>
               </div>
             </div>

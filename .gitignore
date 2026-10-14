@@ -37,3 +37,7 @@ prisma/dev.db-journal
 backups/
 *.dump
 
+# Root raw assets (served from public/)
+/carthi.png
+/videoplayback.m4a
+

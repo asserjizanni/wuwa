@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { href: '/',                         label: 'الرئيسية' },
   { href: '/characters',                label: 'الشخصيات' },
   { href: '/characters?hasGuide=true', label: 'البِلدات' },
+  { href: '/spin',                     label: 'عجلة الحظ' },
   { href: '/builder',                  label: 'WuwaFlex' },
 ]
 
