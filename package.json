@@ -36,7 +36,8 @@
     "tailwind-merge": "^2.5.4",
     "uuid": "^10.0.0",
     "zod": "^3.23.8",
-    "@supabase/supabase-js": "^2.117.3"
+    "@supabase/supabase-js": "^2.117.3",
+    "prisma": "^5.22.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

@@ -21,9 +21,10 @@ function getContentType(filePath: string): string {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { path: string[] } }
+  context: { params: Promise<{ path: string[] }> | { path: string[] } }
 ) {
-  const relativePath = params.path.join('/')
+  const params = await context.params
+  const relativePath = Array.isArray(params.path) ? params.path.join('/') : ''
 
   // Prevent path traversal
   let fsPath: string
