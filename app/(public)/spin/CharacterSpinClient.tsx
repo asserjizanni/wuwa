@@ -513,7 +513,7 @@ export default function CharacterSpinClient({ characters }: CharacterSpinClientP
         >
           <Sparkles size={14} className="text-[#00c8ff] animate-pulse" />
           <span className="text-white text-xs font-black tracking-wide">
-            قرعة رنين السولاريس · Wuthering Gacha Wheel
+            Wuthering Gacha Wheel
           </span>
         </motion.div>
 
