@@ -9,10 +9,14 @@ import { Menu, X, Zap } from 'lucide-react'
 
 const NAV_LINKS = [
   { href: '/',                         label: 'الرئيسية' },
-  { href: '/characters',                label: 'الشخصيات' },
-  { href: '/characters?hasGuide=true', label: 'البِلدات' },
-  { href: '/spin',                     label: 'عجلة الحظ' },
-  { href: '/builder',                  label: 'WuwaFlex' },
+  { href: '/characters',               label: 'الشخصيات' },
+  { href: '/weapons',                  label: 'الأسلحة' },
+
+
+  { href: '/tier-list',                label: 'التصنيفات' },
+  { href: '/teams',                    label: 'الفرق' },
+  { href: '/timeline',                 label: 'الأحداث' },
+  { href: '/builder',                  label: 'بناء الفريق' },
 ]
 
 export default function PublicNav() {
@@ -91,6 +95,7 @@ export default function PublicNav() {
                   <Link
                     key={link.href}
                     href={link.href}
+                    prefetch={false}
                     className={`relative px-4 py-2 text-sm font-bold rounded-xl transition-colors duration-200 ${
                       active ? 'text-[#00c8ff]' : 'text-[#8fa8c4] hover:text-white'
                     }`}
@@ -187,6 +192,7 @@ export default function PublicNav() {
                     >
                       <Link
                         href={link.href}
+                        prefetch={false}
                         className={`flex items-center px-4 py-3 rounded-xl text-sm font-bold transition-all ${
                           active
                             ? 'bg-[rgba(0,200,255,0.12)] text-[#00c8ff] border border-[rgba(0,200,255,0.25)]'

@@ -347,7 +347,7 @@ export default function DashboardClient() {
             <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/[0.06]">
               <div className="flex items-center gap-2">
                 <Activity size={17} className="text-[#a855f7]" />
-                <h3 className="text-sm font-bold text-white">مهام معالجة ملفات PDF</h3>
+                <h3 className="text-sm font-bold text-white">مهام المعالجة في الخلفية</h3>
               </div>
               <Link
                 href="/control-center/jobs"
@@ -439,8 +439,8 @@ export default function DashboardClient() {
             className="p-3.5 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.06] hover:border-amber-500/30 text-center transition-all group"
           >
             <BookOpen size={18} className="mx-auto mb-2 text-amber-400 group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-bold text-white block">أدلة الـ PDF</span>
-            <span className="text-[10px] text-[#4d6580]">رفع واستخراج صفحات</span>
+            <span className="text-xs font-bold text-white block">أدلة البناء</span>
+            <span className="text-[10px] text-[#4d6580]">رفع ونشر الإنفوجرافيك</span>
           </Link>
 
           <Link

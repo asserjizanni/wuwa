@@ -1,0 +1,1703 @@
+[
+    {
+        "__meta": true,
+        "__type": "echoSubstatReference",
+        "showInCalculator": false,
+        "__note": "Reference only. This object is not a character. Use these exact keys in each character's beneficialEchoSubstats array.",
+        "__characterOrderNote": "Keep character records manually ordered from newest or furthest-future release at the top to oldest at the bottom. Within the same version, place the later banner phase above the earlier banner phase. Preserve this canonical order in every derived character list; never alphabetize it.",
+        "beneficialEchoSubstatTypes": [
+            {
+                "key": "hp",
+                "label": "Flat HP"
+            },
+            {
+                "key": "flatAtk",
+                "label": "Flat ATK"
+            },
+            {
+                "key": "def",
+                "label": "Flat DEF"
+            },
+            {
+                "key": "hpPct",
+                "label": "HP%"
+            },
+            {
+                "key": "atkPct",
+                "label": "ATK%"
+            },
+            {
+                "key": "defPct",
+                "label": "DEF%"
+            },
+            {
+                "key": "critRate",
+                "label": "Crit. Rate"
+            },
+            {
+                "key": "critDmg",
+                "label": "Crit. DMG"
+            },
+            {
+                "key": "energyRegen",
+                "label": "Energy Regen"
+            },
+            {
+                "key": "basicDmg",
+                "label": "Basic Attack DMG Bonus"
+            },
+            {
+                "key": "heavyDmg",
+                "label": "Heavy Attack DMG Bonus"
+            },
+            {
+                "key": "skillDmg",
+                "label": "Resonance Skill DMG Bonus"
+            },
+            {
+                "key": "libDmg",
+                "label": "Resonance Liberation DMG Bonus"
+            }
+        ]
+    },
+    {
+        "id": "suoming",
+        "name": "Souming",
+        "arabicName": "سوومينق",
+        "url": "/characters/suoming/",
+        "element": "electro",
+        "weapon": "sword",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "3.7",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/suoming.webp",
+            "mid": "/images/characters-profile/suoming.webp",
+            "filter_image": "/images/characters-filter/suoming.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": ["atkPct", "flatAtk", "critRate", "critDmg", "energyRegen", "basicDmg"]
+    },
+    {
+        "id": "hsin",
+        "name": "Hsin",
+        "arabicName": "شين",
+        "url": "/characters/hsin/",
+        "element": "electro",
+        "weapon": "rectifier",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "3.7",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/hsin.webp",
+            "mid": "/images/characters-profile/hsin.webp",
+            "filter_image": "/images/characters-filter/hsin.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": ["atkPct", "flatAtk", "critRate", "critDmg", "energyRegen", "skillDmg"]
+    },
+    {
+        "id": "jingran",
+        "name": "Jingran",
+        "arabicName": "جنقران",
+        "url": "/characters/jingran/",
+        "arabicUrl": "/ar/characters/jingran/",
+        "element": "fusion",
+        "weapon": "broadblade",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "3.6",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/jingran.webp",
+            "mid": "/images/characters-profile/jingran.webp",
+            "filter_image": "/images/characters-filter/jingran.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": ["hpPct", "hp", "atkPct", "flatAtk", "critRate", "critDmg", "energyRegen", "heavyDmg"]
+    },
+    {
+        "id": "qingxiao",
+        "name": "Qingxiao",
+        "arabicName": "تشينغ شياو",
+        "url": "/characters/qingxiao/",
+        "arabicUrl": "/ar/characters/qingxiao/",
+        "element": "aero",
+        "weapon": "sword",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "3.6",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/qingxiao.webp",
+            "mid": "/images/characters-profile/qingxiao.webp",
+            "filter_image": "/images/characters-filter/qingxiao.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": ["flatAtk", "atkPct", "energyRegen", "critRate", "critDmg", "basicDmg", "heavyDmg", "libDmg"]
+    },
+    {
+        "id": "suisui",
+        "name": "Suisui",
+        "arabicName": "سوي سوي",
+        "url": "/characters/suisui/",
+        "arabicUrl": "/ar/characters/suisui/",
+        "element": "glacio",
+        "weapon": "rectifier",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "3.5",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/suisui.webp",
+            "mid": "/images/characters-profile/suisui.webp",
+            "filter_image": "/images/characters-filter/suisui.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": ["hpPct", "hp", "healingBonus", "critDmg", "energyRegen", "skillDmg"]
+    },
+    {
+        "id": "xuanling",
+        "name": "Xuanling",
+        "arabicName": "شيوان لينق",
+        "url": "/characters/xuanling/",
+        "arabicUrl": "/ar/characters/xuanling/",
+        "element": "havoc",
+        "weapon": "sword",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "3.5",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/xuanling.webp",
+            "mid": "/images/characters-profile/xuanling.webp",
+            "filter_image": "/images/characters-filter/xuanling.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": ["atkPct", "flatAtk", "critRate", "critDmg", "energyRegen", "heavyDmg"]
+    },
+    {
+        "id": "rover-electro",
+        "name": "Rover Electro",
+        "arabicName": "روفر الكترو",
+        "url": "/characters/rover-electro/",
+        "element": "electro",
+        "weapon": "sword",
+        "stars": 5,
+        "leaderboardInvestmentClass": "free",
+        "version": "3.5",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/rover-electro.webp",
+            "mid": "/images/characters-profile/rover-electro.webp",
+            "filter_image": "/images/characters-filter/rover.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg",
+            "skillDmg",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "lucilla",
+        "name": "Lucilla",
+        "arabicName": "لوسيلا",
+        "url": "/characters/lucilla/",
+        "arabicUrl": "/ar/characters/lucilla/",
+        "element": "glacio",
+        "weapon": "rectifier",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "3.4",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/lucilla.webp",
+            "mid": "/images/characters-profile/lucilla.webp",
+            "filter_image": "/images/characters-filter/lucilla.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "basicDmg"
+        ]
+    },
+    {
+        "id": "rebecca",
+        "name": "Rebecca",
+        "arabicName": "ريبيكا",
+        "url": "/characters/rebecca/",
+        "arabicUrl": "/ar/characters/rebecca/",
+        "element": "electro",
+        "weapon": "pistols",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "3.4",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/rebecca.webp",
+            "mid": "/images/characters-profile/rebecca.webp",
+            "filter_image": "/images/characters-filter/rebecca.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg"
+        ]
+    },
+    {
+        "id": "lucy",
+        "name": "Lucy",
+        "arabicName": "لوسي",
+        "url": "/characters/lucy/",
+        "arabicUrl": "/ar/characters/lucy/",
+        "element": "spectro",
+        "weapon": "pistols",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "3.4",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/lucy.webp",
+            "mid": "/images/characters-profile/lucy.webp",
+            "filter_image": "/images/characters-filter/lucy.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "heavyDmg"
+        ]
+    },
+    {
+        "id": "denia",
+        "name": "Denia",
+        "arabicName": "دينيا",
+        "url": "/characters/denia/",
+        "arabicUrl": "/ar/characters/denia/",
+        "element": "fusion",
+        "weapon": "rectifier",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "3.3",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/denia.webp",
+            "mid": "/images/characters-profile/denia.webp",
+            "filter_image": "/images/characters-filter/denia.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "hiyuki",
+        "name": "Hiyuki",
+        "arabicName": "هيوكي",
+        "url": "/characters/hiyuki/",
+        "arabicUrl": "/ar/characters/hiyuki/",
+        "element": "glacio",
+        "weapon": "sword",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "3.3",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/hiyuki.webp",
+            "mid": "/images/characters-profile/hiyuki.webp",
+            "filter_image": "/images/characters-filter/hiyuki.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "sigrika",
+        "name": "Sigrika",
+        "arabicName": "سيقريكا",
+        "url": "/characters/sigrika/",
+        "arabicUrl": "/ar/characters/sigrika/",
+        "element": "aero",
+        "weapon": "gauntlets",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "3.2",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/sigrika.webp",
+            "mid": "/images/characters-profile/sigrika.webp",
+            "filter_image": "/images/characters-filter/sigrika.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen"
+        ]
+    },
+    {
+        "id": "luukherssen",
+        "name": "Luuk Herssen",
+        "arabicName": "لوك هيرسن",
+        "url": "/characters/luukherssen/",
+        "arabicUrl": "/ar/characters/luukherssen/",
+        "element": "spectro",
+        "weapon": "gauntlets",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "3.1",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/luukherssen.webp",
+            "mid": "/images/characters-profile/luukherssen.webp",
+            "filter_image": "/images/characters-filter/luukherssen.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg"
+        ]
+    },
+    {
+        "id": "aemeath",
+        "name": "Aemeath",
+        "arabicName": "إيميث",
+        "url": "/characters/aemeath/",
+        "arabicUrl": "/ar/characters/aemeath/",
+        "element": "fusion",
+        "weapon": "sword",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "3.1",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/aemeath.webp",
+            "mid": "/images/characters-profile/aemeath.webp",
+            "filter_image": "/images/characters-filter/aemeath.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "mornye",
+        "name": "Mornye",
+        "arabicName": "مورني",
+        "url": "/characters/mornye/",
+        "arabicUrl": "/ar/characters/mornye/",
+        "element": "fusion",
+        "weapon": "broadblade",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "3.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/mornye.webp",
+            "mid": "/images/characters-profile/mornye.webp",
+            "filter_image": "/images/characters-filter/mornye.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "defPct",
+            "def",
+            "critDmg",
+            "energyRegen",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "lynae",
+        "name": "Lynae",
+        "arabicName": "ليناي",
+        "url": "/characters/lynae/",
+        "arabicUrl": "/ar/characters/lynae/",
+        "element": "spectro",
+        "weapon": "pistols",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "3.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/lynae.webp",
+            "mid": "/images/characters-profile/lynae.webp",
+            "filter_image": "/images/characters-filter/lynae.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg"
+        ]
+    },
+    {
+        "id": "buling",
+        "name": "Buling",
+        "arabicName": "بولنق",
+        "url": "/characters/buling/",
+        "arabicUrl": "/ar/characters/buling/",
+        "element": "electro",
+        "weapon": "rectifier",
+        "stars": 4,
+        "leaderboardInvestmentClass": "free",
+        "version": "2.8",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/buling.webp",
+            "mid": "/images/characters-profile/buling.webp",
+            "filter_image": "/images/characters-filter/buling.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen"
+        ]
+    },
+    {
+        "id": "chisa",
+        "name": "Chisa",
+        "arabicName": "شيسا",
+        "url": "/characters/chisa/",
+        "arabicUrl": "/ar/characters/chisa/",
+        "element": "havoc",
+        "weapon": "broadblade",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "2.8",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/chisa.webp",
+            "mid": "/images/characters-profile/chisa.webp",
+            "filter_image": "/images/characters-filter/chisa.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "qiuyuan",
+        "name": "Qiuyuan",
+        "arabicName": "شيوان",
+        "url": "/characters/qiuyuan/",
+        "arabicUrl": "/ar/characters/qiuyuan/",
+        "element": "aero",
+        "weapon": "sword",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "2.7",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/qiuyuan.webp",
+            "mid": "/images/characters-profile/qiuyuan.webp",
+            "filter_image": "/images/characters-filter/qiuyuan.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "heavyDmg"
+        ]
+    },
+    {
+        "id": "galbrena",
+        "name": "Galbrena",
+        "arabicName": "قالبرينا",
+        "url": "/characters/galbrena/",
+        "arabicUrl": "/ar/characters/galbrena/",
+        "element": "fusion",
+        "weapon": "pistols",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "2.7",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/galbrena.webp",
+            "mid": "/images/characters-profile/galbrena.webp",
+            "filter_image": "/images/characters-filter/galbrena.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "heavyDmg"
+        ]
+    },
+    {
+        "id": "iuno",
+        "name": "Iuno",
+        "arabicName": "يونو",
+        "url": "/characters/iuno/",
+        "arabicUrl": "/ar/characters/iuno/",
+        "element": "aero",
+        "weapon": "gauntlets",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "2.6",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/iuno.webp",
+            "mid": "/images/characters-profile/iuno.webp",
+            "filter_image": "/images/characters-filter/iuno.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "augusta",
+        "name": "Augusta",
+        "arabicName": "أوقستا",
+        "url": "/characters/augusta/",
+        "arabicUrl": "/ar/characters/augusta/",
+        "element": "electro",
+        "weapon": "broadblade",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "2.6",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/augusta.webp",
+            "mid": "/images/characters-profile/augusta.webp",
+            "filter_image": "/images/characters-filter/augusta.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "heavyDmg"
+        ]
+    },
+    {
+        "id": "phrolova",
+        "name": "Phrolova",
+        "arabicName": "فارلوفا",
+        "url": "/characters/phrolova/",
+        "arabicUrl": "/ar/characters/phrolova/",
+        "element": "havoc",
+        "weapon": "rectifier",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "2.5",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/phrolova.webp",
+            "mid": "/images/characters-profile/phrolova.webp",
+            "filter_image": "/images/characters-filter/phrolova.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "skillDmg"
+        ]
+    },
+    {
+        "id": "lupa",
+        "name": "Lupa",
+        "arabicName": "لوبا",
+        "url": "/characters/lupa/",
+        "arabicUrl": "/ar/characters/lupa/",
+        "element": "fusion",
+        "weapon": "broadblade",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "2.4",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/lupa.webp",
+            "mid": "/images/characters-profile/lupa.webp",
+            "filter_image": "/images/characters-filter/lupa.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "cartethyia",
+        "name": "Cartethyia",
+        "arabicName": "كارتيثيا",
+        "url": "/characters/cartethyia/",
+        "arabicUrl": "/ar/characters/cartethyia/",
+        "element": "aero",
+        "weapon": "sword",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "2.4",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/cartethyia.webp",
+            "mid": "/images/characters-profile/cartethyia.webp",
+            "filter_image": "/images/characters-filter/cartethyia.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "hpPct",
+            "hp",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "ciaccona",
+        "name": "Ciaccona",
+        "arabicName": "شياكونا",
+        "url": "/characters/ciaccona/",
+        "arabicUrl": "/ar/characters/ciaccona/",
+        "element": "aero",
+        "weapon": "pistols",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "2.3",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/ciaccona.webp",
+            "mid": "/images/characters-profile/ciaccona.webp",
+            "filter_image": "/images/characters-filter/ciaccona.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "zani",
+        "name": "Zani",
+        "arabicName": "زاني",
+        "url": "/characters/zani/",
+        "arabicUrl": "/ar/characters/zani/",
+        "element": "spectro",
+        "weapon": "gauntlets",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "2.3",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/zani.webp",
+            "mid": "/images/characters-profile/zani.webp",
+            "filter_image": "/images/characters-filter/zani.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "heavyDmg"
+        ]
+    },
+    {
+        "id": "rover-aero",
+        "name": "Rover Aero",
+        "arabicName": "روفر إيرو",
+        "url": "/characters/rover-aero/",
+        "arabicUrl": "/ar/characters/rover-aero/",
+        "element": "aero",
+        "weapon": "sword",
+        "stars": 5,
+        "leaderboardInvestmentClass": "free",
+        "version": "2.2",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/rover-aero.webp",
+            "mid": "/images/characters-profile/rover-aero.webp",
+            "filter_image": "/images/characters-filter/rover.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "skillDmg"
+        ]
+    },
+    {
+        "id": "cantarella",
+        "name": "Cantarella",
+        "arabicName": "كانتاريلا",
+        "url": "/characters/cantarella/",
+        "arabicUrl": "/ar/characters/cantarella/",
+        "element": "havoc",
+        "weapon": "rectifier",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "2.2",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/cantarella.webp",
+            "mid": "/images/characters-profile/cantarella.webp",
+            "filter_image": "/images/characters-filter/cantarella.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg"
+        ]
+    },
+    {
+        "id": "phoebe",
+        "name": "Phoebe",
+        "arabicName": "فيبي",
+        "url": "/characters/phoebe/",
+        "arabicUrl": "/ar/characters/phoebe/",
+        "element": "spectro",
+        "weapon": "rectifier",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "2.1",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/phoebe.webp",
+            "mid": "/images/characters-profile/phoebe.webp",
+            "filter_image": "/images/characters-filter/phoebe.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "heavyDmg",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "brant",
+        "name": "Brant",
+        "arabicName": "برانت",
+        "url": "/characters/brant/",
+        "arabicUrl": "/ar/characters/brant/",
+        "element": "fusion",
+        "weapon": "sword",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "2.1",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/brant.webp",
+            "mid": "/images/characters-profile/brant.webp",
+            "filter_image": "/images/characters-filter/brant.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg"
+        ]
+    },
+    {
+        "id": "roccia",
+        "name": "Roccia",
+        "arabicName": "روتشيا",
+        "url": "/characters/roccia/",
+        "arabicUrl": "/ar/characters/roccia/",
+        "element": "havoc",
+        "weapon": "gauntlets",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "2.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/roccia.webp",
+            "mid": "/images/characters-profile/roccia.webp",
+            "filter_image": "/images/characters-filter/roccia.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "heavyDmg"
+        ]
+    },
+    {
+        "id": "carlotta",
+        "name": "Carlotta",
+        "arabicName": "كارلوتا",
+        "url": "/characters/carlotta/",
+        "arabicUrl": "/ar/characters/carlotta/",
+        "element": "glacio",
+        "weapon": "pistols",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "2.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/carlotta.webp",
+            "mid": "/images/characters-profile/carlotta.webp",
+            "filter_image": "/images/characters-filter/carlotta.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "skillDmg"
+        ]
+    },
+    {
+        "id": "lumi",
+        "name": "Lumi",
+        "arabicName": "لومي",
+        "url": "/characters/lumi/",
+        "arabicUrl": "/ar/characters/lumi/",
+        "element": "electro",
+        "weapon": "broadblade",
+        "stars": 4,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.4",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/lumi.webp",
+            "mid": "/images/characters-profile/lumi.webp",
+            "filter_image": "/images/characters-filter/lumi.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg"
+        ]
+    },
+    {
+        "id": "camellya",
+        "name": "Camellya",
+        "arabicName": "كاميليا",
+        "url": "/characters/camellya/",
+        "arabicUrl": "/ar/characters/camellya/",
+        "element": "havoc",
+        "weapon": "sword",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "1.4",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/camellya.webp",
+            "mid": "/images/characters-profile/camellya.webp",
+            "filter_image": "/images/characters-filter/camellya.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg"
+        ]
+    },
+    {
+        "id": "youhu",
+        "name": "Youhu",
+        "arabicName": "يوهو",
+        "url": "/characters/youhu/",
+        "arabicUrl": "/ar/characters/youhu/",
+        "element": "glacio",
+        "weapon": "gauntlets",
+        "stars": 4,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.3",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/youhu.webp",
+            "mid": "/images/characters-profile/youhu.webp",
+            "filter_image": "/images/characters-filter/youhu.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen"
+        ]
+    },
+    {
+        "id": "shorekeeper",
+        "name": "Shorekeeper",
+        "arabicName": "شوركيبر",
+        "url": "/characters/shorekeeper/",
+        "arabicUrl": "/ar/characters/shorekeeper/",
+        "element": "spectro",
+        "weapon": "rectifier",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "1.3",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/shorekeeper.webp",
+            "mid": "/images/characters-profile/shorekeeper.webp",
+            "filter_image": "/images/characters-filter/shorekeeper.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "hpPct",
+            "hp",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "xiangli-yao",
+        "name": "Xiangli Yao",
+        "arabicName": "شانقلي ياو",
+        "url": "/characters/xiangli-yao/",
+        "arabicUrl": "/ar/characters/xiangli-yao/",
+        "element": "electro",
+        "weapon": "gauntlets",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "1.2",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/xiangli-yao.webp",
+            "mid": "/images/characters-profile/xiangli-yao.webp",
+            "filter_image": "/images/characters-filter/xiangli-yao.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "zhezhi",
+        "name": "Zhezhi",
+        "arabicName": "جيجي",
+        "url": "/characters/zhezhi/",
+        "arabicUrl": "/ar/characters/zhezhi/",
+        "element": "glacio",
+        "weapon": "rectifier",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "1.2",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/zhezhi.webp",
+            "mid": "/images/characters-profile/zhezhi.webp",
+            "filter_image": "/images/characters-filter/zhezhi.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg"
+        ]
+    },
+    {
+        "id": "changli",
+        "name": "Changli",
+        "arabicName": "شانقلي",
+        "url": "/characters/changli/",
+        "arabicUrl": "/ar/characters/changli/",
+        "element": "fusion",
+        "weapon": "sword",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "1.1",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/changli.webp",
+            "mid": "/images/characters-profile/changli.webp",
+            "filter_image": "/images/characters-filter/changli.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "skillDmg"
+        ]
+    },
+    {
+        "id": "jinhsi",
+        "name": "Jinhsi",
+        "arabicName": "جنشي",
+        "url": "/characters/jinhsi/",
+        "arabicUrl": "/ar/characters/jinhsi/",
+        "element": "spectro",
+        "weapon": "broadblade",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "1.1",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/jinhsi.webp",
+            "mid": "/images/characters-profile/jinhsi.webp",
+            "filter_image": "/images/characters-filter/jinhsi.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "skillDmg"
+        ]
+    },
+    {
+        "id": "yinlin",
+        "name": "Yinlin",
+        "arabicName": "ينلن",
+        "url": "/characters/yinlin/",
+        "arabicUrl": "/ar/characters/yinlin/",
+        "element": "electro",
+        "weapon": "rectifier",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/yinlin.webp",
+            "mid": "/images/characters-profile/yinlin.webp",
+            "filter_image": "/images/characters-filter/yinlin.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "skillDmg"
+        ]
+    },
+    {
+        "id": "rover-havoc",
+        "name": "Rover Havoc",
+        "arabicName": "روفر هافوك",
+        "url": "/characters/rover-havoc/",
+        "arabicUrl": "/ar/characters/rover-havoc/",
+        "element": "havoc",
+        "weapon": "sword",
+        "stars": 5,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/rover-havoc.webp",
+            "mid": "/images/characters-profile/rover-havoc.webp",
+            "filter_image": "/images/characters-filter/rover.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "jiyan",
+        "name": "Jiyan",
+        "arabicName": "جيان",
+        "url": "/characters/jiyan/",
+        "arabicUrl": "/ar/characters/jiyan/",
+        "element": "aero",
+        "weapon": "broadblade",
+        "stars": 5,
+        "leaderboardInvestmentClass": "limited",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/jiyan.webp",
+            "mid": "/images/characters-profile/jiyan.webp",
+            "filter_image": "/images/characters-filter/jiyan.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "heavyDmg"
+        ]
+    },
+    {
+        "id": "jianxin",
+        "name": "Jianxin",
+        "arabicName": "جيانشين",
+        "url": "/characters/jianxin/",
+        "arabicUrl": "/ar/characters/jianxin/",
+        "element": "aero",
+        "weapon": "gauntlets",
+        "stars": 5,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/jianxin.webp",
+            "mid": "/images/characters-profile/jianxin.webp",
+            "filter_image": "/images/characters-filter/jianxin.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "lingyang",
+        "name": "Lingyang",
+        "arabicName": "لنق يانق",
+        "url": "/characters/lingyang/",
+        "arabicUrl": "/ar/characters/lingyang/",
+        "element": "glacio",
+        "weapon": "gauntlets",
+        "stars": 5,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/lingyang.webp",
+            "mid": "/images/characters-profile/lingyang.webp",
+            "filter_image": "/images/characters-filter/lingyang.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg",
+            "skillDmg"
+        ]
+    },
+    {
+        "id": "calcharo",
+        "name": "Calcharo",
+        "arabicName": "كالتشارو",
+        "url": "/characters/calcharo/",
+        "arabicUrl": "/ar/characters/calcharo/",
+        "element": "electro",
+        "weapon": "broadblade",
+        "stars": 5,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/calcharo.webp",
+            "mid": "/images/characters-profile/calcharo.webp",
+            "filter_image": "/images/characters-filter/calcharo.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "verina",
+        "name": "Verina",
+        "arabicName": "فيرينا",
+        "url": "/characters/verina/",
+        "arabicUrl": "/ar/characters/verina/",
+        "element": "spectro",
+        "weapon": "rectifier",
+        "stars": 5,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/verina.webp",
+            "mid": "/images/characters-profile/verina.webp",
+            "filter_image": "/images/characters-filter/verina.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "no",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen"
+        ]
+    },
+    {
+        "id": "encore",
+        "name": "Encore",
+        "arabicName": "انكور",
+        "url": "/characters/encore/",
+        "arabicUrl": "/ar/characters/encore/",
+        "element": "fusion",
+        "weapon": "rectifier",
+        "stars": 5,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/encore.webp",
+            "mid": "/images/characters-profile/encore.webp",
+            "filter_image": "/images/characters-filter/encore.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg"
+        ]
+    },
+    {
+        "id": "sanhua",
+        "name": "Sanhua",
+        "arabicName": "سانهوا",
+        "url": "/characters/sanhua/",
+        "arabicUrl": "/ar/characters/sanhua/",
+        "element": "glacio",
+        "weapon": "sword",
+        "stars": 4,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/sanhua.webp",
+            "mid": "/images/characters-profile/sanhua.webp",
+            "filter_image": "/images/characters-filter/sanhua.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "skillDmg",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "mortefi",
+        "name": "Mortefi",
+        "arabicName": "مورتيفي",
+        "url": "/characters/mortefi/",
+        "arabicUrl": "/ar/characters/mortefi/",
+        "element": "fusion",
+        "weapon": "pistols",
+        "stars": 4,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/mortefi.webp",
+            "mid": "/images/characters-profile/mortefi.webp",
+            "filter_image": "/images/characters-filter/mortefi.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "danjin",
+        "name": "Danjin",
+        "arabicName": "دانجن",
+        "url": "/characters/danjin/",
+        "arabicUrl": "/ar/characters/danjin/",
+        "element": "havoc",
+        "weapon": "sword",
+        "stars": 4,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/danjin.webp",
+            "mid": "/images/characters-profile/danjin.webp",
+            "filter_image": "/images/characters-filter/danjin.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "heavyDmg",
+            "skillDmg",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "chixia",
+        "name": "Chixia",
+        "arabicName": "شيشيا",
+        "url": "/characters/chixia/",
+        "arabicUrl": "/ar/characters/chixia/",
+        "element": "fusion",
+        "weapon": "pistols",
+        "stars": 4,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/chixia.webp",
+            "mid": "/images/characters-profile/chixia.webp",
+            "filter_image": "/images/characters-filter/chixia.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "skillDmg",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "baizhi",
+        "name": "Baizhi",
+        "arabicName": "بايجي",
+        "url": "/characters/baizhi/",
+        "arabicUrl": "/ar/characters/baizhi/",
+        "element": "glacio",
+        "weapon": "rectifier",
+        "stars": 4,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/baizhi.webp",
+            "mid": "/images/characters-profile/baizhi.webp",
+            "filter_image": "/images/characters-filter/baizhi.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "no",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen"
+        ]
+    },
+    {
+        "id": "yuanwu",
+        "name": "Yuanwu",
+        "arabicName": "يوانوو",
+        "url": "/characters/yuanwu/",
+        "arabicUrl": "/ar/characters/yuanwu/",
+        "element": "electro",
+        "weapon": "gauntlets",
+        "stars": 4,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/yuanwu.webp",
+            "mid": "/images/characters-profile/yuanwu.webp",
+            "filter_image": "/images/characters-filter/yuanwu.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "defPct",
+            "def",
+            "critRate",
+            "critDmg",
+            "energyRegen"
+        ]
+    },
+    {
+        "id": "taoqi",
+        "name": "Taoqi",
+        "arabicName": "تاوتشي",
+        "url": "/characters/taoqi/",
+        "arabicUrl": "/ar/characters/taoqi/",
+        "element": "havoc",
+        "weapon": "broadblade",
+        "stars": 4,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/taoqi.webp",
+            "mid": "/images/characters-profile/taoqi.webp",
+            "filter_image": "/images/characters-filter/taoqi.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "defPct",
+            "def",
+            "critRate",
+            "critDmg",
+            "energyRegen"
+        ]
+    },
+    {
+        "id": "yangyang",
+        "name": "Yangyang",
+        "arabicName": "يانق يانق",
+        "url": "/characters/yangyang/",
+        "arabicUrl": "/ar/characters/yangyang/",
+        "element": "aero",
+        "weapon": "sword",
+        "stars": 4,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/yangyang.webp",
+            "mid": "/images/characters-profile/yangyang.webp",
+            "filter_image": "/images/characters-filter/yangyang.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg",
+            "libDmg"
+        ]
+    },
+    {
+        "id": "aalto",
+        "name": "Aalto",
+        "arabicName": "آلتو",
+        "url": "/characters/aalto/",
+        "arabicUrl": "/ar/characters/aalto/",
+        "element": "aero",
+        "weapon": "pistols",
+        "stars": 4,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/aalto.webp",
+            "mid": "/images/characters-profile/aalto.webp",
+            "filter_image": "/images/characters-filter/aalto.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "basicDmg"
+        ]
+    },
+    {
+        "id": "rover-spectro",
+        "name": "Rover Spectro",
+        "arabicName": "روفر سبيكترو",
+        "url": "/characters/rover-spectro/",
+        "arabicUrl": "/ar/characters/rover-spectro/",
+        "element": "spectro",
+        "weapon": "sword",
+        "stars": 5,
+        "leaderboardInvestmentClass": "free",
+        "version": "1.0",
+        "showInCalculator": true,
+        "calculatorAccess": "everyone",
+        "images": {
+            "small": "/images/characters-profile/rover-spectro.webp",
+            "mid": "/images/characters-profile/rover-spectro.webp",
+            "filter_image": "/images/characters-filter/rover.webp?v=20260731-character-filter-v2"
+        },
+        "readyToCalculate": "yes",
+        "beneficialEchoSubstats": [
+            "atkPct",
+            "flatAtk",
+            "critRate",
+            "critDmg",
+            "energyRegen",
+            "skillDmg",
+            "libDmg"
+        ]
+    }
+]

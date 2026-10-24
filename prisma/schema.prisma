@@ -34,25 +34,11 @@ enum WeaponType {
 }
 
 enum Rarity {
+  ONE_STAR
+  TWO_STAR
+  THREE_STAR
   FOUR_STAR
   FIVE_STAR
-}
-
-enum GuideStatus {
-  DRAFT
-  PROCESSING
-  READY
-  PUBLISHED
-  FAILED
-  ARCHIVED
-}
-
-enum JobStatus {
-  PENDING
-  RUNNING
-  COMPLETED
-  FAILED
-  CANCELLED
 }
 
 enum AdminRole {
@@ -87,26 +73,39 @@ model AdminUser {
 // ─────────────────────────────────────────────────────
 
 model Character {
-  id               String     @id @default(cuid())
-  name             String
-  slug             String     @unique
-  element          Element
-  weaponType       WeaponType
-  rarity           Rarity     @default(FIVE_STAR)
-  portraitPath     String?
-  backgroundPath   String?
-  description      String?    @db.Text
-  sourceUrl        String?
-  sourceVerifiedAt DateTime?
-  isPublished      Boolean    @default(false)
-  isFeatured       Boolean    @default(false)
-  sortOrder        Int        @default(0)
-  tags             String[]   @default([])
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
-
-  guides           BuildGuide[]
-  processingJobs   ProcessingJob[]
+  id                  String     @id @default(cuid())
+  name                String
+  nameAr              String?
+  slug                String     @unique
+  element             Element
+  weaponType          WeaponType
+  rarity              Rarity     @default(FIVE_STAR)
+  portraitPath        String?
+  backgroundPath      String?
+  iconUrl             String?
+  description         String?    @db.Text
+  descriptionAr       String?    @db.Text
+  quote               String?
+  quoteAr             String?
+  role                String?
+  stats               Json?
+  skills              Json?
+  ascensionMaterials  Json?
+  skillMaterials      Json?
+  recommendedWeapons  Json?
+  recommendedEchoes   Json?
+  teamComps           Json?
+  buildTips           String?    @db.Text
+  sourceUrl           String?
+  sourceVerifiedAt    DateTime?
+  isPublished         Boolean    @default(true)
+  isComingSoon        Boolean    @default(false)
+  releaseVersion      String?
+  isFeatured          Boolean    @default(false)
+  sortOrder           Int        @default(0)
+  tags                String[]   @default([])
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
 
   @@index([slug])
   @@index([element])
@@ -116,82 +115,230 @@ model Character {
 }
 
 // ─────────────────────────────────────────────────────
-// BUILD GUIDES
+// WEAPONS
 // ─────────────────────────────────────────────────────
 
-model BuildGuide {
-  id              String      @id @default(cuid())
-  characterId     String
-  title           String
-  version         Int         @default(1)
-  originalPdfPath String?
-  status          GuideStatus @default(DRAFT)
-  pageCount       Int         @default(0)
-  isActive        Boolean     @default(false)
-  notes           String?     @db.Text
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-  publishedAt     DateTime?
+model Weapon {
+  id                   String     @id @default(cuid())
+  slug                 String     @unique
+  name                 String
+  nameAr               String?
+  weaponType           WeaponType
+  rarity               Rarity     @default(FOUR_STAR)
+  stars                Int        @default(4)
+  iconUrl              String?
+  imageBig             String?
+  baseAtk              Int?
+  secondaryStat        String?
+  secondaryStatValue   String?
+  skillName            String?
+  skillNameAr          String?
+  desc                 String?    @db.Text
+  descAr               String?    @db.Text
+  buffs                Json?
+  passiveBuffs         Json?
+  stats                Json?
+  signatureCharacter   String?
+  signatureCharacterId String?
+  compatibleCharacters String[]   @default([])
+  isPublished          Boolean    @default(true)
+  sortOrder            Int        @default(0)
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
 
-  character        Character      @relation(fields: [characterId], references: [id], onDelete: Cascade)
-  pages            GuidePage[]
-  processingJobs   ProcessingJob[]
-
-  @@index([characterId])
-  @@index([status])
-  @@index([isActive])
-  @@map("build_guides")
+  @@index([slug])
+  @@index([weaponType])
+  @@index([rarity])
+  @@index([isPublished])
+  @@map("weapons")
 }
 
 // ─────────────────────────────────────────────────────
-// GUIDE PAGES
+// SONATA SETS
 // ─────────────────────────────────────────────────────
 
-model GuidePage {
+model SonataSet {
+  id                    String   @id @default(cuid())
+  slug                  String   @unique
+  name                  String
+  nameAr                String?
+  iconUrl               String?
+  twoPieceEffect        String?  @db.Text
+  twoPieceEffectAr      String?  @db.Text
+  fivePieceEffect       String?  @db.Text
+  fivePieceEffectAr     String?  @db.Text
+  buffs                 Json?
+  calculatorBuffs       Json?
+  recommendedCharacters String[] @default([])
+  sortOrder             Int      @default(0)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([slug])
+  @@map("sonata_sets")
+}
+
+// ─────────────────────────────────────────────────────
+// ECHOES
+// ─────────────────────────────────────────────────────
+
+model Echo {
+  id                    String   @id @default(cuid())
+  slug                  String   @unique
+  name                  String
+  nameAr                String?
+  echoClass             String?
+  cost                  Int      @default(1)
+  iconUrl               String?
+  cooldown              Float?
+  description           String?  @db.Text
+  descriptionAr         String?  @db.Text
+  sonataSets            String[] @default([])
+  buffs                 Json?
+  possibleMainStats     Json?
+  possibleSubStats      Json?
+  recommendedCharacters String[] @default([])
+  isPublished           Boolean  @default(true)
+  sortOrder             Int      @default(0)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([slug])
+  @@index([cost])
+  @@index([isPublished])
+  @@map("echoes")
+}
+
+// ─────────────────────────────────────────────────────
+// ITEMS & MATERIALS
+// ─────────────────────────────────────────────────────
+
+model Item {
   id            String   @id @default(cuid())
-  guideId       String
-  pageNumber    Int
-  imagePath     String
-  thumbnailPath String?
-  width         Int?
-  height        Int?
-  fileSize      Int?
+  slug          String   @unique
+  name          String
+  nameAr        String?
+  category      String   @default("COMMON")
+  rarity        Int      @default(3)
+  iconUrl       String?
+  description   String?  @db.Text
+  descriptionAr String?  @db.Text
+  source        String?
+  isPublished   Boolean  @default(true)
+  sortOrder     Int      @default(0)
   createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  guide         BuildGuide @relation(fields: [guideId], references: [id], onDelete: Cascade)
-
-  @@unique([guideId, pageNumber])
-  @@index([guideId])
-  @@map("guide_pages")
+  @@index([slug])
+  @@index([category])
+  @@index([rarity])
+  @@index([isPublished])
+  @@map("items")
 }
 
 // ─────────────────────────────────────────────────────
-// PROCESSING JOBS
+// ENEMIES & BOSSES
 // ─────────────────────────────────────────────────────
 
-model ProcessingJob {
-  id           String    @id @default(cuid())
-  characterId  String?
-  guideId      String?
-  status       JobStatus @default(PENDING)
-  progress     Int       @default(0)
-  totalPages   Int?
-  processedPages Int?    @default(0)
-  errorMessage String?   @db.Text
-  metadata     Json?
-  startedAt    DateTime?
-  completedAt  DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+model Enemy {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  name          String
+  nameAr        String?
+  enemyClass    String?
+  elements      String[] @default([])
+  hp            Int?
+  atk           Int?
+  def           Int?
+  description   String?  @db.Text
+  descriptionAr String?  @db.Text
+  iconUrl       String?
+  artworkUrl    String?
+  stats         Json?
+  resistances   Json?
+  skills        Json?
+  rewards       Json?
+  detailUrl     String?
+  isPublished   Boolean  @default(true)
+  sortOrder     Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  character    Character?  @relation(fields: [characterId], references: [id], onDelete: SetNull)
-  guide        BuildGuide? @relation(fields: [guideId], references: [id], onDelete: SetNull)
-
-  @@index([status])
-  @@index([characterId])
-  @@index([guideId])
-  @@map("processing_jobs")
+  @@index([slug])
+  @@index([enemyClass])
+  @@index([isPublished])
+  @@map("enemies")
 }
+
+// ─────────────────────────────────────────────────────
+// TIER LISTS
+// ─────────────────────────────────────────────────────
+
+model TierList {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  titleAr     String?
+  gameVersion String   @default("1.4")
+  category    String   @default("overall")
+  description String?  @db.Text
+  tiers       Json
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@index([isPublished])
+  @@map("tier_lists")
+}
+
+// ─────────────────────────────────────────────────────
+// TEAM COMPOSITIONS
+// ─────────────────────────────────────────────────────
+
+model TeamComp {
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  title            String
+  titleAr          String?
+  description      String?  @db.Text
+  descriptionAr    String?  @db.Text
+  members          Json
+  rotationGuide    String?  @db.Text
+  rotationGuideAr  String?  @db.Text
+  isFeatured       Boolean  @default(false)
+  isPublished      Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isFeatured])
+  @@index([isPublished])
+  @@map("team_comps")
+}
+
+// ─────────────────────────────────────────────────────
+// ANNOUNCEMENTS
+// ─────────────────────────────────────────────────────
+
+model Announcement {
+  id          String   @id @default(cuid())
+  title       String
+  titleAr     String?
+  content     String   @db.Text
+  contentAr   String?  @db.Text
+  category    String   @default("news")
+  isPinned    Boolean  @default(false)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isPinned])
+  @@index([isPublished])
+  @@map("announcements")
+}
+
 
 // ─────────────────────────────────────────────────────
 // SITE SETTINGS
@@ -229,3 +376,4 @@ model AuditLog {
   @@index([createdAt])
   @@map("audit_logs")
 }
+

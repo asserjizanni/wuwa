@@ -15,31 +15,59 @@ async function getCharacters() {
   const list = await safeDb(
     () =>
       prisma.character.findMany({
-        where: { isPublished: true },
+        where: {
+          OR: [{ isPublished: true }, { isComingSoon: true }],
+        },
         select: {
           id: true,
           name: true,
+          nameAr: true,
           slug: true,
           element: true,
           weaponType: true,
           rarity: true,
-          portraitPath: true,
           isPublished: true,
+          isComingSoon: true,
+          releaseVersion: true,
           sortOrder: true,
-          guides: {
-            where: { status: 'PUBLISHED', isActive: true },
-            select: { id: true, title: true, pageCount: true, publishedAt: true },
-            take: 1,
-            orderBy: { publishedAt: 'desc' },
-          },
         },
-        orderBy: [{ sortOrder: 'asc' }, { name: 'asc' }],
+        orderBy: [{ isComingSoon: 'desc' }, { releaseVersion: 'desc' }, { sortOrder: 'asc' }, { name: 'asc' }],
       }),
-    null
+    null,
+    1200,
+    'characters:list:v2',
+    600
   )
 
-  if (list !== null) return list
-  return getStoredCharacters().filter(c => c.isPublished)
+  if (list !== null) {
+    return list.map(c => ({
+      ...c,
+      portraitPath: `/images/characters/${c.slug}.webp`,
+    }))
+  }
+  const fallbackList = getStoredCharacters()
+    .filter(c => c.isPublished || c.isComingSoon)
+    .map(c => ({
+      id: c.id,
+      name: c.name,
+      nameAr: c.nameAr,
+      slug: c.slug,
+      element: c.element,
+      weaponType: c.weaponType,
+      rarity: c.rarity,
+      isPublished: c.isPublished,
+      isComingSoon: Boolean(c.isComingSoon),
+      releaseVersion: c.releaseVersion || null,
+      sortOrder: c.sortOrder ?? 0,
+      portraitPath: c.portraitPath || `/images/characters/${c.slug}.webp`,
+      guides: c.guides ? c.guides.map(g => ({ id: g.id, title: g.title, pageCount: g.pageCount || 1 })) : [],
+    }))
+
+  return fallbackList.sort((a, b) => {
+    if (a.isComingSoon && !b.isComingSoon) return -1
+    if (!a.isComingSoon && b.isComingSoon) return 1
+    return (a.sortOrder ?? 0) - (b.sortOrder ?? 0)
+  })
 }
 
 export default async function CharactersPage() {

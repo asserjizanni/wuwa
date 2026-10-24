@@ -47,6 +47,7 @@ interface CharactersClientProps {
 
 export default function CharactersClient({ initialCharacters }: CharactersClientProps) {
   const [search, setSearch]               = useState('')
+  const [statusFilter, setStatusFilter]   = useState<'ALL' | 'AVAILABLE' | 'COMING_SOON'>('ALL')
   const [element, setElement]             = useState<string | null>(null)
   const [weapon, setWeapon]               = useState<string | null>(null)
   const [rarity, setRarity]               = useState<string | null>(null)
@@ -55,36 +56,69 @@ export default function CharactersClient({ initialCharacters }: CharactersClient
 
   const filtered = useMemo(() => {
     let list = [...initialCharacters]
+
+    // Status filter
+    if (statusFilter === 'AVAILABLE') {
+      list = list.filter(c => !c.isComingSoon && c.isPublished !== false)
+    } else if (statusFilter === 'COMING_SOON') {
+      list = list.filter(c => c.isComingSoon || c.isPublished === false)
+    }
+
     if (search.trim()) {
       const q = search.toLowerCase()
-      list = list.filter(c => c.name.toLowerCase().includes(q))
+      list = list.filter(c => 
+        (c.name && c.name.toLowerCase().includes(q)) ||
+        (c.nameAr && c.nameAr.toLowerCase().includes(q)) ||
+        (c.slug && c.slug.toLowerCase().includes(q))
+      )
     }
     if (element)    list = list.filter(c => c.element    === element)
     if (weapon)     list = list.filter(c => c.weaponType === weapon)
     if (rarity)     list = list.filter(c => c.rarity     === rarity)
     if (guideOnly)  list = list.filter(c => c.guides?.length > 0)
 
-    if (sortBy === 'name') {
-      list.sort((a, b) => a.name.localeCompare(b.name))
-    } else {
-      list.sort((a, b) => {
+    list.sort((a, b) => {
+      // 1. Coming soon characters ALWAYS appear first
+      if (a.isComingSoon && !b.isComingSoon) return -1
+      if (!a.isComingSoon && b.isComingSoon) return 1
+
+      // 2. If both are coming soon, newer release version or sortOrder first
+      if (a.isComingSoon && b.isComingSoon) {
+        if (a.releaseVersion && b.releaseVersion) {
+          const vComp = b.releaseVersion.localeCompare(a.releaseVersion, undefined, { numeric: true })
+          if (vComp !== 0) return vComp
+        }
+        return (a.sortOrder ?? 0) - (b.sortOrder ?? 0)
+      }
+
+      // 3. For regular characters, apply chosen sort (name or guide date)
+      if (sortBy === 'name') {
+        return (a.nameAr || a.name).localeCompare(b.nameAr || b.name)
+      } else {
         const aT = a.guides?.[0]?.publishedAt ? new Date(a.guides[0].publishedAt).getTime() : 0
         const bT = b.guides?.[0]?.publishedAt ? new Date(b.guides[0].publishedAt).getTime() : 0
         return bT - aT
-      })
-    }
+      }
+    })
     return list
-  }, [initialCharacters, search, element, weapon, rarity, guideOnly, sortBy])
+  }, [initialCharacters, statusFilter, search, element, weapon, rarity, guideOnly, sortBy])
 
-  const hasFilters = !!(search || element || weapon || rarity || guideOnly)
-  const clearAll   = () => { setSearch(''); setElement(null); setWeapon(null); setRarity(null); setGuideOnly(false) }
+  const hasFilters = !!(search || statusFilter !== 'ALL' || element || weapon || rarity || guideOnly)
+  const clearAll   = () => {
+    setSearch('')
+    setStatusFilter('ALL')
+    setElement(null)
+    setWeapon(null)
+    setRarity(null)
+    setGuideOnly(false)
+  }
 
   return (
     <div dir="rtl" className="container-main py-10">
 
       {/* ── Filter bar ── */}
       <div
-        className="sticky top-[68px] z-30 mb-8 rounded-2xl border border-white/[0.07] overflow-hidden"
+        className="relative md:sticky md:top-[68px] z-30 mb-8 rounded-2xl border border-white/[0.07] overflow-hidden"
         style={{ background: 'rgba(8,12,20,0.88)', backdropFilter: 'blur(20px)' }}
       >
         <div className="px-5 py-4 space-y-4">
@@ -98,7 +132,7 @@ export default function CharactersClient({ initialCharacters }: CharactersClient
             <input
               id="character-search"
               type="text"
-              placeholder="ابحث عن شخصية..."
+              placeholder="ابحث باسم الشخصية العربية أو الإنجليزية..."
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="input-field pr-10"
@@ -114,7 +148,38 @@ export default function CharactersClient({ initialCharacters }: CharactersClient
           </div>
 
           {/* Filter chips row */}
-          <div className="flex flex-wrap gap-2 items-center">
+          <div className="flex flex-wrap gap-2.5 items-center">
+
+            {/* حالة الصفحة (Page Status) */}
+            <div className="flex items-center gap-1 bg-[#040812] px-2 py-1 rounded-xl border border-white/10">
+              <span className="text-[11px] font-bold text-slate-400 pl-1.5 border-l border-white/10">
+                حالة الصفحة:
+              </span>
+              {[
+                { id: 'ALL', label: 'الكل' },
+                { id: 'AVAILABLE', label: 'متاح' },
+                { id: 'COMING_SOON', label: 'قريباً' },
+              ].map(st => {
+                const active = statusFilter === st.id
+                return (
+                  <button
+                    key={st.id}
+                    onClick={() => setStatusFilter(st.id as any)}
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                      active
+                        ? st.id === 'COMING_SOON'
+                          ? 'bg-amber-500/20 text-amber-300 border border-amber-400/40 shadow-sm'
+                          : 'bg-cyan-500 text-black shadow-sm font-black'
+                        : 'text-slate-400 hover:text-white hover:bg-white/5'
+                    }`}
+                  >
+                    {st.label}
+                  </button>
+                )
+              })}
+            </div>
+
+            <div className="w-px h-5 bg-white/[0.07] hidden sm:block" />
 
             {/* Elements */}
             {ELEMENTS.map(el => {

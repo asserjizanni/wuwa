@@ -143,6 +143,8 @@ export function createStoredCharacter(input: {
     saveDeletedIds(deleted)
   }
 
+  const isComingSoon = Boolean(input.isComingSoon)
+
   const newChar: CharacterFallback = {
     id: `char-${Date.now()}`,
     name: input.name,
@@ -154,8 +156,10 @@ export function createStoredCharacter(input: {
     description: input.description || '',
     portraitPath: input.portraitPath || null,
     backgroundPath: input.backgroundPath || null,
-    sortOrder: characters.length + 1,
+    sortOrder: isComingSoon ? 0 : characters.length + 1,
     isPublished: input.isPublished ?? true,
+    isComingSoon,
+    releaseVersion: input.releaseVersion || null,
     tags: input.tags || [],
     guides: [],
     ...(input.isFeatured !== undefined ? { isFeatured: input.isFeatured } : {}),

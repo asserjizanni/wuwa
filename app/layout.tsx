@@ -1,13 +1,12 @@
 import type { Metadata, Viewport } from 'next'
-import { Noto_Sans_Arabic, Inter } from 'next/font/google'
+import { Tajawal, Inter } from 'next/font/google'
 import './globals.css'
 import ToastProvider from '@/components/common/ToastProvider'
 
-// Arabic-first font stack
-const notoArabic = Noto_Sans_Arabic({
-  subsets: ['arabic'],
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-  variable: '--font-arabic',
+const tajawal = Tajawal({
+  subsets: ['arabic', 'latin'],
+  weight: ['300', '400', '500', '700', '800', '900'],
+  variable: '--font-tajawal',
   display: 'swap',
 })
 
@@ -30,8 +29,8 @@ export const metadata: Metadata = {
     default: 'Wuthering Waves Builds — أدلة الشخصيات والبِلدات',
     template: '%s | Wuthering Waves Builds',
   },
-  description: 'منصة مجتمعية لعرض أدلة الشخصيات والبِلدات. تطوير الموقع: Taleen — المجتمع العربي: وذرينق ويفز العربية.',
-  keywords: ['Wuthering Waves', 'WW builds', 'WuwaFlex', 'الشخصيات', 'البِلدات', 'وذرينق ويفز العربية'],
+  description: 'منصة مجتمعية لعرض أدلة الشخصيات والبِلدات.',
+  keywords: ['Wuthering Waves', 'WW builds', 'الشخصيات', 'البِلدات', 'الأسلحة', 'الإيكوز', 'التيرلست'],
   authors: [{ name: 'Taleen' }],
   icons: {
     icon: '/icon.png',
@@ -56,9 +55,13 @@ export default function RootLayout({
     <html
       lang="ar"
       dir="rtl"
-      className={`${notoArabic.variable} ${inter.variable}`}
+      className={`${tajawal.variable} ${inter.variable}`}
+      suppressHydrationWarning
     >
-      <body className="antialiased">
+      <body
+        className="antialiased bg-[#030508] text-[#eef4ff] font-[family-name:var(--font-tajawal)]"
+        suppressHydrationWarning
+      >
         {children}
         <ToastProvider />
       </body>

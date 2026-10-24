@@ -12,6 +12,22 @@ export interface CharacterFallback {
   sortOrder: number
   isPublished: boolean
   tags: string[]
+  nameAr?: string | null
+  descriptionAr?: string | null
+  role?: string | null
+  version?: string | null
+  stats?: any
+  skills?: any[]
+  sequences?: any[]
+  teamComps?: any[]
+  teams?: any[]
+  ascensionMaterials?: any[]
+  skillMaterials?: any[]
+  allMaterials?: any[]
+  recommendedEchoes?: any
+  recommendedWeapons?: any[]
+  damageDistribution?: any
+  buildTips?: string | null
   guides: {
     id: string
     title: string

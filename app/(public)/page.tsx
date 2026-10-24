@@ -1,20 +1,24 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import HeroSection from '@/components/homepage/HeroSection'
+import DatabaseDirectory from '@/components/homepage/DatabaseDirectory'
 import FeaturedCharacters from '@/components/homepage/FeaturedCharacters'
 import ElementExplorer from '@/components/homepage/ElementExplorer'
 import LatestBuilds from '@/components/homepage/LatestBuilds'
 import BuilderFeature from '@/components/homepage/BuilderFeature'
 import { prisma, safeDb } from '@/lib/db'
-import { getStoredCharacters } from '@/lib/data/characterStore'
 
 export const metadata: Metadata = {
-  title: 'Wuthering Waves Builds — أدلة الشخصيات والبِلدات | وذرينق ويفز العربية',
-  description: 'منصة مجتمعية لعرض أدلة الشخصيات والبِلدات. استعرض أحدث بنيات Resonators في Wuthering Waves، وتوزيع Echoes، ومحاكي WuwaFlex المدمج.',
+  title: 'Wuthering Waves Builds — أدلة وبِلدات وذرينق ويفز العربية',
+  description: 'الموسوعة العربية الشاملة للعبة Wuthering Waves: أدلة الشخصيات، البِلدات، الأسلحة، الإيكو، الأعداء، التيرلست وفرق القتال.',
   openGraph: {
     title: 'Wuthering Waves Builds — وذرينق ويفز العربية',
-    description: 'منصة مجتمعية لعرض أدلة الشخصيات والبِلدات.',
+    description: 'الموسوعة العربية الشاملة للعبة Wuthering Waves: أدلة الشخصيات، البِلدات، الأسلحة، الإيكو، الأعداء، والتيرلست.',
+    siteName: 'Wuthering Waves Builds',
   },
 }
+
+export const revalidate = 3600
 
 async function getFeaturedCharacters() {
   const list = await safeDb(
@@ -24,76 +28,36 @@ async function getFeaturedCharacters() {
         select: {
           id: true,
           name: true,
+          nameAr: true,
           slug: true,
           element: true,
           weaponType: true,
           rarity: true,
-          portraitPath: true,
+          role: true,
           isFeatured: true,
-          guides: {
-            where: { status: 'PUBLISHED', isActive: true },
-            select: { id: true, title: true, pageCount: true },
-            take: 1,
-          },
+          isPublished: true,
+          sortOrder: true,
+          description: true,
+          descriptionAr: true,
         },
         orderBy: [{ isFeatured: 'desc' }, { sortOrder: 'asc' }, { name: 'asc' }],
         take: 8,
       }),
-    null
+    [],
+    1200,
+    'home:featured_characters',
+    600
   )
 
-  if (list !== null) return list
-  return getStoredCharacters().filter(c => c.isPublished).slice(0, 8)
+  return (list || []).map(c => ({
+    ...c,
+    portraitPath: `/images/characters/${c.slug}.webp`,
+  }))
 }
 
 async function getLatestBuilds() {
-  const list = await safeDb(
-    () =>
-      prisma.buildGuide.findMany({
-        where: {
-          status: 'PUBLISHED',
-          isActive: true,
-          character: { isPublished: true },
-        },
-        select: {
-          id: true,
-          title: true,
-          version: true,
-          pageCount: true,
-          publishedAt: true,
-          character: {
-            select: { name: true, slug: true, element: true, portraitPath: true },
-          },
-        },
-        orderBy: { publishedAt: 'desc' },
-        take: 6,
-      }),
-    null
-  )
-
-  if (list !== null) return list
-
-  return getStoredCharacters()
-    .filter(c => c.isPublished)
-    .flatMap(c =>
-      (c.guides || []).map(g => ({
-        id: g.id,
-        title: g.title,
-        version: g.version,
-        pageCount: g.pageCount,
-        publishedAt: g.publishedAt,
-        character: {
-          name: c.name,
-          slug: c.slug,
-          element: c.element,
-          portraitPath: c.portraitPath,
-        },
-      }))
-    )
-    .slice(0, 6)
+  return []
 }
-
-export const revalidate = 3600
 
 export default async function HomePage() {
   const [featured, latestBuilds] = await Promise.all([
@@ -104,7 +68,10 @@ export default async function HomePage() {
   return (
     <>
       <HeroSection />
-      <FeaturedCharacters characters={featured as any[]} />
+      <DatabaseDirectory />
+      <Suspense fallback={<div className="h-64" />}>
+        <FeaturedCharacters characters={featured as any[]} />
+      </Suspense>
       <ElementExplorer />
       <LatestBuilds guides={latestBuilds as any[]} />
       <BuilderFeature />

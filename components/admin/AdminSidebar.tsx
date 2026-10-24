@@ -6,17 +6,21 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  LayoutDashboard, Users, BookOpen, Activity,
+  LayoutDashboard, Users,
   Settings, LogOut, ChevronRight, Shield, Menu, X, ExternalLink,
-  Sparkles, Radio
+  Sparkles, Radio, Package, Trophy, Swords
 } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 const NAV_ITEMS = [
   { href: '/control-center/dashboard', label: 'لوحة التحكم', labelEn: 'Dashboard', icon: LayoutDashboard },
   { href: '/control-center/characters', label: 'الشخصيات', labelEn: 'Characters', icon: Users },
-  { href: '/control-center/guides', label: 'أدلة البناء', labelEn: 'Build Guides', icon: BookOpen },
-  { href: '/control-center/jobs', label: 'مهام المعالجة', labelEn: 'Processing Jobs', icon: Activity },
+  { href: '/control-center/weapons', label: 'الأسلحة', labelEn: 'Weapons', icon: Shield },
+  { href: '/control-center/echoes', label: 'الإيكو والسوناتا', labelEn: 'Echoes & Sets', icon: Sparkles },
+  { href: '/control-center/tier-lists', label: 'التصنيفات (Tier List)', labelEn: 'Tier Lists', icon: Trophy },
+  { href: '/control-center/teams', label: 'الفرق وتشكيلات القتال', labelEn: 'Teams & Comps', icon: Swords },
+  { href: '/control-center/items', label: 'المواد والعناصر', labelEn: 'Items & Materials', icon: Package },
+  { href: '/control-center/enemies', label: 'الأعداء والزعماء', labelEn: 'Enemies', icon: Radio },
   { href: '/control-center/settings', label: 'الإعدادات', labelEn: 'Settings', icon: Settings },
 ]
 

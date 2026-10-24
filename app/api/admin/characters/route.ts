@@ -16,8 +16,12 @@ const createCharacterSchema = z.object({
   description: z.string().max(2000).optional().nullable().or(z.literal('')),
   sourceUrl: z.string().max(500).optional().nullable().or(z.literal('')),
   isPublished: z.boolean().optional().default(true),
+  isComingSoon: z.boolean().optional().default(false),
+  releaseVersion: z.string().max(20).optional().nullable().or(z.literal('')),
   isFeatured: z.boolean().optional().default(false),
   tags: z.array(z.string()).optional().default([]),
+  portraitPath: z.string().optional().nullable().or(z.literal('')),
+  backgroundPath: z.string().optional().nullable().or(z.literal('')),
 })
 
 export async function GET(request: NextRequest) {
@@ -32,26 +36,44 @@ export async function GET(request: NextRequest) {
   const search = searchParams.get('search') || ''
   const element = searchParams.get('element') || ''
   const published = searchParams.get('published')
+  const status = searchParams.get('status') || published
 
   const result = await safeDb(async () => {
     const where: any = {}
     if (search) where.name = { contains: search, mode: 'insensitive' }
     if (element) where.element = element
-    if (published === 'true') where.isPublished = true
-    if (published === 'false') where.isPublished = false
+
+    if (status === 'COMING_SOON') {
+      where.isComingSoon = true
+    } else if (status === 'AVAILABLE' || status === 'true') {
+      where.isPublished = true
+      where.isComingSoon = false
+    } else if (status === 'DRAFT' || status === 'false') {
+      where.isPublished = false
+    }
 
     const [characters, total] = await Promise.all([
       prisma.character.findMany({
         where,
-        include: {
-          guides: {
-            select: { id: true, status: true, isActive: true, pageCount: true, publishedAt: true },
-            orderBy: { createdAt: 'desc' },
-            take: 3,
-          },
-          _count: { select: { guides: true } },
+        select: {
+          id: true,
+          name: true,
+          nameAr: true,
+          slug: true,
+          element: true,
+          weaponType: true,
+          rarity: true,
+          role: true,
+          isPublished: true,
+          isComingSoon: true,
+          releaseVersion: true,
+          isFeatured: true,
+          sortOrder: true,
+          portraitPath: true,
+          createdAt: true,
+          updatedAt: true,
         },
-        orderBy: [{ sortOrder: 'asc' }, { name: 'asc' }],
+        orderBy: [{ isComingSoon: 'desc' }, { sortOrder: 'asc' }, { name: 'asc' }],
         skip: (page - 1) * limit,
         take: limit,
       }),
@@ -72,8 +94,19 @@ export async function GET(request: NextRequest) {
   let list = [...getStoredCharacters()]
   if (search) list = list.filter(c => c.name.toLowerCase().includes(search.toLowerCase()))
   if (element) list = list.filter(c => c.element === element)
-  if (published === 'true') list = list.filter(c => c.isPublished === true)
-  if (published === 'false') list = list.filter(c => c.isPublished === false)
+  if (status === 'COMING_SOON') {
+    list = list.filter(c => Boolean(c.isComingSoon))
+  } else if (status === 'AVAILABLE' || status === 'true') {
+    list = list.filter(c => c.isPublished === true && !c.isComingSoon)
+  } else if (status === 'DRAFT' || status === 'false') {
+    list = list.filter(c => c.isPublished === false)
+  }
+  list.sort((a, b) => {
+    if (a.isComingSoon && !b.isComingSoon) return -1
+    if (!a.isComingSoon && b.isComingSoon) return 1
+    return (a.sortOrder ?? 0) - (b.sortOrder ?? 0)
+  })
+
   const total = list.length
   const paginated = list.slice((page - 1) * limit, page * limit).map(c => ({
     ...c,
@@ -121,8 +154,13 @@ export async function POST(request: NextRequest) {
             description: data.description || null,
             sourceUrl: data.sourceUrl || null,
             isPublished: data.isPublished,
+            isComingSoon: data.isComingSoon,
+            releaseVersion: data.releaseVersion || null,
+            sortOrder: data.isComingSoon ? 0 : undefined,
             isFeatured: data.isFeatured,
             tags: data.tags,
+            portraitPath: data.portraitPath || null,
+            backgroundPath: data.backgroundPath || null,
           },
         })
 

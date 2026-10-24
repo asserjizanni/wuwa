@@ -1,0 +1,1843 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://arabwuwa.com/ar/enemies/#webpage",
+      "url": "https://arabwuwa.com/ar/enemies/",
+      "name": "الأعداء",
+      "description": "تصفح الأعداء وقارن ستاتهم الأساسية ومقاوماتهم، وتعرّف على تفاصيل كل نوع.",
+      "inLanguage": "ar",
+      "isPartOf": {
+        "@id": "https://arabwuwa.com/#website"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://arabwuwa.com/images/enemies/256w/enemy-330000070-04d3d9d67911d704.webp"
+      },
+      "mainEntity": {
+        "@type": "ItemList",
+        "numberOfItems": 301,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "url": "https://arabwuwa.com/ar/enemies/350000430/",
+            "name": "فانتوم: ميرياد سنير: راستفاير شاسيه"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "url": "https://arabwuwa.com/ar/enemies/350000420/",
+            "name": "فانتوم: سمايتر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "url": "https://arabwuwa.com/ar/enemies/350000410/",
+            "name": "فانتوم: فوربيدن باستيون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "url": "https://arabwuwa.com/ar/enemies/350000400/",
+            "name": "فانتوم: قلوموث"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "url": "https://arabwuwa.com/ar/enemies/350000390/",
+            "name": "فانتوم: كروناكلو"
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "url": "https://arabwuwa.com/ar/enemies/350000380/",
+            "name": "فانتوم: رياكتور هسك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 7,
+            "url": "https://arabwuwa.com/ar/enemies/350000370/",
+            "name": "فانتوم: آيسقلينت دانسر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 8,
+            "url": "https://arabwuwa.com/ar/enemies/350000360/",
+            "name": "فانتوم: سيقيلوم"
+          },
+          {
+            "@type": "ListItem",
+            "position": 9,
+            "url": "https://arabwuwa.com/ar/enemies/350000350/",
+            "name": "فانتوم: توين نوفا: كولابسار بليد"
+          },
+          {
+            "@type": "ListItem",
+            "position": 10,
+            "url": "https://arabwuwa.com/ar/enemies/350000340/",
+            "name": "فانتوم: توين نوفا: نيبيولوس كانون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 11,
+            "url": "https://arabwuwa.com/ar/enemies/350000330/",
+            "name": "فانتوم: زيب زاب"
+          },
+          {
+            "@type": "ListItem",
+            "position": 12,
+            "url": "https://arabwuwa.com/ar/enemies/350000310/",
+            "name": "فانتوم: ذا فولس سوفرن"
+          },
+          {
+            "@type": "ListItem",
+            "position": 13,
+            "url": "https://arabwuwa.com/ar/enemies/350000300/",
+            "name": "فانتوم: تشوب تشوب"
+          },
+          {
+            "@type": "ListItem",
+            "position": 14,
+            "url": "https://arabwuwa.com/ar/enemies/350000290/",
+            "name": "فانتوم: لايونس أوف غلوري"
+          },
+          {
+            "@type": "ListItem",
+            "position": 15,
+            "url": "https://arabwuwa.com/ar/enemies/350000280/",
+            "name": "فانتوم: كيراسور"
+          },
+          {
+            "@type": "ListItem",
+            "position": 16,
+            "url": "https://arabwuwa.com/ar/enemies/350000270/",
+            "name": "فانتوم: فالاسي أوف نو ريتيرن"
+          },
+          {
+            "@type": "ListItem",
+            "position": 17,
+            "url": "https://arabwuwa.com/ar/enemies/350000260/",
+            "name": "فانتوم: نايتمير: مورنينق إيكس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 18,
+            "url": "https://arabwuwa.com/ar/enemies/350000250/",
+            "name": "فانتوم: نايتمير: إنفيرنو رايدر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 19,
+            "url": "https://arabwuwa.com/ar/enemies/350000240/",
+            "name": "فانتوم: كادل وادل"
+          },
+          {
+            "@type": "ListItem",
+            "position": 20,
+            "url": "https://arabwuwa.com/ar/enemies/350000230/",
+            "name": "فانتوم: فاي إيقنيس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 21,
+            "url": "https://arabwuwa.com/ar/enemies/350000220/",
+            "name": "فانتوم: تشست ميميك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 22,
+            "url": "https://arabwuwa.com/ar/enemies/350000210/",
+            "name": "فانتوم: نايتمير: كراونلس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 23,
+            "url": "https://arabwuwa.com/ar/enemies/350000200/",
+            "name": "فانتوم: كراونلس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 24,
+            "url": "https://arabwuwa.com/ar/enemies/350000190/",
+            "name": "فانتوم: نيمبوس ريث"
+          },
+          {
+            "@type": "ListItem",
+            "position": 25,
+            "url": "https://arabwuwa.com/ar/enemies/350000180/",
+            "name": "فانتوم: كابيتانيوس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 26,
+            "url": "https://arabwuwa.com/ar/enemies/350000170/",
+            "name": "فانتوم: لوريلاي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 27,
+            "url": "https://arabwuwa.com/ar/enemies/350000160/",
+            "name": "فانتوم: سنتري كونستركت"
+          },
+          {
+            "@type": "ListItem",
+            "position": 28,
+            "url": "https://arabwuwa.com/ar/enemies/350000150/",
+            "name": "فانتوم: كويستلس نايت"
+          },
+          {
+            "@type": "ListItem",
+            "position": 29,
+            "url": "https://arabwuwa.com/ar/enemies/350000140/",
+            "name": "فانتوم: فيتريوم دانسر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 30,
+            "url": "https://arabwuwa.com/ar/enemies/350000130/",
+            "name": "فانتوم: ديقي دوقي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 31,
+            "url": "https://arabwuwa.com/ar/enemies/350000120/",
+            "name": "فانتوم: إنفيرنو رايدر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 32,
+            "url": "https://arabwuwa.com/ar/enemies/350000110/",
+            "name": "فانتوم: لوميسكيل كونستركت"
+          },
+          {
+            "@type": "ListItem",
+            "position": 33,
+            "url": "https://arabwuwa.com/ar/enemies/350000100/",
+            "name": "فانتوم: قلبف"
+          },
+          {
+            "@type": "ListItem",
+            "position": 34,
+            "url": "https://arabwuwa.com/ar/enemies/350000090/",
+            "name": "فانتوم: دريملس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 35,
+            "url": "https://arabwuwa.com/ar/enemies/350000080/",
+            "name": "فانتوم: لايت كراشر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 36,
+            "url": "https://arabwuwa.com/ar/enemies/350000070/",
+            "name": "فانتوم: كلانق بانق"
+          },
+          {
+            "@type": "ListItem",
+            "position": 37,
+            "url": "https://arabwuwa.com/ar/enemies/350000060/",
+            "name": "فانتوم: إمبيرماننس هيرون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 38,
+            "url": "https://arabwuwa.com/ar/enemies/350000050/",
+            "name": "فانتوم: فيليان بيرينقال"
+          },
+          {
+            "@type": "ListItem",
+            "position": 39,
+            "url": "https://arabwuwa.com/ar/enemies/350000040/",
+            "name": "فانتوم: ثندرينق ميفيس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 40,
+            "url": "https://arabwuwa.com/ar/enemies/350000030/",
+            "name": "فانتوم: هورتويس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 41,
+            "url": "https://arabwuwa.com/ar/enemies/350000020/",
+            "name": "فانتوم: روكستيدي قارديان"
+          },
+          {
+            "@type": "ListItem",
+            "position": 42,
+            "url": "https://arabwuwa.com/ar/enemies/350000010/",
+            "name": "فانتوم: مورنينق إيكس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 43,
+            "url": "https://arabwuwa.com/ar/enemies/340000320/",
+            "name": "كالاميتي إفيجي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 44,
+            "url": "https://arabwuwa.com/ar/enemies/340000310/",
+            "name": "ثاوزند بابت بافيليون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 45,
+            "url": "https://arabwuwa.com/ar/enemies/340000300/",
+            "name": "ميرياد سنير: راستفاير شاسيه"
+          },
+          {
+            "@type": "ListItem",
+            "position": 46,
+            "url": "https://arabwuwa.com/ar/enemies/340000291/",
+            "name": "ريمينيسنس - نايتمير: آدم سماشر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 47,
+            "url": "https://arabwuwa.com/ar/enemies/340000290/",
+            "name": "نايتمير: آدم سماشر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 48,
+            "url": "https://arabwuwa.com/ar/enemies/340000281/",
+            "name": "ريمينيسنس: دينيا"
+          },
+          {
+            "@type": "ListItem",
+            "position": 49,
+            "url": "https://arabwuwa.com/ar/enemies/340000280/",
+            "name": "دينيا"
+          },
+          {
+            "@type": "ListItem",
+            "position": 50,
+            "url": "https://arabwuwa.com/ar/enemies/340000271/",
+            "name": "ريمينيسنس: ثرينوديان - فويدبورن كونستركت"
+          },
+          {
+            "@type": "ListItem",
+            "position": 51,
+            "url": "https://arabwuwa.com/ar/enemies/340000270/",
+            "name": "ألف-1 كرييشن"
+          },
+          {
+            "@type": "ListItem",
+            "position": 52,
+            "url": "https://arabwuwa.com/ar/enemies/340000261/",
+            "name": "ديسوليت أباريشن"
+          },
+          {
+            "@type": "ListItem",
+            "position": 53,
+            "url": "https://arabwuwa.com/ar/enemies/340000260/",
+            "name": "نيملس إكسبلورر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 54,
+            "url": "https://arabwuwa.com/ar/enemies/340000252/",
+            "name": "ستيلار ويفيرر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 55,
+            "url": "https://arabwuwa.com/ar/enemies/340000251/",
+            "name": "سيقيلوم"
+          },
+          {
+            "@type": "ListItem",
+            "position": 56,
+            "url": "https://arabwuwa.com/ar/enemies/340000250/",
+            "name": "سيقيلوم"
+          },
+          {
+            "@type": "ListItem",
+            "position": 57,
+            "url": "https://arabwuwa.com/ar/enemies/340000240/",
+            "name": "فويدوورم"
+          },
+          {
+            "@type": "ListItem",
+            "position": 58,
+            "url": "https://arabwuwa.com/ar/enemies/340000230/",
+            "name": "فالاسي أوف نو ريتيرن"
+          },
+          {
+            "@type": "ListItem",
+            "position": 59,
+            "url": "https://arabwuwa.com/ar/enemies/340000222/",
+            "name": "فيرال ميلتداون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 60,
+            "url": "https://arabwuwa.com/ar/enemies/340000221/",
+            "name": "فيرال ميلتداون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 61,
+            "url": "https://arabwuwa.com/ar/enemies/340000220/",
+            "name": "رياكتور هسك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 62,
+            "url": "https://arabwuwa.com/ar/enemies/340000213/",
+            "name": "ستار قيزر أوف سايلنت فويد"
+          },
+          {
+            "@type": "ListItem",
+            "position": 63,
+            "url": "https://arabwuwa.com/ar/enemies/340000212/",
+            "name": "ستار قيزر أوف سايلنت فويد"
+          },
+          {
+            "@type": "ListItem",
+            "position": 64,
+            "url": "https://arabwuwa.com/ar/enemies/340000211/",
+            "name": "هيفاتيا"
+          },
+          {
+            "@type": "ListItem",
+            "position": 65,
+            "url": "https://arabwuwa.com/ar/enemies/340000210/",
+            "name": "هيفاتيا"
+          },
+          {
+            "@type": "ListItem",
+            "position": 66,
+            "url": "https://arabwuwa.com/ar/enemies/340000201/",
+            "name": "ريمينيسنس: ثرينوديان - ليفايثان"
+          },
+          {
+            "@type": "ListItem",
+            "position": 67,
+            "url": "https://arabwuwa.com/ar/enemies/340000200/",
+            "name": "ثرينوديان: ليفايثان"
+          },
+          {
+            "@type": "ListItem",
+            "position": 68,
+            "url": "https://arabwuwa.com/ar/enemies/340000190/",
+            "name": "هيكاتي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 69,
+            "url": "https://arabwuwa.com/ar/enemies/340000181/",
+            "name": "ليدي أوف ذا سي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 70,
+            "url": "https://arabwuwa.com/ar/enemies/340000180/",
+            "name": "ليدي أوف ذا سي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 71,
+            "url": "https://arabwuwa.com/ar/enemies/340000172/",
+            "name": "إترنل هسك أوف سوفرن"
+          },
+          {
+            "@type": "ListItem",
+            "position": 72,
+            "url": "https://arabwuwa.com/ar/enemies/340000171/",
+            "name": "ذا فولس سوفرن"
+          },
+          {
+            "@type": "ListItem",
+            "position": 73,
+            "url": "https://arabwuwa.com/ar/enemies/340000170/",
+            "name": "ذا فولس سوفرن"
+          },
+          {
+            "@type": "ListItem",
+            "position": 74,
+            "url": "https://arabwuwa.com/ar/enemies/340000160/",
+            "name": "نايتمير: هيكاتي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 75,
+            "url": "https://arabwuwa.com/ar/enemies/340000151/",
+            "name": "ريمينيسنس: فينريكو"
+          },
+          {
+            "@type": "ListItem",
+            "position": 76,
+            "url": "https://arabwuwa.com/ar/enemies/340000150/",
+            "name": "فينريكو"
+          },
+          {
+            "@type": "ListItem",
+            "position": 77,
+            "url": "https://arabwuwa.com/ar/enemies/340000142/",
+            "name": "أيبيكس تشامبيون أوف ذا سيتادل"
+          },
+          {
+            "@type": "ListItem",
+            "position": 78,
+            "url": "https://arabwuwa.com/ar/enemies/340000141/",
+            "name": "لايونس أوف غلوري"
+          },
+          {
+            "@type": "ListItem",
+            "position": 79,
+            "url": "https://arabwuwa.com/ar/enemies/340000140/",
+            "name": "لايونس أوف غلوري"
+          },
+          {
+            "@type": "ListItem",
+            "position": 80,
+            "url": "https://arabwuwa.com/ar/enemies/340000130/",
+            "name": "نايتمير: لامبيلومن ميرياد"
+          },
+          {
+            "@type": "ListItem",
+            "position": 81,
+            "url": "https://arabwuwa.com/ar/enemies/340000123/",
+            "name": "فيسل أوف ذا فولن دريم"
+          },
+          {
+            "@type": "ListItem",
+            "position": 82,
+            "url": "https://arabwuwa.com/ar/enemies/340000122/",
+            "name": "فليرديليس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 83,
+            "url": "https://arabwuwa.com/ar/enemies/340000121/",
+            "name": "ريمينيسنس: فليرديليس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 84,
+            "url": "https://arabwuwa.com/ar/enemies/340000120/",
+            "name": "فليرديليس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 85,
+            "url": "https://arabwuwa.com/ar/enemies/340000113/",
+            "name": "فانتوم أوف سنكن ريفري"
+          },
+          {
+            "@type": "ListItem",
+            "position": 86,
+            "url": "https://arabwuwa.com/ar/enemies/340000112/",
+            "name": "كيلبي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 87,
+            "url": "https://arabwuwa.com/ar/enemies/340000110/",
+            "name": "نايتمير: كيلبي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 88,
+            "url": "https://arabwuwa.com/ar/enemies/340000101/",
+            "name": "هيكاتي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 89,
+            "url": "https://arabwuwa.com/ar/enemies/340000100/",
+            "name": "هيكاتي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 90,
+            "url": "https://arabwuwa.com/ar/enemies/340000090/",
+            "name": "جوي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 91,
+            "url": "https://arabwuwa.com/ar/enemies/340000080/",
+            "name": "ثندرينق ميفيس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 92,
+            "url": "https://arabwuwa.com/ar/enemies/340000070/",
+            "name": "دريملس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 93,
+            "url": "https://arabwuwa.com/ar/enemies/340000060/",
+            "name": "ميك أبومينيشن"
+          },
+          {
+            "@type": "ListItem",
+            "position": 94,
+            "url": "https://arabwuwa.com/ar/enemies/340000050/",
+            "name": "سكار: أبيرانت نايتمير"
+          },
+          {
+            "@type": "ListItem",
+            "position": 95,
+            "url": "https://arabwuwa.com/ar/enemies/340000020/",
+            "name": "بيل بورن جيوكيلون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 96,
+            "url": "https://arabwuwa.com/ar/enemies/340000010/",
+            "name": "كراونلس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 97,
+            "url": "https://arabwuwa.com/ar/enemies/330000200/",
+            "name": "نايتمير: مورنينق إيكس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 98,
+            "url": "https://arabwuwa.com/ar/enemies/330000190/",
+            "name": "نايتمير: إنفيرنو رايدر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 99,
+            "url": "https://arabwuwa.com/ar/enemies/330000180/",
+            "name": "نايتمير: كراونلس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 100,
+            "url": "https://arabwuwa.com/ar/enemies/330000170/",
+            "name": "نايتمير: تيمبست ميفيس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 101,
+            "url": "https://arabwuwa.com/ar/enemies/330000160/",
+            "name": "نايتمير: ثندرينق ميفيس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 102,
+            "url": "https://arabwuwa.com/ar/enemies/330000150/",
+            "name": "نايتمير: إمبيرماننس هيرون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 103,
+            "url": "https://arabwuwa.com/ar/enemies/330000140/",
+            "name": "نايتمير: فيليان بيرينقال"
+          },
+          {
+            "@type": "ListItem",
+            "position": 104,
+            "url": "https://arabwuwa.com/ar/enemies/330000131/",
+            "name": "دراقون أوف ديرج"
+          },
+          {
+            "@type": "ListItem",
+            "position": 105,
+            "url": "https://arabwuwa.com/ar/enemies/330000130/",
+            "name": "دراقون أوف ديرج"
+          },
+          {
+            "@type": "ListItem",
+            "position": 106,
+            "url": "https://arabwuwa.com/ar/enemies/330000120/",
+            "name": "سنتري كونستركت"
+          },
+          {
+            "@type": "ListItem",
+            "position": 107,
+            "url": "https://arabwuwa.com/ar/enemies/330000111/",
+            "name": "لوريلاي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 108,
+            "url": "https://arabwuwa.com/ar/enemies/330000110/",
+            "name": "لوريلاي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 109,
+            "url": "https://arabwuwa.com/ar/enemies/330000100/",
+            "name": "سكار: لايتبين ريفيرسال"
+          },
+          {
+            "@type": "ListItem",
+            "position": 110,
+            "url": "https://arabwuwa.com/ar/enemies/330000070/",
+            "name": "فالاسي أوف نو ريتيرن"
+          },
+          {
+            "@type": "ListItem",
+            "position": 111,
+            "url": "https://arabwuwa.com/ar/enemies/330000060/",
+            "name": "مورنينق إيكس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 112,
+            "url": "https://arabwuwa.com/ar/enemies/330000050/",
+            "name": "فيليان بيرينقال"
+          },
+          {
+            "@type": "ListItem",
+            "position": 113,
+            "url": "https://arabwuwa.com/ar/enemies/330000040/",
+            "name": "لامبيلومن ميرياد"
+          },
+          {
+            "@type": "ListItem",
+            "position": 114,
+            "url": "https://arabwuwa.com/ar/enemies/330000030/",
+            "name": "إمبيرماننس هيرون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 115,
+            "url": "https://arabwuwa.com/ar/enemies/330000020/",
+            "name": "إنفيرنو رايدر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 116,
+            "url": "https://arabwuwa.com/ar/enemies/330000010/",
+            "name": "تيمبست ميفيس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 117,
+            "url": "https://arabwuwa.com/ar/enemies/320000690/",
+            "name": "سكاي ووتش لانسر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 118,
+            "url": "https://arabwuwa.com/ar/enemies/320000680/",
+            "name": "فوربيدن باستيون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 119,
+            "url": "https://arabwuwa.com/ar/enemies/320000670/",
+            "name": "فوق لايونارك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 120,
+            "url": "https://arabwuwa.com/ar/enemies/320000660/",
+            "name": "فويدوينق موث"
+          },
+          {
+            "@type": "ListItem",
+            "position": 121,
+            "url": "https://arabwuwa.com/ar/enemies/320000650/",
+            "name": "فاقوسايت: ميزيرارك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 122,
+            "url": "https://arabwuwa.com/ar/enemies/320000640/",
+            "name": "فاقوسايت: هيستيرارك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 123,
+            "url": "https://arabwuwa.com/ar/enemies/320000630/",
+            "name": "فاقوسايت: بايبولارك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 124,
+            "url": "https://arabwuwa.com/ar/enemies/320000620/",
+            "name": "فراكتسيدوس ميلينر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 125,
+            "url": "https://arabwuwa.com/ar/enemies/320000610/",
+            "name": "قلوموث"
+          },
+          {
+            "@type": "ListItem",
+            "position": 126,
+            "url": "https://arabwuwa.com/ar/enemies/320000601/",
+            "name": "ريمينيسنس: كروناكلو"
+          },
+          {
+            "@type": "ListItem",
+            "position": 127,
+            "url": "https://arabwuwa.com/ar/enemies/320000600/",
+            "name": "كروناكلو"
+          },
+          {
+            "@type": "ListItem",
+            "position": 128,
+            "url": "https://arabwuwa.com/ar/enemies/320000590/",
+            "name": "كرونابلايت"
+          },
+          {
+            "@type": "ListItem",
+            "position": 129,
+            "url": "https://arabwuwa.com/ar/enemies/320000580/",
+            "name": "ويندلاش كوليويد"
+          },
+          {
+            "@type": "ListItem",
+            "position": 130,
+            "url": "https://arabwuwa.com/ar/enemies/320000570/",
+            "name": "فروستبايت كوليويد"
+          },
+          {
+            "@type": "ListItem",
+            "position": 131,
+            "url": "https://arabwuwa.com/ar/enemies/320000560/",
+            "name": "سيبركات براولر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 132,
+            "url": "https://arabwuwa.com/ar/enemies/320000550/",
+            "name": "سيبركات ريفر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 133,
+            "url": "https://arabwuwa.com/ar/enemies/320000540/",
+            "name": "سبيس تريك إكسبلورر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 134,
+            "url": "https://arabwuwa.com/ar/enemies/320000530/",
+            "name": "آيرنهوف"
+          },
+          {
+            "@type": "ListItem",
+            "position": 135,
+            "url": "https://arabwuwa.com/ar/enemies/320000520/",
+            "name": "مايننق ريندير"
+          },
+          {
+            "@type": "ListItem",
+            "position": 136,
+            "url": "https://arabwuwa.com/ar/enemies/320000510/",
+            "name": "فلورا ريندير"
+          },
+          {
+            "@type": "ListItem",
+            "position": 137,
+            "url": "https://arabwuwa.com/ar/enemies/320000500/",
+            "name": "توين نوفا: كولابسار بليد"
+          },
+          {
+            "@type": "ListItem",
+            "position": 138,
+            "url": "https://arabwuwa.com/ar/enemies/320000490/",
+            "name": "توين نوفا: نيبيولوس كانون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 139,
+            "url": "https://arabwuwa.com/ar/enemies/320000480/",
+            "name": "نايتمير: روزشرووم"
+          },
+          {
+            "@type": "ListItem",
+            "position": 140,
+            "url": "https://arabwuwa.com/ar/enemies/320000470/",
+            "name": "نايتمير: فيريدبليز سوريان"
+          },
+          {
+            "@type": "ListItem",
+            "position": 141,
+            "url": "https://arabwuwa.com/ar/enemies/320000460/",
+            "name": "نايتمير: سايان فيذرد هيرون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 142,
+            "url": "https://arabwuwa.com/ar/enemies/320000450/",
+            "name": "نايتمير: فايولت فيذرد هيرون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 143,
+            "url": "https://arabwuwa.com/ar/enemies/320000440/",
+            "name": "كوروسورس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 144,
+            "url": "https://arabwuwa.com/ar/enemies/320000430/",
+            "name": "نايتمير: تامبورينيست"
+          },
+          {
+            "@type": "ListItem",
+            "position": 145,
+            "url": "https://arabwuwa.com/ar/enemies/320000420/",
+            "name": "فراكتسيدوس إنسبكتر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 146,
+            "url": "https://arabwuwa.com/ar/enemies/320000410/",
+            "name": "أبيس كريست قلادييتر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 147,
+            "url": "https://arabwuwa.com/ar/enemies/320000400/",
+            "name": "ثندر كريست قلادييتر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 148,
+            "url": "https://arabwuwa.com/ar/enemies/320000390/",
+            "name": "فروست كريست قلادييتر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 149,
+            "url": "https://arabwuwa.com/ar/enemies/320000380/",
+            "name": "لايت كريست قلادييتر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 150,
+            "url": "https://arabwuwa.com/ar/enemies/320000370/",
+            "name": "قيل كريست قلادييتر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 151,
+            "url": "https://arabwuwa.com/ar/enemies/320000360/",
+            "name": "فليم كريست قلادييتر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 152,
+            "url": "https://arabwuwa.com/ar/enemies/320000350/",
+            "name": "بيلقريمز شيل"
+          },
+          {
+            "@type": "ListItem",
+            "position": 153,
+            "url": "https://arabwuwa.com/ar/enemies/320000340/",
+            "name": "كيراسور"
+          },
+          {
+            "@type": "ListItem",
+            "position": 154,
+            "url": "https://arabwuwa.com/ar/enemies/320000330/",
+            "name": "كابيتانيوس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 155,
+            "url": "https://arabwuwa.com/ar/enemies/320000320/",
+            "name": "هوريكلو"
+          },
+          {
+            "@type": "ListItem",
+            "position": 156,
+            "url": "https://arabwuwa.com/ar/enemies/320000310/",
+            "name": "ريج أقينست ذا ستاتشو"
+          },
+          {
+            "@type": "ListItem",
+            "position": 157,
+            "url": "https://arabwuwa.com/ar/enemies/320000300/",
+            "name": "كادل وادل"
+          },
+          {
+            "@type": "ListItem",
+            "position": 158,
+            "url": "https://arabwuwa.com/ar/enemies/320000290/",
+            "name": "فيتريوم دانسر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 159,
+            "url": "https://arabwuwa.com/ar/enemies/320000280/",
+            "name": "تشوب تشوب"
+          },
+          {
+            "@type": "ListItem",
+            "position": 160,
+            "url": "https://arabwuwa.com/ar/enemies/320000270/",
+            "name": "أبيسال ميركاتور"
+          },
+          {
+            "@type": "ListItem",
+            "position": 161,
+            "url": "https://arabwuwa.com/ar/enemies/320000260/",
+            "name": "أبيسال قلاديوس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 162,
+            "url": "https://arabwuwa.com/ar/enemies/320000250/",
+            "name": "أبيسال باتريسيوس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 163,
+            "url": "https://arabwuwa.com/ar/enemies/320000240/",
+            "name": "نوكتورنوس نايت"
+          },
+          {
+            "@type": "ListItem",
+            "position": 164,
+            "url": "https://arabwuwa.com/ar/enemies/320000230/",
+            "name": "ديورنوس نايت"
+          },
+          {
+            "@type": "ListItem",
+            "position": 165,
+            "url": "https://arabwuwa.com/ar/enemies/320000220/",
+            "name": "كويستلس نايت"
+          },
+          {
+            "@type": "ListItem",
+            "position": 166,
+            "url": "https://arabwuwa.com/ar/enemies/320000210/",
+            "name": "لايت كراشر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 167,
+            "url": "https://arabwuwa.com/ar/enemies/320000200/",
+            "name": "لوميسكيل كونستركت"
+          },
+          {
+            "@type": "ListItem",
+            "position": 168,
+            "url": "https://arabwuwa.com/ar/enemies/320000190/",
+            "name": "قلاشيو دريدمين"
+          },
+          {
+            "@type": "ListItem",
+            "position": 169,
+            "url": "https://arabwuwa.com/ar/enemies/320000180/",
+            "name": "أوتوبابت سكاوت"
+          },
+          {
+            "@type": "ListItem",
+            "position": 170,
+            "url": "https://arabwuwa.com/ar/enemies/320000170/",
+            "name": "هووتشيف مينس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 171,
+            "url": "https://arabwuwa.com/ar/enemies/320000160/",
+            "name": "فراكتسيدوس إكسيكيوشنر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 172,
+            "url": "https://arabwuwa.com/ar/enemies/320000150/",
+            "name": "إكسايل تيكنيشن"
+          },
+          {
+            "@type": "ListItem",
+            "position": 173,
+            "url": "https://arabwuwa.com/ar/enemies/320000140/",
+            "name": "إكسايل ليدر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 174,
+            "url": "https://arabwuwa.com/ar/enemies/320000130/",
+            "name": "كارابيس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 175,
+            "url": "https://arabwuwa.com/ar/enemies/320000120/",
+            "name": "سبيرباك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 176,
+            "url": "https://arabwuwa.com/ar/enemies/320000111/",
+            "name": "هووتشيف"
+          },
+          {
+            "@type": "ListItem",
+            "position": 177,
+            "url": "https://arabwuwa.com/ar/enemies/320000110/",
+            "name": "هووتشيف سايكلون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 178,
+            "url": "https://arabwuwa.com/ar/enemies/320000100/",
+            "name": "هافوك دريدمين"
+          },
+          {
+            "@type": "ListItem",
+            "position": 179,
+            "url": "https://arabwuwa.com/ar/enemies/320000090/",
+            "name": "روزشرووم"
+          },
+          {
+            "@type": "ListItem",
+            "position": 180,
+            "url": "https://arabwuwa.com/ar/enemies/320000080/",
+            "name": "فيريدبليز سوريان"
+          },
+          {
+            "@type": "ListItem",
+            "position": 181,
+            "url": "https://arabwuwa.com/ar/enemies/320000070/",
+            "name": "كازم قارديان"
+          },
+          {
+            "@type": "ListItem",
+            "position": 182,
+            "url": "https://arabwuwa.com/ar/enemies/320000060/",
+            "name": "روكستيدي قارديان"
+          },
+          {
+            "@type": "ListItem",
+            "position": 183,
+            "url": "https://arabwuwa.com/ar/enemies/320000050/",
+            "name": "تامبورينيست"
+          },
+          {
+            "@type": "ListItem",
+            "position": 184,
+            "url": "https://arabwuwa.com/ar/enemies/320000040/",
+            "name": "فلوتست"
+          },
+          {
+            "@type": "ListItem",
+            "position": 185,
+            "url": "https://arabwuwa.com/ar/enemies/320000030/",
+            "name": "سايان فيذرد هيرون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 186,
+            "url": "https://arabwuwa.com/ar/enemies/320000020/",
+            "name": "فايولت فيذرد هيرون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 187,
+            "url": "https://arabwuwa.com/ar/enemies/320000010/",
+            "name": "ستونوول بريسر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 188,
+            "url": "https://arabwuwa.com/ar/enemies/310001030/",
+            "name": "جيد نيذر سيربنت"
+          },
+          {
+            "@type": "ListItem",
+            "position": 189,
+            "url": "https://arabwuwa.com/ar/enemies/310001020/",
+            "name": "سمولدر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 190,
+            "url": "https://arabwuwa.com/ar/enemies/310001010/",
+            "name": "فوق لايونارك: هيد"
+          },
+          {
+            "@type": "ListItem",
+            "position": 191,
+            "url": "https://arabwuwa.com/ar/enemies/310001000/",
+            "name": "فوق لايونارك: بودي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 192,
+            "url": "https://arabwuwa.com/ar/enemies/310000990/",
+            "name": "كيرنل بابت: فرايت"
+          },
+          {
+            "@type": "ListItem",
+            "position": 193,
+            "url": "https://arabwuwa.com/ar/enemies/310000980/",
+            "name": "كيرنل بابت: قريف"
+          },
+          {
+            "@type": "ListItem",
+            "position": 194,
+            "url": "https://arabwuwa.com/ar/enemies/310000970/",
+            "name": "كيرنل بابت: ريفلكشن"
+          },
+          {
+            "@type": "ListItem",
+            "position": 195,
+            "url": "https://arabwuwa.com/ar/enemies/310000960/",
+            "name": "كيرنل بابت: ووري"
+          },
+          {
+            "@type": "ListItem",
+            "position": 196,
+            "url": "https://arabwuwa.com/ar/enemies/310000950/",
+            "name": "كيرنل بابت: آنقر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 197,
+            "url": "https://arabwuwa.com/ar/enemies/310000940/",
+            "name": "كيرنل بابت: جوي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 198,
+            "url": "https://arabwuwa.com/ar/enemies/310000930/",
+            "name": "أوريات بيكيت"
+          },
+          {
+            "@type": "ListItem",
+            "position": 199,
+            "url": "https://arabwuwa.com/ar/enemies/310000920/",
+            "name": "ستون بيكيت"
+          },
+          {
+            "@type": "ListItem",
+            "position": 200,
+            "url": "https://arabwuwa.com/ar/enemies/310000910/",
+            "name": "بورسلين بيكيت"
+          },
+          {
+            "@type": "ListItem",
+            "position": 201,
+            "url": "https://arabwuwa.com/ar/enemies/310000900/",
+            "name": "سمايتر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 202,
+            "url": "https://arabwuwa.com/ar/enemies/310000890/",
+            "name": "نايتمير: سبيك أوبس كوربو"
+          },
+          {
+            "@type": "ListItem",
+            "position": 203,
+            "url": "https://arabwuwa.com/ar/enemies/310000880/",
+            "name": "نايتمير: سيكيوريتي كوربو"
+          },
+          {
+            "@type": "ListItem",
+            "position": 204,
+            "url": "https://arabwuwa.com/ar/enemies/310000870/",
+            "name": "نايتمير: آرمد كوربو"
+          },
+          {
+            "@type": "ListItem",
+            "position": 205,
+            "url": "https://arabwuwa.com/ar/enemies/310000860/",
+            "name": "فراكتسيدوس مودول"
+          },
+          {
+            "@type": "ListItem",
+            "position": 206,
+            "url": "https://arabwuwa.com/ar/enemies/310000850/",
+            "name": "فراكتسيدوس ريبر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 207,
+            "url": "https://arabwuwa.com/ar/enemies/310000840/",
+            "name": "شادو ستيبر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 208,
+            "url": "https://arabwuwa.com/ar/enemies/310000830/",
+            "name": "آيسقلينت دانسر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 209,
+            "url": "https://arabwuwa.com/ar/enemies/310000820/",
+            "name": "زيب زاب"
+          },
+          {
+            "@type": "ListItem",
+            "position": 210,
+            "url": "https://arabwuwa.com/ar/enemies/310000810/",
+            "name": "ثندستاف آوتكاست"
+          },
+          {
+            "@type": "ListItem",
+            "position": 211,
+            "url": "https://arabwuwa.com/ar/enemies/310000800/",
+            "name": "آوتكاست إكسيكيوشنر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 212,
+            "url": "https://arabwuwa.com/ar/enemies/310000790/",
+            "name": "جيوسبايدر S4"
+          },
+          {
+            "@type": "ListItem",
+            "position": 213,
+            "url": "https://arabwuwa.com/ar/enemies/310000780/",
+            "name": "مايننق درون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 214,
+            "url": "https://arabwuwa.com/ar/enemies/310000770/",
+            "name": "فلورا درون"
+          },
+          {
+            "@type": "ListItem",
+            "position": 215,
+            "url": "https://arabwuwa.com/ar/enemies/310000760/",
+            "name": "نايتمير: دوارف كاسواري"
+          },
+          {
+            "@type": "ListItem",
+            "position": 216,
+            "url": "https://arabwuwa.com/ar/enemies/310000750/",
+            "name": "نايتمير: تيك تاك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 217,
+            "url": "https://arabwuwa.com/ar/enemies/310000740/",
+            "name": "تريمور واريور"
+          },
+          {
+            "@type": "ListItem",
+            "position": 218,
+            "url": "https://arabwuwa.com/ar/enemies/310000730/",
+            "name": "نايتمير: بيبي روزشرووم"
+          },
+          {
+            "@type": "ListItem",
+            "position": 219,
+            "url": "https://arabwuwa.com/ar/enemies/310000720/",
+            "name": "نايتمير: بيبي فيريدبليز سوريان"
+          },
+          {
+            "@type": "ListItem",
+            "position": 220,
+            "url": "https://arabwuwa.com/ar/enemies/310000710/",
+            "name": "قانق ميمبر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 221,
+            "url": "https://arabwuwa.com/ar/enemies/310000700/",
+            "name": "ميدنايت رينجر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 222,
+            "url": "https://arabwuwa.com/ar/enemies/310000690/",
+            "name": "ميدنايت رينجر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 223,
+            "url": "https://arabwuwa.com/ar/enemies/310000680/",
+            "name": "نايتمير: تشيربف"
+          },
+          {
+            "@type": "ListItem",
+            "position": 224,
+            "url": "https://arabwuwa.com/ar/enemies/310000670/",
+            "name": "نايتمير: قلبف"
+          },
+          {
+            "@type": "ListItem",
+            "position": 225,
+            "url": "https://arabwuwa.com/ar/enemies/310000660/",
+            "name": "نايتمير: إيرو بريداتور"
+          },
+          {
+            "@type": "ListItem",
+            "position": 226,
+            "url": "https://arabwuwa.com/ar/enemies/310000650/",
+            "name": "نايتمير: إلكترو بريداتور"
+          },
+          {
+            "@type": "ListItem",
+            "position": 227,
+            "url": "https://arabwuwa.com/ar/enemies/310000640/",
+            "name": "نايتمير: قلاشيو بريداتور"
+          },
+          {
+            "@type": "ListItem",
+            "position": 228,
+            "url": "https://arabwuwa.com/ar/enemies/310000630/",
+            "name": "نايتمير: هافوك واريور"
+          },
+          {
+            "@type": "ListItem",
+            "position": 229,
+            "url": "https://arabwuwa.com/ar/enemies/310000620/",
+            "name": "أبيسال قن ماستر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 230,
+            "url": "https://arabwuwa.com/ar/enemies/310000610/",
+            "name": "ديفوتيز فليش"
+          },
+          {
+            "@type": "ListItem",
+            "position": 231,
+            "url": "https://arabwuwa.com/ar/enemies/310000600/",
+            "name": "هافوك دريك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 232,
+            "url": "https://arabwuwa.com/ar/enemies/310000590/",
+            "name": "سبيكترو دريك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 233,
+            "url": "https://arabwuwa.com/ar/enemies/310000580/",
+            "name": "فيوجن دريك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 234,
+            "url": "https://arabwuwa.com/ar/enemies/310000570/",
+            "name": "قلاشيو دريك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 235,
+            "url": "https://arabwuwa.com/ar/enemies/310000560/",
+            "name": "إلكترو دريك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 236,
+            "url": "https://arabwuwa.com/ar/enemies/310000550/",
+            "name": "إيرو دريك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 237,
+            "url": "https://arabwuwa.com/ar/enemies/310000540/",
+            "name": "ساسيردوس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 238,
+            "url": "https://arabwuwa.com/ar/enemies/310000530/",
+            "name": "ساجيتاريو"
+          },
+          {
+            "@type": "ListItem",
+            "position": 239,
+            "url": "https://arabwuwa.com/ar/enemies/310000520/",
+            "name": "لا قوارديا"
+          },
+          {
+            "@type": "ListItem",
+            "position": 240,
+            "url": "https://arabwuwa.com/ar/enemies/310000510/",
+            "name": "إيرو بريزم"
+          },
+          {
+            "@type": "ListItem",
+            "position": 241,
+            "url": "https://arabwuwa.com/ar/enemies/310000500/",
+            "name": "كالسيفايد جنروك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 242,
+            "url": "https://arabwuwa.com/ar/enemies/310000490/",
+            "name": "قولدن جنروك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 243,
+            "url": "https://arabwuwa.com/ar/enemies/310000480/",
+            "name": "تشست ميميك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 244,
+            "url": "https://arabwuwa.com/ar/enemies/310000470/",
+            "name": "ديقي دوقي"
+          },
+          {
+            "@type": "ListItem",
+            "position": 245,
+            "url": "https://arabwuwa.com/ar/enemies/310000460/",
+            "name": "لوتي لوست"
+          },
+          {
+            "@type": "ListItem",
+            "position": 246,
+            "url": "https://arabwuwa.com/ar/enemies/310000450/",
+            "name": "هوكس بوكس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 247,
+            "url": "https://arabwuwa.com/ar/enemies/310000440/",
+            "name": "نيمبوس ريث"
+          },
+          {
+            "@type": "ListItem",
+            "position": 248,
+            "url": "https://arabwuwa.com/ar/enemies/310000430/",
+            "name": "فاي إيقنيس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 249,
+            "url": "https://arabwuwa.com/ar/enemies/310000420/",
+            "name": "تشوب تشوب: رايتلس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 250,
+            "url": "https://arabwuwa.com/ar/enemies/310000410/",
+            "name": "تشوب تشوب: ليفتلس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 251,
+            "url": "https://arabwuwa.com/ar/enemies/310000400/",
+            "name": "تشوب تشوب: هيدلس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 252,
+            "url": "https://arabwuwa.com/ar/enemies/310000390/",
+            "name": "فروستسكورج ستوكر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 253,
+            "url": "https://arabwuwa.com/ar/enemies/310000380/",
+            "name": "فولتسكورج ستوكر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 254,
+            "url": "https://arabwuwa.com/ar/enemies/310000370/",
+            "name": "قيلسكورج ستوكر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 255,
+            "url": "https://arabwuwa.com/ar/enemies/310000360/",
+            "name": "دوارف كاسواري"
+          },
+          {
+            "@type": "ListItem",
+            "position": 256,
+            "url": "https://arabwuwa.com/ar/enemies/310000350/",
+            "name": "لافا لارفا"
+          },
+          {
+            "@type": "ListItem",
+            "position": 257,
+            "url": "https://arabwuwa.com/ar/enemies/310000340/",
+            "name": "كلانق بانق"
+          },
+          {
+            "@type": "ListItem",
+            "position": 258,
+            "url": "https://arabwuwa.com/ar/enemies/310000330/",
+            "name": "ترافيك إلومينيتر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 259,
+            "url": "https://arabwuwa.com/ar/enemies/310000320/",
+            "name": "فراكتسيدوس قن ماستر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 260,
+            "url": "https://arabwuwa.com/ar/enemies/310000310/",
+            "name": "فراكتسيدوس كانونير"
+          },
+          {
+            "@type": "ListItem",
+            "position": 261,
+            "url": "https://arabwuwa.com/ar/enemies/310000300/",
+            "name": "هووسكامب كلابركلو"
+          },
+          {
+            "@type": "ListItem",
+            "position": 262,
+            "url": "https://arabwuwa.com/ar/enemies/310000290/",
+            "name": "فراكتسيدوس ثراستر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 263,
+            "url": "https://arabwuwa.com/ar/enemies/310000280/",
+            "name": "فيوجن دريدمين"
+          },
+          {
+            "@type": "ListItem",
+            "position": 264,
+            "url": "https://arabwuwa.com/ar/enemies/310000270/",
+            "name": "هورتويس"
+          },
+          {
+            "@type": "ListItem",
+            "position": 265,
+            "url": "https://arabwuwa.com/ar/enemies/310000260/",
+            "name": "دايموندكلو"
+          },
+          {
+            "@type": "ListItem",
+            "position": 266,
+            "url": "https://arabwuwa.com/ar/enemies/310000251/",
+            "name": "هووسكامب"
+          },
+          {
+            "@type": "ListItem",
+            "position": 267,
+            "url": "https://arabwuwa.com/ar/enemies/310000250/",
+            "name": "هووسكامب فلينقر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 268,
+            "url": "https://arabwuwa.com/ar/enemies/310000245/",
+            "name": "إكسايل"
+          },
+          {
+            "@type": "ListItem",
+            "position": 269,
+            "url": "https://arabwuwa.com/ar/enemies/310000244/",
+            "name": "إكسايل"
+          },
+          {
+            "@type": "ListItem",
+            "position": 270,
+            "url": "https://arabwuwa.com/ar/enemies/310000243/",
+            "name": "إكسايل"
+          },
+          {
+            "@type": "ListItem",
+            "position": 271,
+            "url": "https://arabwuwa.com/ar/enemies/310000242/",
+            "name": "إكسايل"
+          },
+          {
+            "@type": "ListItem",
+            "position": 272,
+            "url": "https://arabwuwa.com/ar/enemies/310000241/",
+            "name": "إكسايل"
+          },
+          {
+            "@type": "ListItem",
+            "position": 273,
+            "url": "https://arabwuwa.com/ar/enemies/310000240/",
+            "name": "إكسايل"
+          },
+          {
+            "@type": "ListItem",
+            "position": 274,
+            "url": "https://arabwuwa.com/ar/enemies/310000235/",
+            "name": "إكسايل"
+          },
+          {
+            "@type": "ListItem",
+            "position": 275,
+            "url": "https://arabwuwa.com/ar/enemies/310000234/",
+            "name": "إكسايل"
+          },
+          {
+            "@type": "ListItem",
+            "position": 276,
+            "url": "https://arabwuwa.com/ar/enemies/310000233/",
+            "name": "إكسايل"
+          },
+          {
+            "@type": "ListItem",
+            "position": 277,
+            "url": "https://arabwuwa.com/ar/enemies/310000232/",
+            "name": "إكسايل"
+          },
+          {
+            "@type": "ListItem",
+            "position": 278,
+            "url": "https://arabwuwa.com/ar/enemies/310000231/",
+            "name": "إكسايل"
+          },
+          {
+            "@type": "ListItem",
+            "position": 279,
+            "url": "https://arabwuwa.com/ar/enemies/310000230/",
+            "name": "إكسايل"
+          },
+          {
+            "@type": "ListItem",
+            "position": 280,
+            "url": "https://arabwuwa.com/ar/enemies/310000220/",
+            "name": "بيبي روزشرووم"
+          },
+          {
+            "@type": "ListItem",
+            "position": 281,
+            "url": "https://arabwuwa.com/ar/enemies/310000210/",
+            "name": "بيبي فيريدبليز سوريان"
+          },
+          {
+            "@type": "ListItem",
+            "position": 282,
+            "url": "https://arabwuwa.com/ar/enemies/310000200/",
+            "name": "إكسكارات"
+          },
+          {
+            "@type": "ListItem",
+            "position": 283,
+            "url": "https://arabwuwa.com/ar/enemies/310000190/",
+            "name": "سابر بور"
+          },
+          {
+            "@type": "ListItem",
+            "position": 284,
+            "url": "https://arabwuwa.com/ar/enemies/310000180/",
+            "name": "كروزوينق"
+          },
+          {
+            "@type": "ListItem",
+            "position": 285,
+            "url": "https://arabwuwa.com/ar/enemies/310000170/",
+            "name": "هافوك بريزم"
+          },
+          {
+            "@type": "ListItem",
+            "position": 286,
+            "url": "https://arabwuwa.com/ar/enemies/310000160/",
+            "name": "سبيكترو بريزم"
+          },
+          {
+            "@type": "ListItem",
+            "position": 287,
+            "url": "https://arabwuwa.com/ar/enemies/310000150/",
+            "name": "فيوجن بريزم"
+          },
+          {
+            "@type": "ListItem",
+            "position": 288,
+            "url": "https://arabwuwa.com/ar/enemies/310000140/",
+            "name": "قلاشيو بريزم"
+          },
+          {
+            "@type": "ListItem",
+            "position": 289,
+            "url": "https://arabwuwa.com/ar/enemies/310000130/",
+            "name": "تشيربف"
+          },
+          {
+            "@type": "ListItem",
+            "position": 290,
+            "url": "https://arabwuwa.com/ar/enemies/310000120/",
+            "name": "قلبف"
+          },
+          {
+            "@type": "ListItem",
+            "position": 291,
+            "url": "https://arabwuwa.com/ar/enemies/310000110/",
+            "name": "تيك تاك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 292,
+            "url": "https://arabwuwa.com/ar/enemies/310000100/",
+            "name": "ويف واف"
+          },
+          {
+            "@type": "ListItem",
+            "position": 293,
+            "url": "https://arabwuwa.com/ar/enemies/310000090/",
+            "name": "زيق زاق"
+          },
+          {
+            "@type": "ListItem",
+            "position": 294,
+            "url": "https://arabwuwa.com/ar/enemies/310000080/",
+            "name": "سنيب سناب"
+          },
+          {
+            "@type": "ListItem",
+            "position": 295,
+            "url": "https://arabwuwa.com/ar/enemies/310000070/",
+            "name": "هافوك واريور"
+          },
+          {
+            "@type": "ListItem",
+            "position": 296,
+            "url": "https://arabwuwa.com/ar/enemies/310000060/",
+            "name": "فيوجن واريور"
+          },
+          {
+            "@type": "ListItem",
+            "position": 297,
+            "url": "https://arabwuwa.com/ar/enemies/310000050/",
+            "name": "إيرو بريداتور"
+          },
+          {
+            "@type": "ListItem",
+            "position": 298,
+            "url": "https://arabwuwa.com/ar/enemies/310000040/",
+            "name": "قلاشيو بريداتور"
+          },
+          {
+            "@type": "ListItem",
+            "position": 299,
+            "url": "https://arabwuwa.com/ar/enemies/310000030/",
+            "name": "إلكترو بريداتور"
+          },
+          {
+            "@type": "ListItem",
+            "position": 300,
+            "url": "https://arabwuwa.com/ar/enemies/310000020/",
+            "name": "فيشن جنروك"
+          },
+          {
+            "@type": "ListItem",
+            "position": 301,
+            "url": "https://arabwuwa.com/ar/enemies/310000010/",
+            "name": "فانقارد جنروك"
+          }
+        ]
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "الأعداء",
+          "item": "https://arabwuwa.com/ar/enemies/"
+        }
+      ]
+    }
+  ]
+}

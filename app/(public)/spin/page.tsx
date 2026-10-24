@@ -23,12 +23,6 @@ async function getSpinCharacters(): Promise<SpinCharacter[]> {
           element: true,
           weaponType: true,
           rarity: true,
-          portraitPath: true,
-          guides: {
-            where: { status: 'PUBLISHED', isActive: true },
-            select: { id: true },
-            take: 1,
-          },
         },
         orderBy: [{ sortOrder: 'asc' }, { name: 'asc' }],
       }),
@@ -43,8 +37,8 @@ async function getSpinCharacters(): Promise<SpinCharacter[]> {
       element: c.element,
       weaponType: c.weaponType,
       rarity: c.rarity,
-      portraitPath: c.portraitPath,
-      hasGuide: c.guides.length > 0,
+      portraitPath: `/images/characters/${c.slug}.webp`,
+      hasGuide: true,
     }))
   }
 

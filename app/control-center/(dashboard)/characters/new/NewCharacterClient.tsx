@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Save, Loader2, Sparkles, AlertCircle } from 'lucide-react'
 import toast from 'react-hot-toast'
+import ImageUploadField from '@/components/admin/ImageUploadField'
 
 const ELEMENTS = [
   { value: 'AERO', label: 'Aero (Wind)' },
@@ -38,8 +39,12 @@ export default function NewCharacterClient() {
     description: '',
     sourceUrl: '',
     isPublished: true,
+    isComingSoon: false,
+    releaseVersion: '',
     isFeatured: false,
     tags: [] as string[],
+    portraitPath: '',
+    backgroundPath: '',
   })
 
   const handleNameChange = (name: string) => {
@@ -85,6 +90,8 @@ export default function NewCharacterClient() {
         isPublished: formData.isPublished,
         isFeatured: formData.isFeatured,
         tags: formData.tags,
+        portraitPath: formData.portraitPath.trim() || undefined,
+        backgroundPath: formData.backgroundPath.trim() || undefined,
       }
 
       const res = await fetch('/api/admin/characters', {
@@ -255,6 +262,33 @@ export default function NewCharacterClient() {
             </div>
           </div>
 
+          {/* Character Images (Portrait & Background) */}
+          <div className="pt-2 border-t border-white/5 space-y-4">
+            <h3 className="text-sm font-semibold text-white">Character Media & Artwork</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <ImageUploadField
+                label="Portrait Image (صورة البورتريه)"
+                value={formData.portraitPath}
+                onChange={(url) => setFormData({ ...formData, portraitPath: url })}
+                folder="characters"
+                type="portrait"
+                aspectRatio="portrait"
+                placeholder="/characters/slug.webp or https://..."
+                helperText="Upload portrait directly from your device"
+              />
+              <ImageUploadField
+                label="Background Banner (خلفية الشخصية)"
+                value={formData.backgroundPath}
+                onChange={(url) => setFormData({ ...formData, backgroundPath: url })}
+                folder="characters"
+                type="background"
+                aspectRatio="banner"
+                placeholder="/characters/slug-bg.webp or https://..."
+                helperText="Upload background banner directly from your device"
+              />
+            </div>
+          </div>
+
           {/* Description */}
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">
@@ -292,20 +326,56 @@ export default function NewCharacterClient() {
             </div>
           </div>
 
-          {/* Switches */}
-          <div className="pt-4 border-t border-white/5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <label className="flex items-center gap-3 p-3.5 rounded-xl bg-black/30 border border-white/10 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={formData.isPublished}
-                onChange={e => setFormData({ ...formData, isPublished: e.target.checked })}
-                className="w-4 h-4 accent-primary rounded cursor-pointer"
-              />
+          {/* Publishing Status & Coming Soon */}
+          <div className="pt-4 border-t border-white/5 space-y-4">
+            <h3 className="text-sm font-semibold text-white">Status & Availability (حالة الشخصية)</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <div className="text-sm font-semibold text-white">Publish Immediately</div>
-                <div className="text-xs text-gray-400">Make visible on the public resonator roster</div>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">
+                  Page Status (حالة الصفحة)
+                </label>
+                <select
+                  value={formData.isComingSoon ? 'COMING_SOON' : formData.isPublished ? 'AVAILABLE' : 'DRAFT'}
+                  onChange={e => {
+                    const val = e.target.value
+                    if (val === 'COMING_SOON') {
+                      setFormData(prev => ({ ...prev, isComingSoon: true, isPublished: true }))
+                    } else if (val === 'AVAILABLE') {
+                      setFormData(prev => ({ ...prev, isComingSoon: false, isPublished: true }))
+                    } else {
+                      setFormData(prev => ({ ...prev, isComingSoon: false, isPublished: false }))
+                    }
+                  }}
+                  className="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-primary/50 font-semibold"
+                >
+                  <option value="AVAILABLE" className="bg-zinc-900 text-emerald-400">
+                    🟢 متاح (Available - منشورة ومفتوحة)
+                  </option>
+                  <option value="COMING_SOON" className="bg-zinc-900 text-amber-400">
+                    🟡 قريباً (Coming Soon - معروضة مقفلة ومظللة)
+                  </option>
+                  <option value="DRAFT" className="bg-zinc-900 text-gray-400">
+                    ⚪ مسودة (Draft - غير منشورة للعامة)
+                  </option>
+                </select>
+                <p className="text-[11px] text-slate-400 mt-1">
+                  شخصيات &quot;قريباً&quot; ستظهر صورتها مظللة/مموهة (Dark & Blur) مع شارة القفل.
+                </p>
               </div>
-            </label>
+
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">
+                  Release Version (رقم الإصدار)
+                </label>
+                <input
+                  type="text"
+                  value={formData.releaseVersion}
+                  onChange={e => setFormData(prev => ({ ...prev, releaseVersion: e.target.value }))}
+                  placeholder="e.g. 3.4, 3.5..."
+                  className="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-primary/50"
+                />
+              </div>
+            </div>
 
             <label className="flex items-center gap-3 p-3.5 rounded-xl bg-black/30 border border-white/10 cursor-pointer">
               <input

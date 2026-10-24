@@ -27,11 +27,6 @@ export async function GET(request: NextRequest) {
           weaponType: true,
           rarity: true,
           portraitPath: true,
-          guides: {
-            where: { status: 'PUBLISHED', isActive: true },
-            select: { id: true, title: true, pageCount: true },
-            take: 1,
-          },
         },
         orderBy: { name: 'asc' },
         take: 12,

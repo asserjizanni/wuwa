@@ -5,11 +5,14 @@ declare global {
   var prisma: PrismaClient | undefined
   // eslint-disable-next-line no-var
   var dbOfflineUntil: number | undefined
+  // eslint-disable-next-line no-var
+  var dbMemoryCache: Map<string, { data: any; expiresAt: number }> | undefined
 }
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
   dbOfflineUntil: number | undefined
+  dbMemoryCache: Map<string, { data: any; expiresAt: number }> | undefined
 }
 
 export const prisma =
@@ -20,13 +23,30 @@ export const prisma =
 
 globalForPrisma.prisma = prisma
 
+const memoryCache = globalForPrisma.dbMemoryCache ?? new Map<string, { data: any; expiresAt: number }>()
+globalForPrisma.dbMemoryCache = memoryCache
+
 /**
- * Execute a DB query with rapid circuit breaker and timeout.
- * If the DB is unreachable, fails fast (under 600ms) and caches failure for 15s
- * so subsequent page renders are instantaneous (< 5ms).
+ * Execute a DB query with rapid circuit breaker, timeout, and optional in-memory cache.
+ * If cached, returns instantaneously (< 1ms).
+ * If the DB is unreachable, fails fast and caches failure for 5s.
  */
-export async function safeDb<T>(fn: () => Promise<T>, fallback: T, timeoutMs = 5000): Promise<T> {
+export async function safeDb<T>(
+  fn: () => Promise<T>,
+  fallback: T,
+  timeoutMs = 1500,
+  cacheKey?: string,
+  ttlSeconds = 120
+): Promise<T> {
   const now = Date.now()
+
+  if (cacheKey) {
+    const cached = memoryCache.get(cacheKey)
+    if (cached && cached.expiresAt > now) {
+      return cached.data as T
+    }
+  }
+
   if (global.dbOfflineUntil && now < global.dbOfflineUntil) {
     return fallback
   }
@@ -40,10 +60,27 @@ export async function safeDb<T>(fn: () => Promise<T>, fallback: T, timeoutMs = 5
     ])
     // Success, clear offline flag
     global.dbOfflineUntil = undefined
+
+    if (cacheKey && result !== null && result !== undefined) {
+      memoryCache.set(cacheKey, { data: result, expiresAt: now + ttlSeconds * 1000 })
+    }
+
     return result
   } catch {
-    // Trip circuit breaker for 15 seconds so other queries don't lag
-    global.dbOfflineUntil = Date.now() + 15000
+    // Trip circuit breaker briefly (5s) so other queries don't lag
+    global.dbOfflineUntil = Date.now() + 3000
     return fallback
+  }
+}
+
+export function clearDbCache(keyPrefix?: string) {
+  if (!keyPrefix) {
+    memoryCache.clear()
+    return
+  }
+  for (const k of memoryCache.keys()) {
+    if (k.startsWith(keyPrefix)) {
+      memoryCache.delete(k)
+    }
   }
 }

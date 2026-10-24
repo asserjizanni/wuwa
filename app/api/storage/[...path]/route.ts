@@ -10,8 +10,11 @@ const MIME_TYPES: Record<string, string> = {
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.png': 'image/png',
-  '.pdf': 'application/pdf',
+  '.svg': 'image/svg+xml',
+  '.avif': 'image/avif',
   '.gif': 'image/gif',
+  '.ico': 'image/x-icon',
+  '.pdf': 'application/pdf',
 }
 
 function getContentType(filePath: string): string {
@@ -21,7 +24,7 @@ function getContentType(filePath: string): string {
 
 export async function GET(
   request: NextRequest,
-  context: { params: Promise<{ path: string[] }> | { path: string[] } }
+  context: { params: Promise<{ path: string[] }> }
 ) {
   const params = await context.params
   const relativePath = Array.isArray(params.path) ? params.path.join('/') : ''

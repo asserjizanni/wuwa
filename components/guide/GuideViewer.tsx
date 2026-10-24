@@ -27,14 +27,14 @@ interface GuideViewerProps {
 }
 
 export default function GuideViewer({
-  isOpen, onClose, guideId, pages: initialPages, title, characterName
+  isOpen, onClose, guideId, pages: initialPages = [], title, characterName
 }: GuideViewerProps) {
   const [currentPage, setCurrentPage] = useState(0)
   const [mode, setMode] = useState<'single' | 'grid'>('single')
   const [zoom, setZoom] = useState(1)
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
-  const [pages, setPages] = useState<GuidePage[]>(initialPages)
+  const [pages, setPages] = useState<GuidePage[]>(initialPages || [])
   const [pagesLoading, setPagesLoading] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const touchStartX = useRef<number>(0)
@@ -46,7 +46,7 @@ export default function GuideViewer({
   useEffect(() => {
     if (!isOpen || !guideId) return
     // If we already have pages with real images, use them
-    if (initialPages.length > 0 && initialPages[0]?.imagePath) {
+    if (initialPages && initialPages.length > 0 && initialPages[0]?.imagePath) {
       setPages(initialPages)
       return
     }

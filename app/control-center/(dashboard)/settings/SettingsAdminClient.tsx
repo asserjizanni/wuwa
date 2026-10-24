@@ -147,7 +147,7 @@ export default function SettingsAdminClient() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">
-                Max PDF Upload (MB)
+                Max Image/Asset Upload (MB)
               </label>
               <input
                 type="number"
