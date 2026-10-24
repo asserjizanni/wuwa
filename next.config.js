@@ -1,6 +1,22 @@
+const path = require('path')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   serverExternalPackages: ['sharp'],
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'framer-motion'],
+    outputFileTracingRoot: path.join(__dirname),
+    outputFileTracingExcludes: {
+      '*': [
+        '**/.next/cache/**',
+        '**/node_modules/@swc/core*/**',
+        '**/node_modules/@esbuild/**',
+        // Exclude Windows temp paths from tracing
+        '**/AppData/Local/Temp/**',
+        '**/Temp/**',
+      ],
+    },
+  },
   images: {
     remotePatterns: [
       {
@@ -26,6 +42,12 @@ const nextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
+      {
+        source: '/images/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
     ]
   },
   async rewrites() {
@@ -33,6 +55,22 @@ const nextConfig = {
       {
         source: '/storage/:path*',
         destination: '/api/storage/:path*',
+      },
+      {
+        source: '/ar/characters/:slug*',
+        destination: '/characters/:slug*',
+      },
+      {
+        source: '/ar/weapons/:slug*',
+        destination: '/weapons/:slug*',
+      },
+      {
+        source: '/ar/echoes/:slug*',
+        destination: '/echoes/:slug*',
+      },
+      {
+        source: '/ar/:path*',
+        destination: '/:path*',
       },
     ]
   },
